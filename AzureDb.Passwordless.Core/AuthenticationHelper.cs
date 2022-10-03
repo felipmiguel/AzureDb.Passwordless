@@ -47,7 +47,7 @@ namespace AzureDb.Passwordless.Core
         }
 
         private static string GetKey(string clientId)
-            => string.IsNullOrEmpty(clientId) ? clientId : SYSTEM_KEY;
+            => string.IsNullOrEmpty(clientId) ? SYSTEM_KEY : clientId;
 
     }
 }

@@ -12,31 +12,9 @@ namespace AzureDb.DemoWebOldFwk.Controllers
 {
     public class ValuesController : ApiController
     {
-        private string ConnectionString
-        {
-            get
-            {
-                MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder();
-                //connectionStringBuilder["authenticationPlugins"] = "AzureDb.Passwordless.MySql.AzureIdentityMysqlAuthenticationPlugin";
-                connectionStringBuilder.DefaultAuthenticationPlugin = "mysql_clear_password";
-                //connectionStringBuilder[""]
-                connectionStringBuilder.Server = "mysql-weblogic-passwordless.mysql.database.azure.com";
-                connectionStringBuilder.UserID = "fmiguel@microsoft.com";
-                connectionStringBuilder.Database = "checklist";
-                connectionStringBuilder.SslMode = MySqlSslMode.Required;
-                connectionStringBuilder.SslCa = "DigiCertGlobalRootCA.crt.pem";
-                return connectionStringBuilder.GetConnectionString(false);
-
-            }
-        }
-
         // GET api/values
         public async Task<IEnumerable<string>> Get()
         {
-            MySqlConnection connection = new MySqlConnection(ConnectionString);
-            await connection.OpenAsync();
-            await connection.CloseAsync();
-
             return new string[] { "value1", "value2" };
         }
 

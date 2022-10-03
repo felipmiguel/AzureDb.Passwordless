@@ -1,6 +1,8 @@
 using AzureDb.Passwordless.MySql;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
+using System.Threading.Tasks;
 
 namespace AzureDb.Passwordless.ConnectionTests
 {
@@ -25,11 +27,10 @@ namespace AzureDb.Passwordless.ConnectionTests
             
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder();
             connectionStringBuilder.DefaultAuthenticationPlugin = "mysql_clear_password";
-            connectionStringBuilder.Server = "mysql-weblogic-passwordless.mysql.database.azure.com";
-            connectionStringBuilder.UserID = "fmiguel@microsoft.com";
+            connectionStringBuilder.Server = "[PUT YOUR SERVER]";
+            connectionStringBuilder.UserID = "[PUT YOUR USER";
             connectionStringBuilder.Database = "checklist";
             connectionStringBuilder.SslMode = MySqlSslMode.Required;
-            connectionStringBuilder.SslCa = "DigiCertGlobalRootCA.crt.pem";
             MySqlConnection connection = new MySqlConnection(connectionStringBuilder.GetConnectionString(false));
             await connection.OpenAsync();
             await connection.CloseAsync();

@@ -21,31 +21,11 @@ namespace AzureDb.DemoApi.Controllers
             this.configuration = configuration;
         }
 
-        private string ConnectionString
-        {
-            get
-            {
-                MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder();
-                connectionStringBuilder["authenticationPlugins"] = "AzureDb.Passwordless.MySql.AzureIdentityMysqlAuthenticationPlugin";
-                connectionStringBuilder.DefaultAuthenticationPlugin = "mysql_clear_password";
-                //connectionStringBuilder[""]
-                connectionStringBuilder.Server = "mysql-weblogic-passwordless.mysql.database.azure.com";
-                connectionStringBuilder.UserID = "fmiguel@microsoft.com";
-                connectionStringBuilder.Database = "checklist";
-                connectionStringBuilder.SslMode = MySqlSslMode.Required;
-                connectionStringBuilder.SslCa = "DigiCertGlobalRootCA.crt.pem";
-                return connectionStringBuilder.GetConnectionString(false);
-
-            }
-        }
+        
 
         [HttpGet(Name = "GetWeatherForecast")]
         public async Task<IEnumerable<WeatherForecast>> Get()
         {
-            var s = configuration.GetSection("MySQL");
-            MySqlConnection connection = new MySqlConnection(ConnectionString);
-            await connection.OpenAsync();
-            await connection.CloseAsync();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
