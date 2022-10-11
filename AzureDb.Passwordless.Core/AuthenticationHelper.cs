@@ -16,25 +16,24 @@ namespace AzureDb.Passwordless.Core
 
         private static DefaultAzureCredential GetCredentials(string clientId)
         {
+            DefaultAzureCredentialOptions options = new DefaultAzureCredentialOptions
+            {
+                ExcludeVisualStudioCredential = true,
+                ExcludeVisualStudioCodeCredential = true
+            };
+            if (!string.IsNullOrEmpty(clientId))
+            {
+                options.ManagedIdentityClientId = clientId;
 
-            if (string.IsNullOrEmpty(clientId))
-            {
-                return new DefaultAzureCredential();
             }
-            else
-            {
-                return new DefaultAzureCredential(new DefaultAzureCredentialOptions
-                {
-                    ManagedIdentityClientId = (string)clientId,
-                });
-            }
+            return new DefaultAzureCredential(options);
         }
 
         public static string GetAccessToken(string clientId)
         {
             string key = GetKey(clientId);
-            AccessToken currentAccessToken = accessTokens.GetOrAdd(key, GetCredentials(clientId).GetToken(requestContext));
-            if (currentAccessToken.ExpiresOn < DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(30)))
+            AccessToken currentAccessToken = accessTokens.GetOrAdd(key, (k) => GetCredentials(clientId).GetToken(requestContext));
+            if (currentAccessToken.ExpiresOn > DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(30)))
             {
                 return currentAccessToken.Token;
             }

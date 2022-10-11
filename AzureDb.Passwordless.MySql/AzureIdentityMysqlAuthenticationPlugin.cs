@@ -4,6 +4,8 @@ using AzureDb.Passwordless.Core;
 using MySql.Data.MySqlClient;
 using MySql.Data.MySqlClient.Authentication;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Resources;
 
 namespace AzureDb.Passwordless.MySql
@@ -14,32 +16,48 @@ namespace AzureDb.Passwordless.MySql
         private const string CLIENTID_PROPERTY_NAME = "azure.clientId";
         public override string PluginName => PLUGIN_NAME;
 
-        protected override byte[] MoreData(byte[] data)
-        {
-            if ((Settings.SslMode != MySqlSslMode.Disabled && Settings.ConnectionProtocol != MySqlConnectionProtocol.UnixSocket)
-                || (Settings.ConnectionProtocol == MySqlConnectionProtocol.UnixSocket))
-            {
-                return System.Text.Encoding.UTF8.GetBytes(GetAccessToken());
-            }
-            else
-            {
-                throw new Exception("Method not supported");
-            }
-        }
 
-        private string ClientId
-            => Settings.TryGetValue(CLIENTID_PROPERTY_NAME, out object clientId)
-                ? clientId as string
-                : string.Empty;
-
-
+        //protected override byte[] MoreData(byte[] data)
+        //{
+        //    if (Settings.SslMode != MySqlSslMode.Disabled)
+        //    {
+        //        byte[] passBytes = System.Text.Encoding.UTF8.GetBytes(GetAccessToken());
+        //        return passBytes;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Method not supported");
+        //    }
+        //}
 
         public override object GetPassword()
         {
-            return GetAccessToken();
+            return System.Text.Encoding.UTF8.GetBytes(GetAccessToken());
         }
 
-        private string GetAccessToken() => AuthenticationHelper.GetAccessToken(ClientId);
+        private string ClientId
+        {
+            get
+            {
+                if (Settings != null && Settings.TryGetValue(CLIENTID_PROPERTY_NAME, out object clientId))
+                {
+                    return clientId as string;
+                }
+                return string.Empty;
+            }
+        }
+
+
+
+        //public override object GetPassword()
+        //{
+        //    return GetAccessToken();
+        //}
+
+        private string GetAccessToken()
+        {
+            return AuthenticationHelper.GetAccessToken(ClientId);
+        }
 
     }
 }
