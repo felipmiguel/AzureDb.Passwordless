@@ -27,9 +27,9 @@ jobs:
       run: dotnet pack --no-restore --configuration 'Release'
       working-directory: AzureDb.Passwordless.Postgresql
     - name: Publish Postgresql
-      run: dotnet nuget push "AzureDb.Passwordless.Postgresql/bin/Release/AzureDb.Passwordless.Postgresql.1.0.0.nupkg"
+      run: dotnet nuget push "AzureDb.Passwordless/AzureDb.Passwordless.Postgresql/bin/Release/AzureDb.Passwordless.Postgresql.1.0.0.nupkg"
     - name: Package MySql
       run: dotnet pack --no-restore --configuration 'Release'
       working-directory: AzureDb.Passwordless.MySql    
     - name: Publish MySql
-      run: dotnet nuget push "AzureDb.Passwordless.MySql/bin/Release/AzureDb.Passwordless.Mysql.1.0.0.nupkg"
+      run: dotnet nuget push "AzureDb.Passwordless/AzureDb.Passwordless.MySql/bin/Release/AzureDb.Passwordless.Mysql.1.0.0.nupkg"
