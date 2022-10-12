@@ -17,23 +17,23 @@ namespace AzureDb.Passwordless.MySql
         public override string PluginName => PLUGIN_NAME;
 
 
-        //protected override byte[] MoreData(byte[] data)
-        //{
-        //    if (Settings.SslMode != MySqlSslMode.Disabled)
-        //    {
-        //        byte[] passBytes = System.Text.Encoding.UTF8.GetBytes(GetAccessToken());
-        //        return passBytes;
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("Method not supported");
-        //    }
-        //}
-
-        public override object GetPassword()
+        protected override byte[] MoreData(byte[] data)
         {
-            return System.Text.Encoding.UTF8.GetBytes(GetAccessToken());
+            if (Settings.SslMode != MySqlSslMode.Disabled)
+            {
+                byte[] passBytes = System.Text.Encoding.UTF8.GetBytes(GetAccessToken());
+                return passBytes;
+            }
+            else
+            {
+                throw new Exception("Method not supported");
+            }
         }
+
+        //public override object GetPassword()
+        //{
+        //    return System.Text.Encoding.UTF8.GetBytes(GetAccessToken());
+        //}
 
         private string ClientId
         {
