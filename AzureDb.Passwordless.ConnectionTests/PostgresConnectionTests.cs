@@ -24,21 +24,23 @@ namespace AzureDb.Passwordless.ConnectionTests
                 Host = configuration.GetSection("postgresql:host").Value,
                 Database = configuration.GetSection("postgresql:database").Value,
                 Username = configuration.GetSection("postgresql:user").Value,
-                Port = 5432,                
+                Port = 5432,
                 SslMode = SslMode.Require,
                 TrustServerCertificate = true,
                 Timeout = 30,
             };
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionStringBuilder.ConnectionString))
+            AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
+            using NpgsqlConnection connection = new NpgsqlConnection
             {
-                AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
-                connection.ProvidePasswordCallback = passwordProvider.ProvidePasswordCallback;
-                connection.Open();
-                NpgsqlCommand cmd = new NpgsqlCommand("SELECT now()", connection);
-                DateTime? serverDate = (DateTime?)cmd.ExecuteScalar();
-                Assert.IsNotNull(serverDate);
-            }
+                ConnectionString = connectionStringBuilder.ConnectionString,
+                ProvidePasswordCallback = passwordProvider.ProvidePasswordCallback
+            };
+            connection.Open();
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT now()", connection);
+            DateTime? serverDate = (DateTime?)cmd.ExecuteScalar();
+            Assert.IsNotNull(serverDate);
+
         }
     }
 }
