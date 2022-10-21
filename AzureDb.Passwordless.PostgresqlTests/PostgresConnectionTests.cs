@@ -46,8 +46,6 @@ namespace AzureDb.Passwordless.MysqlTests
         [TestMethod]
         public void TestConnectionPasswordProvider()
         {
-
-
             AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
             using NpgsqlConnection connection = new NpgsqlConnection
             {
