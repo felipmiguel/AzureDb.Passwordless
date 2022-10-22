@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using MySqlConnector;
 using System.Data.Common;
 
-namespace Microsoft.EntityFrameworkCore
+namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
 {
     internal class AzureIdentityMysqlPasswordProviderInterceptor : DbConnectionInterceptor
     {

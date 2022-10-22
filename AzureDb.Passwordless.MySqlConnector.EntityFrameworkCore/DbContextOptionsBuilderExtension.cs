@@ -1,4 +1,5 @@
 ﻿using AzureDb.Passwordless.MySqlConnector;
+using AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Microsoft.EntityFrameworkCore;
