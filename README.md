@@ -100,9 +100,9 @@ This approach has some drawbacks:
 
 The proposed solution is using Azure.Identity library in a way that it retrieves an access token with the correct audience and scope. That should be done transparently for the user. There are few application scenarios when developers create a database connection explicitly, while ASP.Net Core and Entity Framework are much more common. The proposed solution is to create a library that can be used in all scenarios.
 
-The implication should retrieve an access token just before creating a connection and if is not expired. Each database driver provides different solutions:
+The implication should retrieve an access token before creating a connection, cache the access token, and retrieve a new access token only if it expires. Each database driver provides different solutions:
 
-* Postgresql: Npgsql library provides a mechanism to obtain the password each time there is a physical connection to the database. That is [_ProvidePasswordCallback_ delegate](https://www.npgsql.org/doc/api/Npgsql.ProvidePasswordCallback.html?q=ProvidePasswordCallback). The library AzureDb.Passwordless.Postgresql provides a class that implements the delegate signature and obtains the password from Azure AD.
+* Postgresql: Npgsql library provides a mechanism to obtain a password periodically. That is using NpgsqlDataSourceBuilder and [_UsePeriodicPasswordProvider_ method](https://www.npgsql.org/doc/api/Npgsql.NpgsqlDataSourceBuilder.html#Npgsql_NpgsqlDataSourceBuilder_UsePeriodicPasswordProvider_System_Nullable_Func_Npgsql_NpgsqlConnectionStringBuilder_CancellationToken_ValueTask_System_String____TimeSpan_TimeSpan_). The library AzureDb.Passwordless.Postgresql contains a class that provides a callback that obtains the password from Azure AD.
 * Mysql:
   * MySql.Data library provides a mechanism to configure an authentication plugin. The library AzureDb.Passwordless.Mysql provides a class that implements the authentication plugin and obtains the password from Azure AD. The problem of this library is that the configuration uses old System.Configuration library, which is not supported in .Net Core. So, the library is not usable in .Net Core applications.
   This library was tested with Azure Database for MySQL Flexible Server and Azure Database for MySQL Single Server, but **token as password only works in Azure Database for MySQL Single Server**.
@@ -114,19 +114,35 @@ The solution relies on Azure.Identity library. This library supports different a
 
 ### Connection pooling
 
-To make this library connection pool friendly, the library should be able to retrieve the access token just before creating a connection. The library AzureDb.Passwordless.MysqlConnector and AzureDb.Passwordless.Postgresql implement this mechanism. Also, the connection string should be the same for all connections.
+To make this library connection pool friendly, it should use a valid token, not an expired one, and the connection string should be the same for all connections to avoid pool fragmentation.
 
-Here is an example using Postgresql
+Here is an example using Postgresql:
+
+```csharp
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConnectionString());
+            NpgsqlDataSource dataSource = dataSourceBuilder
+                .UsePeriodicPasswordProvider(async (settings, cancellationToken) =>
+                {
+                    var azureCredential = new DefaultAzureCredential();
+                    AccessToken token = await azureCredential.GetTokenAsync(new TokenRequestContext(new string[] { "https://ossrdbms-aad.database.windows.net/.default" }));
+                    return token.Token;
+                }, TimeSpan.FromMinutes(55), TimeSpan.FromMilliseconds(100))
+                .Build();
+using NpgsqlConnection connection = dataSource.OpenConnection();
+```
+
+To facilitate the above implementation it is provided the class _AzureIdentityPostgresqlPasswordProvider_. It provides an access token and also provides a caching mechanism to avoid retrieving an access token if it is not yet expired.
 
 ```csharp
 AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
-using NpgsqlConnection connection = new NpgsqlConnection
-{
-  ConnectionString = GetConnectionString(),
-  ProvidePasswordCallback = passwordProvider.ProvidePasswordCallback
-};
-connection.Open();
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConnectionString());
+NpgsqlDataSource dataSource = dataSourceBuilder
+                .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                .Build();
+using NpgsqlConnection connection = dataSource.OpenConnection();
 ```
+
+> [!NOTE] According to Npgsql driver documentation, the password callback is called by a timer, not when it is going to be used. For that reason, in the first code sample the timer is set to a value lower than the default AAD access token expiration time - 1 hour. The second example uses AzureIdentityPostgresqlPasswordProvider which reuses the token if it is not expired, for that reason it can be checked more frequently and it won't perform an access token retrieval unless it expired. 
 
 ### Entity Framework Core
 
@@ -160,36 +176,69 @@ The connection using this library looks like this:
 
 ```csharp
 AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
-using NpgsqlConnection connection = new NpgsqlConnection
-{
-    ConnectionString = connectionStringBuilder.ConnectionString,
-    ProvidePasswordCallback = passwordProvider.ProvidePasswordCallback
-};
-connection.Open();
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConnectionString());
+NpgsqlDataSource dataSource = dataSourceBuilder
+                .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                .Build();
+using NpgsqlConnection connection = dataSource.OpenConnection();
 /* Do something with the connection */
 ```
-
-If the connection string contains _Password_ this callback will be ignored.
 
 The library uses Azure.Identity, which tries to use different authentication mechanisms to get the access token. It includes Managed Identity, Visual Studio, Azure CLI, and others. In Azure workloads a hosting environment may have more than one Managed Identity assigned, for instance when using User Assigned Managed Identity. In that case it can be necessary to specify which Managed Identity to use. This can be done by setting the clientId attribute to the AzureIdentityPostgresqlPasswordProvider constructor.
 
 ```csharp
 string managedIdentityClientId= "00000000-0000-0000-0000-000000000000";
 AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider(managedIdentityClientId);
-using NpgsqlConnection connection = new NpgsqlConnection
-{
-    ConnectionString = connectionStringBuilder.ConnectionString,
-    ProvidePasswordCallback = passwordProvider.ProvidePasswordCallback
-};
-connection.Open();
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConnectionString());
+NpgsqlDataSource dataSource = dataSourceBuilder
+                .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                .Build();
+using NpgsqlConnection connection = dataSource.OpenConnection();
 /* Do something with the connection */
 ```
 
 ### Entity Framework Core
 
-Npgsql Entity Framework Core provider supports the same mechanism to obtain the password. In this case in DbContextOptionsBuilderOptions.ProvidePasswordCallback. Then it will look like this:
+Npgsql Entity Framework Core provider provides two mechanisms:
 
-For DbContext factories:
+* Using a NpgsqlDataSource
+* Using a DbContextOptionsBuilderOptions.ProvidePasswordCallback. This delegate provides a mechanism to retrieve a the password before the connection is created. 
+
+#### NpgsqlDataSource
+
+DbContext factories:
+
+```csharp
+AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
+            NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("PSQL CONNECTION STRING");
+            NpgsqlDataSource dataSource = dataSourceBuilder
+                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                            .Build();
+            ServiceCollection services = new ServiceCollection();
+            services.AddDbContextFactory<ChecklistContext>(options =>
+            {
+                options.UseNpgsql(dataSource);
+            });
+```
+
+DbContext:
+
+```csharp
+AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
+            NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("PSQL CONNECTION STRING");
+            NpgsqlDataSource dataSource = dataSourceBuilder
+                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                            .Build();
+            ServiceCollection services = new ServiceCollection();
+            services.AddDbContext<ChecklistContext>(options =>
+            {
+                options.UseNpgsql(dataSource);
+            });
+```
+
+#### DbContextOptionsBuilderOptions.ProvidePasswordCallback
+
+DbContext factories:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -206,7 +255,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-For DbContext:
+DbContext:
 
 ```csharp
 builder.Services.AddDbContext<MyContext>(options =>
