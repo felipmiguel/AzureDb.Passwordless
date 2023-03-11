@@ -2,6 +2,8 @@
 using Azure.Identity;
 using System;
 using System.Collections.Concurrent;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AzureDb.Passwordless.Core
 {
@@ -43,6 +45,21 @@ namespace AzureDb.Passwordless.Core
                 accessTokens.TryUpdate(key, newToken, currentAccessToken);
                 return newToken.Token;
             }
+        }
+
+        public static async ValueTask<string> GetAccessTokenAsync(string clientId, CancellationToken cancellationToken=default)
+        {
+            string key = GetKey(clientId);
+            AccessToken currentAccessToken;
+            if (!accessTokens.TryGetValue(key, out currentAccessToken))
+            {
+                currentAccessToken = await GetCredentials(clientId).GetTokenAsync(requestContext, cancellationToken);
+                if (!accessTokens.TryAdd(key, currentAccessToken))
+                {
+                    accessTokens.TryGetValue(key, out currentAccessToken);
+                }
+            }
+            return currentAccessToken.Token;
         }
 
         private static string GetKey(string clientId)

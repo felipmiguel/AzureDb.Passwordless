@@ -1,4 +1,8 @@
 ﻿using AzureDb.Passwordless.Core;
+using Npgsql;
+using System.Threading.Tasks;
+using System.Threading;
+using System;
 
 namespace AzureDb.Passwordless.Postgresql
 {
@@ -18,6 +22,11 @@ namespace AzureDb.Passwordless.Postgresql
         public string ProvidePasswordCallback(string host, int port, string database, string username)
         {
             return AuthenticationHelper.GetAccessToken(clientId);
+        }
+
+        public ValueTask<string> PeriodicPasswordProvider(NpgsqlConnectionStringBuilder settings, CancellationToken cancellationToken=default)
+        {
+            return AuthenticationHelper.GetAccessTokenAsync(clientId, cancellationToken);
         }
     }
 }

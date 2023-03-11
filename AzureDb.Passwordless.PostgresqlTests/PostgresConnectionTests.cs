@@ -22,6 +22,9 @@ namespace AzureDb.Passwordless.MysqlTests
             var services = new ServiceCollection();
             services.AddDbContextFactory<ChecklistContext>(options =>
             {
+                //NpgsqlDataSourceBuilder sourceBuilder = new NpgsqlDataSourceBuilder();
+                //sourceBuilder.UsePeriodicPasswordProvider()
+                //options.UseNpgsql()
                 options.UseNpgsql(GetConnectionString(), options => options.UseAadAuthentication());
             });
 
@@ -38,7 +41,7 @@ namespace AzureDb.Passwordless.MysqlTests
                 Port = 5432,
                 SslMode = SslMode.Require,
                 TrustServerCertificate = true,
-                Timeout = 30,
+                Timeout = 30
             };
             return connectionStringBuilder.ConnectionString;
         }
@@ -47,16 +50,13 @@ namespace AzureDb.Passwordless.MysqlTests
         public void TestConnectionPasswordProvider()
         {
             AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
-            using NpgsqlConnection connection = new NpgsqlConnection
-            {
-                ConnectionString = GetConnectionString(),
-                ProvidePasswordCallback = passwordProvider.ProvidePasswordCallback
-            };
-            connection.Open();
-            NpgsqlCommand cmd = new NpgsqlCommand("SELECT now()", connection);
+            NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConnectionString());
+            NpgsqlDataSource dataSource = dataSourceBuilder
+                .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                .Build();
+            using NpgsqlCommand cmd = dataSource.CreateCommand("SELECT now()");
             DateTime? serverDate = (DateTime?)cmd.ExecuteScalar();
             Assert.IsNotNull(serverDate);
-
         }
 
         [TestMethod]
