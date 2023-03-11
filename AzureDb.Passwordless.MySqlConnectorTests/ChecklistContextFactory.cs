@@ -26,7 +26,8 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
             ServiceCollection services = new ServiceCollection();
             services.AddDbContext<ChecklistContext>(options =>
             {
-                string connectionString = GetConnectionString(config);
+                string? connectionString = GetConnectionString(config);
+                Assert.IsNotNull(connectionString);
                 var serverVersion = ServerVersion.Parse("5.7", Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql);
                 options.UseMySql(connectionString, serverVersion,
                     optionsBuilder => optionsBuilder.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))

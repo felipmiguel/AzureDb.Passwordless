@@ -10,8 +10,8 @@ namespace AzureDb.Passwordless.MysqlTests
     [TestClass]
     public class PostgresConnectionTests
     {
-        private static IConfiguration configuration;
-        private static IServiceProvider serviceProvider;
+        private static IConfiguration? configuration;
+        private static IServiceProvider? serviceProvider;
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -33,6 +33,7 @@ namespace AzureDb.Passwordless.MysqlTests
 
         private static string GetConnectionString()
         {
+            Assert.IsNotNull(configuration);
             NpgsqlConnectionStringBuilder connectionStringBuilder = new NpgsqlConnectionStringBuilder
             {
                 Host = configuration.GetSection("postgresql:host").Value,
@@ -62,12 +63,14 @@ namespace AzureDb.Passwordless.MysqlTests
         [TestMethod]
         public void FeedData()
         {
+            Assert.IsNotNull(serviceProvider);
             SeedData.Initialize(serviceProvider);
         }
 
         [TestMethod]
         public void TestEntityFrameworkAad()
         {
+            Assert.IsNotNull(serviceProvider);
             var contextFactory = serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
             using var context = contextFactory.CreateDbContext();
             var result = context.Checklists?.ToList();

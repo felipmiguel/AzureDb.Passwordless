@@ -12,8 +12,8 @@ namespace AzureDb.Passwordless.MysqlTests
     [TestClass]
     public class MySqlConnectionTests
     {
-        static IConfiguration configuration;
-        private static IServiceProvider serviceProvider;
+        static IConfiguration? configuration;
+        private static IServiceProvider? serviceProvider;
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
@@ -44,12 +44,13 @@ namespace AzureDb.Passwordless.MysqlTests
         [TestMethod]
         public async Task AuthenticationPluginsInConnectionString()
         {
+            Assert.IsNotNull(configuration);
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder
             {
                 Server = configuration.GetSection("mySqlInfo:host").Value,
                 UserID = configuration.GetSection("mySqlInfo:user").Value,
                 Database = configuration.GetSection("mySqlInfo:database").Value,
-                AuthenticationPlugins = $"mysql_clear_password:{typeof(AzureIdentityMysqlAuthenticationPlugin).AssemblyQualifiedName.Replace(',', '#')}",
+                AuthenticationPlugins = $"mysql_clear_password:{typeof(AzureIdentityMysqlAuthenticationPlugin).AssemblyQualifiedName?.Replace(',', '#')}",
                 SslMode = MySqlSslMode.Required,
                 DefaultAuthenticationPlugin = "mysql_clear_password",
                 ConnectionTimeout = 120
@@ -62,6 +63,7 @@ namespace AzureDb.Passwordless.MysqlTests
         [TestMethod]
         public async Task AuthenticationPluginsRegisteredByReflection()
         {
+            Assert.IsNotNull(configuration);
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder
             {
                 Server = configuration.GetSection("mySqlInfo:host").Value,
@@ -94,6 +96,7 @@ namespace AzureDb.Passwordless.MysqlTests
         [TestMethod]
         public async Task TokenAsPassword()
         {
+            Assert.IsNotNull(configuration);
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder
             {
                 Server = configuration.GetSection("mySqlInfo:host").Value,
@@ -110,6 +113,7 @@ namespace AzureDb.Passwordless.MysqlTests
         [TestMethod]
         public void TestEntityFrameworkAad()
         {
+            Assert.IsNotNull(serviceProvider);
             var contextFactory = serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
             using var context = contextFactory.CreateDbContext();
             var result = context.Checklists?.ToList();

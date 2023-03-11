@@ -25,7 +25,8 @@ namespace AzureDb.Passwordless.MSSqlTests
             ServiceCollection services = new ServiceCollection();
             services.AddDbContext<ChecklistContext>(options =>
             {
-                string connectionString = GetConnectionString(config);
+                string? connectionString = GetConnectionString(config);
+                Assert.IsNotNull(connectionString);
                 options.UseSqlServer(connectionString,
                     optionsBuilder => optionsBuilder.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
             });

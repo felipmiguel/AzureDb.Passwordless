@@ -11,7 +11,7 @@ namespace AzureDb.Passwordless.MSSqlTests
     [TestClass]
     public class MSSqlConnectionTests
     {
-        private static IConfiguration configuration;
+        private static IConfiguration? configuration;
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -36,6 +36,7 @@ namespace AzureDb.Passwordless.MSSqlTests
         [TestMethod]
         public async Task OpenMSSqlConnection()
         {
+            Assert.IsNotNull(configuration);
             string connectionString = configuration.GetSection("mssqlconnstring").Value;
             using SqlConnection connection = new SqlConnection(connectionString);
             await connection.OpenAsync();
@@ -47,6 +48,7 @@ namespace AzureDb.Passwordless.MSSqlTests
         [TestMethod]
         public async Task OpenMSSqlConnectionWithToken()
         {
+            Assert.IsNotNull(configuration);
             string connectionString = configuration.GetSection("mssqlconnstringNoAuth").Value;
             string RDBMS_SCOPE = "https://database.windows.net/.default";
             TokenRequestContext requestContext = new TokenRequestContext(new string[] { RDBMS_SCOPE });
@@ -63,12 +65,15 @@ namespace AzureDb.Passwordless.MSSqlTests
         [TestMethod]
         public async Task OpenMSSqlConnectionEntityFrameworkCore()
         {
+            Assert.IsNotNull(configuration);
             string connectionString = configuration.GetSection("mssqlconnstring").Value;
             ServiceCollection services = new ServiceCollection();
             services.AddDbContext<ChecklistContext>(options => options.UseSqlServer(connectionString));
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             using var context = serviceProvider.GetRequiredService<ChecklistContext>();
+            Assert.IsNotNull(context);
+            Assert.IsNotNull(context.Checklists);
             var checklists = await context.Checklists.ToListAsync();
             Assert.IsNotNull(checklists);
         }
@@ -76,6 +81,7 @@ namespace AzureDb.Passwordless.MSSqlTests
         [TestMethod]
         public async Task OpenMSSqlConnectionEntityWithConnectringStringBuilder()
         {
+            Assert.IsNotNull(configuration);
             string server = configuration.GetSection("server").Value;
             string database = configuration.GetSection("database").Value;
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();

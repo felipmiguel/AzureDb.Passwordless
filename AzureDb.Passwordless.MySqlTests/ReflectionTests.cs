@@ -16,15 +16,12 @@ namespace AzureDb.Passwordless.MysqlTests
         [TestMethod]
         public void ForceAuthenticationPluginByReflection()
         {
-            Type authenticationPluginManagerType = Type.GetType("MySql.Data.MySqlClient.Authentication.AuthenticationPluginManager, MySql.Data");
-            FieldInfo pluginsField = authenticationPluginManagerType.GetField("Plugins", BindingFlags.Static | BindingFlags.NonPublic);
+            Type? authenticationPluginManagerType = Type.GetType("MySql.Data.MySqlClient.Authentication.AuthenticationPluginManager, MySql.Data");
+            FieldInfo? pluginsField = authenticationPluginManagerType?.GetField("Plugins", BindingFlags.Static | BindingFlags.NonPublic);
             Assert.IsNotNull(pluginsField);
-            IDictionary plugins = pluginsField.GetValue(null) as IDictionary;
-            object clearTextPasswordPlugin = plugins["mysql_clear_password"];
-            clearTextPasswordPlugin.GetType().GetField("Type").SetValue(clearTextPasswordPlugin, typeof(AzureIdentityMysqlAuthenticationPlugin).AssemblyQualifiedName);
-
-
-
+            IDictionary? plugins = pluginsField?.GetValue(null) as IDictionary;
+            object? clearTextPasswordPlugin = plugins?["mysql_clear_password"];
+            clearTextPasswordPlugin?.GetType().GetField("Type")?.SetValue(clearTextPasswordPlugin, typeof(AzureIdentityMysqlAuthenticationPlugin).AssemblyQualifiedName);
         }
     }
 }

@@ -11,8 +11,8 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
     [TestClass]
     public class MySqlConnectionTests
     {
-        static IConfiguration configuration;
-        static IServiceProvider serviceProvider;
+        static IConfiguration? configuration;
+        static IServiceProvider? serviceProvider;
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -60,11 +60,13 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
         [TestMethod]
         public void FeedData()
         {
+            Assert.IsNotNull(serviceProvider);
             SeedData.Initialize(serviceProvider);
         }
 
         private static string? GetConnectionString()
         {
+            Assert.IsNotNull(configuration);
             MySqlConnectionStringBuilder connStringBuilder = new MySqlConnectionStringBuilder
             {
                 Server = configuration.GetSection("mySqlInfo:host").Value,
