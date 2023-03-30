@@ -128,7 +128,7 @@ NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConne
                     return token.Token;
                 }, TimeSpan.FromMinutes(55), TimeSpan.FromMilliseconds(100))
                 .Build();
-using NpgsqlConnection connection = dataSource.OpenConnection();
+using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
 ```
 
 To facilitate the above implementation it is provided the class _AzureIdentityPostgresqlPasswordProvider_. It provides an access token and also provides a caching mechanism to avoid retrieving an access token if it is not yet expired.
@@ -139,7 +139,7 @@ NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConne
 NpgsqlDataSource dataSource = dataSourceBuilder
                 .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
                 .Build();
-using NpgsqlConnection connection = dataSource.OpenConnection();
+using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
 ```
 
 > [!NOTE] According to Npgsql driver documentation, the password callback is called by a timer, not when it is going to be used. For that reason, in the first code sample the timer is set to a value lower than the default AAD access token expiration time - 1 hour. The second example uses AzureIdentityPostgresqlPasswordProvider which reuses the token if it is not expired, for that reason it can be checked more frequently and it won't perform an access token retrieval unless it expired. 
@@ -180,7 +180,7 @@ NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConne
 NpgsqlDataSource dataSource = dataSourceBuilder
                 .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
                 .Build();
-using NpgsqlConnection connection = dataSource.OpenConnection();
+using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
 /* Do something with the connection */
 ```
 
@@ -193,7 +193,7 @@ NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConne
 NpgsqlDataSource dataSource = dataSourceBuilder
                 .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
                 .Build();
-using NpgsqlConnection connection = dataSource.OpenConnection();
+using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
 /* Do something with the connection */
 ```
 
