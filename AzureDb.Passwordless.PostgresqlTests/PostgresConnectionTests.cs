@@ -1,11 +1,12 @@
-﻿using AzureDb.Passwordless.Postgresql;
+﻿using Azure.Identity;
+using AzureDb.Passwordless.Postgresql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Sample.Repository;
 
-namespace AzureDb.Passwordless.MysqlTests
+namespace AzureDb.Passwordless.PostgresqlTests
 {
     [TestClass]
     public class PostgresConnectionTests
@@ -48,6 +49,16 @@ namespace AzureDb.Passwordless.MysqlTests
         }
 
         [TestMethod]
+        public void TestCaching()
+        {
+            DefaultAzureCredential cred = new DefaultAzureCredential();
+            var hc1 = cred.GetHashCode();
+            DefaultAzureCredential cred2 = new DefaultAzureCredential();
+            var hc2 = cred2.GetHashCode();
+            Assert.AreNotEqual(hc1, hc2);
+        }
+
+        [TestMethod]
         public void TestConnectionPasswordProvider()
         {
             AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
@@ -68,14 +79,14 @@ namespace AzureDb.Passwordless.MysqlTests
         }
 
         [TestMethod]
-        public void TestEntityFrameworkAad()
+        public async Task TestEntityFrameworkAad()
         {
             Assert.IsNotNull(serviceProvider);
             var contextFactory = serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
-            using var context = contextFactory.CreateDbContext();
-            var result = context.Checklists?.ToList();
+            using var context = await contextFactory.CreateDbContextAsync();
+            Assert.IsNotNull(context.Checklists);
+            var result = await context.Checklists.ToListAsync();
             Assert.IsNotNull(result);
-
         }
     }
 }

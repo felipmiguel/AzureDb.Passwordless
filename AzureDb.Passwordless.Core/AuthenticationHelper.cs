@@ -11,7 +11,7 @@ namespace AzureDb.Passwordless.Core
     {
         private const string OSSRDBMS_SCOPE = "https://ossrdbms-aad.database.windows.net/.default";
         private const string SYSTEM_KEY = "system";
-        private static readonly TokenRequestContext requestContext = new TokenRequestContext(new string[] { OSSRDBMS_SCOPE });
+        internal static readonly TokenRequestContext requestContext = new TokenRequestContext(new string[] { OSSRDBMS_SCOPE });
 
         private static ConcurrentDictionary<string, AccessToken> accessTokens = new ConcurrentDictionary<string, AccessToken>();
 

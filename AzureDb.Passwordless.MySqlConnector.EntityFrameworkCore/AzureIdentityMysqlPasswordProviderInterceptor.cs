@@ -1,4 +1,5 @@
-﻿using AzureDb.Passwordless.MySqlConnector;
+﻿using Azure.Core;
+using AzureDb.Passwordless.MySqlConnector;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using MySqlConnector;
 using System.Data.Common;
@@ -11,7 +12,19 @@ namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
 
         public AzureIdentityMysqlPasswordProviderInterceptor(string? clientId = null)
         {
-            _passwordProvider = new AzureIdentityMysqlPasswordProvider(clientId);
+            if (clientId == null) 
+            {
+                _passwordProvider = new AzureIdentityMysqlPasswordProvider();
+            }
+            else
+            {
+                _passwordProvider = new AzureIdentityMysqlPasswordProvider(clientId);
+            }
+        }
+
+        public AzureIdentityMysqlPasswordProviderInterceptor(TokenCredential credential)
+        {
+            _passwordProvider = new AzureIdentityMysqlPasswordProvider(credential);
         }
 
         public override InterceptionResult ConnectionOpening(DbConnection connection, ConnectionEventData eventData, InterceptionResult result)

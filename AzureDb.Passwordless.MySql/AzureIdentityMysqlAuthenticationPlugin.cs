@@ -17,12 +17,27 @@ namespace AzureDb.Passwordless.MySql
         private const string CLIENTID_PROPERTY_NAME = "azure.clientId";
         public override string PluginName => PLUGIN_NAME;
 
+        private AzureIdentityBaseAuthenticationPlugin _aadAuthenticationPlugin;
+        private AzureIdentityBaseAuthenticationPlugin AadAuthenticationPlugin
+        {
+            get
+            {
+                if (_aadAuthenticationPlugin == null)
+                {
+                    _aadAuthenticationPlugin = string.IsNullOrEmpty(ClientId) 
+                        ? new AzureIdentityBaseAuthenticationPlugin() 
+                        : new AzureIdentityBaseAuthenticationPlugin(ClientId);
+                }
+                return _aadAuthenticationPlugin;
+            }
+        }
+
 
         protected override byte[] MoreData(byte[] data)
         {
             if (Settings.SslMode != MySqlSslMode.Disabled)
             {
-                byte[] passBytes = System.Text.Encoding.UTF8.GetBytes(GetAccessToken());
+                byte[] passBytes = System.Text.Encoding.UTF8.GetBytes(AadAuthenticationPlugin.GetAuthenticationToken());
                 return passBytes;
             }
             else
@@ -60,11 +75,6 @@ namespace AzureDb.Passwordless.MySql
                 }
                 return string.Empty;
             }
-        }
-
-        private string GetAccessToken()
-        {
-            return AuthenticationHelper.GetAccessToken(ClientId);
         }
 
 
