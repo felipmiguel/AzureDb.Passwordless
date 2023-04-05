@@ -1,22 +1,24 @@
-﻿using Azure.Core;
+using Azure.Core;
 using Azure.Identity;
 using AzureDb.Passwordless.Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace AzureDb.Passwordless.MysqlTests
+namespace AzureDb.Passwordless.CoreTests
 {
     [TestClass]
     public class AccessTokenTests
     {
         [TestMethod]
-        public void CachingCreds()
+        public async Task CachingCreds()
         {
-            string accessToken1 = AuthenticationHelper.GetAccessToken(null);
-            string accessToken2 = AuthenticationHelper.GetAccessToken(null);
+            AzureIdentityBaseAuthenticationPlugin authenticationPlugin = new AzureIdentityBaseAuthenticationPlugin();
+            string[] tokens = await Task.WhenAll(authenticationPlugin.GetAuthenticationTokenAsync().AsTask(), authenticationPlugin.GetAuthenticationTokenAsync().AsTask());
+            Assert.AreEqual(tokens[0], tokens[1]);
+            string accessToken1 = await authenticationPlugin.GetAuthenticationTokenAsync();
+            string accessToken2 = await authenticationPlugin.GetAuthenticationTokenAsync();
             Assert.AreEqual(accessToken1, accessToken2);
+            Assert.AreEqual(accessToken1, tokens[1]);
+
+            
         }
 
         [TestMethod]

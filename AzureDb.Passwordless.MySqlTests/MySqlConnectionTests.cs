@@ -75,15 +75,15 @@ namespace AzureDb.Passwordless.MysqlTests
             };
 
             AzureIdentityMysqlAuthenticationPlugin.RegisterAuthenticationPlugin();
+            string authPlugin = AzureIdentityMysqlAuthenticationPlugin.GetAuthenticationPlugin("mysql_clear_password");
+            Assert.AreEqual(typeof(AzureIdentityMysqlAuthenticationPlugin).AssemblyQualifiedName, authPlugin);
             await DoConnectAsync(connectionStringBuilder);
         }
 
         private static async Task DoConnectAsync(MySqlConnectionStringBuilder connectionStringBuilder)
         {
             using (var connection = new MySqlConnection(connectionStringBuilder.ConnectionString))
-            {
-                string authPlugin = AzureIdentityMysqlAuthenticationPlugin.GetAuthenticationPlugin("mysql_clear_password");
-                Assert.AreEqual(typeof(AzureIdentityMysqlAuthenticationPlugin).AssemblyQualifiedName, authPlugin);
+            {                
                 await connection.OpenAsync();
                 var cmd = connection.CreateCommand();
                 cmd.CommandText = "SELECT now()";
@@ -97,12 +97,13 @@ namespace AzureDb.Passwordless.MysqlTests
         public async Task TokenAsPassword()
         {
             Assert.IsNotNull(configuration);
+            AzureIdentityBaseAuthenticationPlugin authenticationPlugin = new AzureIdentityBaseAuthenticationPlugin();
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder
             {
                 Server = configuration.GetSection("mySqlInfo:host").Value,
                 UserID = configuration.GetSection("mySqlInfo:user").Value,
                 Database = configuration.GetSection("mySqlInfo:database").Value,
-                Password = AuthenticationHelper.GetAccessToken(null),
+                Password = await authenticationPlugin.GetAuthenticationTokenAsync(),
                 SslMode = MySqlSslMode.Required,
                 DefaultAuthenticationPlugin = "mysql_clear_password",
                 ConnectionTimeout = 120
@@ -111,12 +112,20 @@ namespace AzureDb.Passwordless.MysqlTests
         }
 
         [TestMethod]
-        public void TestEntityFrameworkAad()
+        public async Task FeedData()
+        {
+            Assert.IsNotNull(serviceProvider);
+            await SeedData.InitializeAsync(serviceProvider);
+        }
+
+        [TestMethod]
+        public async Task TestEntityFrameworkAad()
         {
             Assert.IsNotNull(serviceProvider);
             var contextFactory = serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
-            using var context = contextFactory.CreateDbContext();
-            var result = context.Checklists?.ToList();
+            using var context = await contextFactory.CreateDbContextAsync();
+            Assert.IsNotNull(context.Checklists);
+            var result = await context.Checklists.ToListAsync();
             Assert.IsNotNull(result);
 
         }

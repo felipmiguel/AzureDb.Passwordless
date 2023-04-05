@@ -34,34 +34,34 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
 
 
         [TestMethod]
-        public void TestConnectionPasswordProvider()
+        public async Task TestConnectionPasswordProvider()
         {
             AzureIdentityMysqlPasswordProvider passwordProvider = new AzureIdentityMysqlPasswordProvider();
             using MySqlConnection connection = new MySqlConnection(GetConnectionString());
             connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
-            connection.Open();
+            await connection.OpenAsync();
             MySqlCommand cmd = new MySqlCommand("SELECT now()", connection);
-            DateTime? serverDate = (DateTime?)cmd.ExecuteScalar();
+            DateTime? serverDate = (DateTime?) await cmd.ExecuteScalarAsync();
             Assert.IsNotNull(serverDate);
         }
 
         [TestMethod]
-        public void CheckServerVersion()
+        public async Task CheckServerVersion()
         {
             AzureIdentityMysqlPasswordProvider passwordProvider = new AzureIdentityMysqlPasswordProvider();
             using MySqlConnection connection = new MySqlConnection(GetConnectionString());
             connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
-            connection.Open();
+            await connection.OpenAsync();
             ServerVersion version = ServerVersion.Parse(connection.ServerVersion);
             Assert.AreEqual(5, version.Version.Major);
             Assert.AreEqual(7, version.Version.Minor);            
         }
 
         [TestMethod]
-        public void FeedData()
+        public async Task FeedData()
         {
             Assert.IsNotNull(serviceProvider);
-            SeedData.Initialize(serviceProvider);
+            await SeedData.InitializeAsync(serviceProvider);
         }
 
         private static string? GetConnectionString()

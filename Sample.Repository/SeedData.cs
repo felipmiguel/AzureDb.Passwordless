@@ -9,10 +9,10 @@ namespace Sample.Repository
 {
     public static class SeedData
     {
-        public static void Initialize(IServiceProvider serviceProvider)
+        public static async Task InitializeAsync(IServiceProvider serviceProvider)
         {
             IDbContextFactory<ChecklistContext> contextFactory= serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
-            using (var context = contextFactory.CreateDbContext())
+            using (var context = await contextFactory.CreateDbContextAsync())
             {
                 if (context == null || context.Checklists == null)
                 {
@@ -20,12 +20,12 @@ namespace Sample.Repository
                 }
 
                 // Look for any checklist.
-                if (context.Checklists.Any())
+                if (await context.Checklists.AnyAsync())
                 {
                     return;   // DB has been seeded
                 }
 
-                context.Checklists.AddRange(
+                await context.Checklists.AddRangeAsync(
                     new Checklist
                     {
                         Name = "Checklist 1",
@@ -53,7 +53,7 @@ namespace Sample.Repository
                         }
                     }
                 );
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
     }

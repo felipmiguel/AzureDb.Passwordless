@@ -49,17 +49,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
         }
 
         [TestMethod]
-        public void TestCaching()
-        {
-            DefaultAzureCredential cred = new DefaultAzureCredential();
-            var hc1 = cred.GetHashCode();
-            DefaultAzureCredential cred2 = new DefaultAzureCredential();
-            var hc2 = cred2.GetHashCode();
-            Assert.AreNotEqual(hc1, hc2);
-        }
-
-        [TestMethod]
-        public void TestConnectionPasswordProvider()
+        public async Task TestConnectionPasswordProviderExplicit()
         {
             AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConnectionString());
@@ -67,15 +57,29 @@ namespace AzureDb.Passwordless.PostgresqlTests
                 .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
                 .Build();
             using NpgsqlCommand cmd = dataSource.CreateCommand("SELECT now()");
-            DateTime? serverDate = (DateTime?)cmd.ExecuteScalar();
+            DateTime? serverDate = (DateTime?)await cmd.ExecuteScalarAsync();
             Assert.IsNotNull(serverDate);
         }
 
         [TestMethod]
-        public void FeedData()
+        public async Task TestConnectionAadAuthentication()
+        {
+            NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConnectionString());
+            NpgsqlDataSource dataSource = dataSourceBuilder
+                .UseAadAuthentication()
+                .Build();
+            using NpgsqlCommand cmd = dataSource.CreateCommand("SELECT now()");
+            DateTime? serverDate = (DateTime?) await cmd.ExecuteScalarAsync();
+            Assert.IsNotNull(serverDate);
+        }
+
+
+
+        [TestMethod]
+        public async Task FeedData()
         {
             Assert.IsNotNull(serviceProvider);
-            SeedData.Initialize(serviceProvider);
+            await SeedData.InitializeAsync(serviceProvider);
         }
 
         [TestMethod]

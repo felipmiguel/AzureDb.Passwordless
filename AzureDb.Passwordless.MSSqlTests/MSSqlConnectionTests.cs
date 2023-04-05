@@ -41,7 +41,7 @@ namespace AzureDb.Passwordless.MSSqlTests
             using SqlConnection connection = new SqlConnection(connectionString);
             await connection.OpenAsync();
             SqlCommand cmd = new SqlCommand("SELECT GETDATE()", connection);
-            DateTime? serverDate = (DateTime?)cmd.ExecuteScalar();
+            DateTime? serverDate = (DateTime?) await cmd.ExecuteScalarAsync();
             Assert.IsNotNull(serverDate);
         }
 
@@ -58,7 +58,7 @@ namespace AzureDb.Passwordless.MSSqlTests
             connection.AccessToken = accessToken.Token;
             await connection.OpenAsync();
             SqlCommand cmd = new SqlCommand("SELECT GETDATE()", connection);
-            DateTime? serverDate = (DateTime?)cmd.ExecuteScalar();
+            DateTime? serverDate = (DateTime?) await cmd.ExecuteScalarAsync();
             Assert.IsNotNull(serverDate);
         }
 
@@ -92,7 +92,7 @@ namespace AzureDb.Passwordless.MSSqlTests
             using SqlConnection connection = new SqlConnection(builder.ConnectionString);
             await connection.OpenAsync();
             SqlCommand cmd = new SqlCommand("SELECT GETDATE()", connection);
-            DateTime? serverDate = (DateTime?)cmd.ExecuteScalar();
+            DateTime? serverDate = (DateTime?)await cmd.ExecuteScalarAsync();
             Assert.IsNotNull(serverDate);
         }
     }
