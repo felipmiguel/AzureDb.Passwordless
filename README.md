@@ -120,14 +120,14 @@ Here is an example using Postgresql:
 
 ```csharp
 NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(GetConnectionString());
-            NpgsqlDataSource dataSource = dataSourceBuilder
-                .UsePeriodicPasswordProvider(async (settings, cancellationToken) =>
-                {
-                    var azureCredential = new DefaultAzureCredential();
-                    AccessToken token = await azureCredential.GetTokenAsync(new TokenRequestContext(new string[] { "https://ossrdbms-aad.database.windows.net/.default" }));
-                    return token.Token;
-                }, TimeSpan.FromMinutes(55), TimeSpan.FromMilliseconds(100))
-                .Build();
+NpgsqlDataSource dataSource = dataSourceBuilder
+                 .UsePeriodicPasswordProvider(async (settings, cancellationToken) =>
+                 {
+                     var azureCredential = new DefaultAzureCredential();
+                     AccessToken token = await azureCredential.GetTokenAsync(new TokenRequestContext(new string[] { "https://ossrdbms-aad.database.windows.net/.default" }));
+                     return token.Token;
+                 }, TimeSpan.FromMinutes(55), TimeSpan.FromMilliseconds(100))
+                 .Build();
 using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
 ```
 
@@ -210,30 +210,30 @@ DbContext factories:
 
 ```csharp
 AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
-            NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("PSQL CONNECTION STRING");
-            NpgsqlDataSource dataSource = dataSourceBuilder
-                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
-                            .Build();
-            ServiceCollection services = new ServiceCollection();
-            services.AddDbContextFactory<ChecklistContext>(options =>
-            {
-                options.UseNpgsql(dataSource);
-            });
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("PSQL CONNECTION STRING");
+NpgsqlDataSource dataSource = dataSourceBuilder
+                .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                .Build();
+ServiceCollection services = new ServiceCollection();
+services.AddDbContextFactory<ChecklistContext>(options =>
+{
+    options.UseNpgsql(dataSource);
+});
 ```
 
 DbContext:
 
 ```csharp
 AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
-            NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("PSQL CONNECTION STRING");
-            NpgsqlDataSource dataSource = dataSourceBuilder
-                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
-                            .Build();
-            ServiceCollection services = new ServiceCollection();
-            services.AddDbContext<ChecklistContext>(options =>
-            {
-                options.UseNpgsql(dataSource);
-            });
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("PSQL CONNECTION STRING");
+NpgsqlDataSource dataSource = dataSourceBuilder
+                .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                .Build();
+ServiceCollection services = new ServiceCollection();
+services.AddDbContext<ChecklistContext>(options =>
+{
+    options.UseNpgsql(dataSource);
+});
 ```
 
 #### DbContextOptionsBuilderOptions.ProvidePasswordCallback

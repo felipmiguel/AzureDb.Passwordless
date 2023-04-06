@@ -10,7 +10,7 @@ namespace AzureDb.Passwordless.CoreTests
         [TestMethod]
         public async Task CachingCreds()
         {
-            AzureIdentityBaseAuthenticationPlugin authenticationPlugin = new AzureIdentityBaseAuthenticationPlugin();
+            AzureIdentityBaseAuthenticationProvider authenticationPlugin = new AzureIdentityBaseAuthenticationProvider();
             string[] tokens = await Task.WhenAll(authenticationPlugin.GetAuthenticationTokenAsync().AsTask(), authenticationPlugin.GetAuthenticationTokenAsync().AsTask());
             Assert.AreEqual(tokens[0], tokens[1]);
             string accessToken1 = await authenticationPlugin.GetAuthenticationTokenAsync();

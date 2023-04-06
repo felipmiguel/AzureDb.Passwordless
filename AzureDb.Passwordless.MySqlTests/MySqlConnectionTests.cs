@@ -97,7 +97,7 @@ namespace AzureDb.Passwordless.MysqlTests
         public async Task TokenAsPassword()
         {
             Assert.IsNotNull(configuration);
-            AzureIdentityBaseAuthenticationPlugin authenticationPlugin = new AzureIdentityBaseAuthenticationPlugin();
+            AzureIdentityBaseAuthenticationProvider authenticationPlugin = new AzureIdentityBaseAuthenticationProvider();
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder
             {
                 Server = configuration.GetSection("mySqlInfo:host").Value,
