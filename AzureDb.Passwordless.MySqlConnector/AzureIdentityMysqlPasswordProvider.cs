@@ -2,6 +2,7 @@
 using AzureDb.Passwordless.Core;
 using MySqlConnector;
 using MySqlConnector.Authentication;
+using System.Threading.Tasks;
 
 namespace AzureDb.Passwordless.MySqlConnector
 {
