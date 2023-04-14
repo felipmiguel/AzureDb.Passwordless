@@ -11,7 +11,7 @@ namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
     /// </summary>
     internal class AzureIdentityMysqlPasswordProviderInterceptor : DbConnectionInterceptor
     {
-        private readonly AzureIdentityMysqlPasswordProvider _passwordProvider;
+        private readonly AzureIdentityMySqlPasswordProvider _passwordProvider;
 
         /// <summary>
         /// Constructor that allow specify the client id of the managed identity to be used. If no clientId is provided it will use DefaultAzureCredential with default behavior.
@@ -21,12 +21,14 @@ namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
         {
             if (clientId == null) 
             {
-                _passwordProvider = new AzureIdentityMysqlPasswordProvider();
+                _passwordProvider = new AzureIdentityMySqlPasswordProvider();
             }
             else
             {
-                _passwordProvider = new AzureIdentityMysqlPasswordProvider(clientId);
+                _passwordProvider = new AzureIdentityMySqlPasswordProvider(clientId);
             }
+            // force initialization
+            _passwordProvider.GetAuthenticationToken();
         }
 
         /// <summary>
@@ -35,7 +37,9 @@ namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
         /// <param name="credential">TokenCredential to be used to retrieve AAD access tokens</param>
         public AzureIdentityMysqlPasswordProviderInterceptor(TokenCredential credential)
         {
-            _passwordProvider = new AzureIdentityMysqlPasswordProvider(credential);
+            _passwordProvider = new AzureIdentityMySqlPasswordProvider(credential);
+            // force initialization
+            _passwordProvider.GetAuthenticationToken();
         }
 
         /// <summary>

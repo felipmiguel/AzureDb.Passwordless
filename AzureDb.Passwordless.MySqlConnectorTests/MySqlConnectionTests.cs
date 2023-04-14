@@ -1,4 +1,6 @@
+using Azure.Identity;
 using AzureDb.Passwordless.MySqlConnector;
+using AzureDb.Passwordless.MySqlConnectorTests.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,73 +14,58 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
     public class MySqlConnectionTests
     {
         static IConfiguration? configuration;
-        static IServiceProvider? serviceProvider;
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
             configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
-
-            var services = new ServiceCollection();
-            services.AddDbContextFactory<ChecklistContext>(options =>
-            {
-                ServerVersion serverVersion = ServerVersion.Parse("5.7", Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql);
-                options
-                    .UseMySql(GetConnectionString(), serverVersion)
-                    .UseAadAuthentication();
-            });
-
-            serviceProvider = services.BuildServiceProvider();
         }
 
-
-        [TestMethod]
-        public async Task TestConnectionPasswordProvider()
+        private static async Task ValidateConnectionAsync(MySqlConnection connection)
         {
-            AzureIdentityMysqlPasswordProvider passwordProvider = new AzureIdentityMysqlPasswordProvider();
-            using MySqlConnection connection = new MySqlConnection(GetConnectionString());
-            connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
-            await connection.OpenAsync();
-            MySqlCommand cmd = new MySqlCommand("SELECT now()", connection);
-            DateTime? serverDate = (DateTime?) await cmd.ExecuteScalarAsync();
-            Assert.IsNotNull(serverDate);
-        }
-
-        [TestMethod]
-        public async Task CheckServerVersion()
-        {
-            AzureIdentityMysqlPasswordProvider passwordProvider = new AzureIdentityMysqlPasswordProvider();
-            using MySqlConnection connection = new MySqlConnection(GetConnectionString());
-            connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
+            Assert.IsNotNull(connection);
             await connection.OpenAsync();
             ServerVersion version = ServerVersion.Parse(connection.ServerVersion);
             Assert.AreEqual(5, version.Version.Major);
-            Assert.AreEqual(7, version.Version.Minor);            
+            Assert.AreEqual(7, version.Version.Minor);
+            MySqlCommand cmd = new MySqlCommand("SELECT now()", connection);
+            DateTime? serverDate = (DateTime?)await cmd.ExecuteScalarAsync();
+            Assert.IsNotNull(serverDate);
+        }
+
+
+        [TestMethod]
+        public async Task ProviderDefaultConstructor()
+        {
+            Assert.IsNotNull(configuration);
+            AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider();
+            using MySqlConnection connection = new MySqlConnection(configuration.GetConnectionString());
+            connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
+            await ValidateConnectionAsync(connection);            
         }
 
         [TestMethod]
-        public async Task FeedData()
-        {
-            Assert.IsNotNull(serviceProvider);
-            await SeedData.InitializeAsync(serviceProvider);
-        }
-
-        private static string? GetConnectionString()
+        public async Task ProviderWithManagedIdentity()
         {
             Assert.IsNotNull(configuration);
-            MySqlConnectionStringBuilder connStringBuilder = new MySqlConnectionStringBuilder
-            {
-                Server = configuration.GetSection("mySqlInfo:host").Value,
-                Database = configuration.GetSection("mySqlInfo:database").Value,
-                UserID = configuration.GetSection("mySqlInfo:user").Value,
-                Port = 3306,
-                SslMode = MySqlSslMode.Required,
-                AllowPublicKeyRetrieval = true,
-                ConnectionTimeout = 30,
+            string? managedIdentityClientId = configuration.GetManagedIdentityClientId();
+            Assert.IsNotNull(managedIdentityClientId);
+            AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider(managedIdentityClientId);
+            using MySqlConnection connection = new MySqlConnection(configuration.GetConnectionString());
+            connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
+            await ValidateConnectionAsync(connection);
+        }
 
-            };
-            return connStringBuilder.ConnectionString;
+        [TestMethod]
+        public async Task ProviderWithTokenCredential()
+        {
+            Assert.IsNotNull(configuration);
+            AzureCliCredential credential = new AzureCliCredential();
+            AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider(credential);
+            using MySqlConnection connection = new MySqlConnection(configuration.GetConnectionString());
+            connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
+            await ValidateConnectionAsync(connection);
         }
     }
 }
