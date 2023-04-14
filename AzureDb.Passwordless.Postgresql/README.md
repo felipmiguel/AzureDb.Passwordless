@@ -100,7 +100,7 @@ The following command creates a service connection from the app service to the d
 * Create a configuration setting with the connection string that can be used to connect to the database
 
 ```bash
-az webapp connection create postgres \
+az webapp connection create postgres-flexible \
     --resource-group ${RESOURCE_GROUP} \
     --name ${APPSERVICE} \
     --tg ${RESOURCE_GROUP} \
@@ -109,6 +109,8 @@ az webapp connection create postgres \
     --client-type dotnet \
     --system-identity
 ```
+
+> [!NOTE] It can take few minutes to complete
 
 ## AzureIdentityPostgresqlPasswordProvider
 
