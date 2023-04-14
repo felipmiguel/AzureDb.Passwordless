@@ -4,7 +4,7 @@ This library provides some extension methods to facilitate the usage of Azure AD
 
 ## DbContextOptionsBuilder extensions
 
-DbContextOptionsBuilder is used to configure the Entity Framework context. [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/7.0.3) library provides the `UseAadAuthentication` overloaded method to configure PostgreSQL connections.
+DbContextOptionsBuilder is used to configure the Entity Framework context. This library provides the `UseAadAuthentication` overloaded method to configure PostgreSQL connections.
 
 This library uses AzureDb.Passwordless.Postgresql library to get an Azure AD access token that can be used to authenticate to Postgresql. It allows the following options:
 * Using [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
