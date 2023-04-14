@@ -9,52 +9,55 @@ namespace Sample.Repository
 {
     public static class SeedData
     {
-        public static void Initialize(IServiceProvider serviceProvider)
+        public static async Task InitializeAsync(IServiceProvider serviceProvider)
         {
-            IDbContextFactory<ChecklistContext> contextFactory= serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
-            using (var context = contextFactory.CreateDbContext())
+            IDbContextFactory<ChecklistContext> contextFactory = serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
+            using var context = await contextFactory.CreateDbContextAsync();
+            await InitializeAsync(context);
+        }
+
+        public static async Task InitializeAsync(ChecklistContext context)
+        {
+            if (context == null || context.Checklists == null)
             {
-                if (context == null || context.Checklists == null)
-                {
-                    throw new ArgumentNullException("Null Checklists");
-                }
-
-                // Look for any checklist.
-                if (context.Checklists.Any())
-                {
-                    return;   // DB has been seeded
-                }
-
-                context.Checklists.AddRange(
-                    new Checklist
-                    {
-                        Name = "Checklist 1",
-                        Date = DateTime.UtcNow,
-                        Description = "Checklist 1 Description",
-                        CheckItems = new List<CheckItem>
-                        {
-                            new CheckItem { Description = "CheckItem 1"},
-                            new CheckItem { Description = "CheckItem 3"},
-                            new CheckItem { Description = "CheckItem 4"},
-                            new CheckItem { Description = "CheckItem 5"},
-                        }
-                    },
-                    new Checklist
-                    {
-                        Name = "Checklist 2",
-                        Date = DateTime.UtcNow,
-                        Description = "Checklist 2 Description",
-                        CheckItems = new List<CheckItem>
-                        {
-                            new CheckItem { Description = "CheckItem 1"},
-                            new CheckItem { Description = "CheckItem 3"},
-                            new CheckItem { Description = "CheckItem 4"},
-                            new CheckItem { Description = "CheckItem 5"},
-                        }
-                    }
-                );
-                context.SaveChanges();
+                throw new ArgumentNullException("Null Checklists");
             }
+
+            // Look for any checklist.
+            if (await context.Checklists.AnyAsync())
+            {
+                return;   // DB has been seeded
+            }
+
+            await context.Checklists.AddRangeAsync(
+                new Checklist
+                {
+                    Name = "Checklist 1",
+                    Date = DateTime.UtcNow,
+                    Description = "Checklist 1 Description",
+                    CheckItems = new List<CheckItem>
+                    {
+                            new CheckItem { Description = "CheckItem 1"},
+                            new CheckItem { Description = "CheckItem 3"},
+                            new CheckItem { Description = "CheckItem 4"},
+                            new CheckItem { Description = "CheckItem 5"},
+                    }
+                },
+                new Checklist
+                {
+                    Name = "Checklist 2",
+                    Date = DateTime.UtcNow,
+                    Description = "Checklist 2 Description",
+                    CheckItems = new List<CheckItem>
+                    {
+                            new CheckItem { Description = "CheckItem 1"},
+                            new CheckItem { Description = "CheckItem 3"},
+                            new CheckItem { Description = "CheckItem 4"},
+                            new CheckItem { Description = "CheckItem 5"},
+                    }
+                }
+            );
+            await context.SaveChangesAsync();
         }
     }
 }

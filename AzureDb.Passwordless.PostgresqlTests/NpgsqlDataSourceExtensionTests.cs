@@ -1,20 +1,21 @@
 ﻿using Azure.Identity;
-using AzureDb.Passwordless.Postgresql;
 using AzureDb.Passwordless.PostgresqlTests.Utils;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Sample.Repository;
-using System.Runtime.CompilerServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AzureDb.Passwordless.PostgresqlTests
 {
     [TestClass]
-    public class PostgresConnectionTests
+    public class NpgsqlDataSourceExtensionTests
     {
         private static IConfiguration? configuration;
-
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
@@ -34,44 +35,41 @@ namespace AzureDb.Passwordless.PostgresqlTests
         }
 
         [TestMethod]
-        public async Task NoExtensionDefaultConstructor()
+        public async Task DataSourceBuilderExtensionDefault()
         {
             Assert.IsNotNull(configuration);
-            AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
-            // Connection string does not contain password
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
-                            .Build();
+                .UseAadAuthentication()
+                .Build();
             await ValidateDataSourceAsync(dataSource);
         }
 
         [TestCategory("server-only")]
         [TestMethod]
-        public async Task NoExtensionConstructorWithManagedIdentity()
+        public async Task DataSourceBuilderExtensionWithManagedIdentity()
         {
             Assert.IsNotNull(configuration);
             string? managedIdentityClientId = configuration.GetManagedIdentityClientId();
             Assert.IsNotNull(managedIdentityClientId);
-            AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider(managedIdentityClientId);
+
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
-                            .Build();
+                .UseAadAuthentication(managedIdentityClientId)
+                .Build();
             await ValidateDataSourceAsync(dataSource);
         }
 
         [TestCategory("local-only")]
         [TestMethod]
-        public async Task NoExtensionConstructorWithTokenCredential()
+        public async Task DataSourceBuilderExtensionWithTokenCredential()
         {
             Assert.IsNotNull(configuration);
-            AzureCliCredential credential = new AzureCliCredential();
-            AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider(credential);
+            AzureCliCredential tokenCredential = new AzureCliCredential();
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
-                            .Build();
+                .UseAadAuthentication(tokenCredential)
+                .Build();
             await ValidateDataSourceAsync(dataSource);
         }
     }
