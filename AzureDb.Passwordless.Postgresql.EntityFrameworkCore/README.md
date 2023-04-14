@@ -1,0 +1,56 @@
+# Authentication helper library for Azure Database for Postgresql and Entity Framework Core
+
+This library provides some extension methods to facilitate the usage of Azure AD authentication when connecting to Azure Database for Postgresql.
+
+## DbContextOptionsBuilder extensions
+
+DbContextOptionsBuilder is used to configure the Entity Framework context. [Npgsql.EntityFrameworkCore.PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL/7.0.3) library provides the `UseAadAuthentication` overloaded method to configure PostgreSQL connections.
+
+This library uses AzureDb.Passwordless.Postgresql library to get an Azure AD access token that can be used to authenticate to Postgresql. It allows the following options:
+* Using [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
+* Specify an Azure Managed Identity. It uses DefaultAzureCredential, but tries to use a specific Managed Identity if the application hosting has more than one managed identity assigned.
+* Specify a [TokenCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
+
+### Sample Default authentication
+
+It uses _UseAadAuthentication_ without parameters, which uses [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) to get a token.
+
+```csharp
+// configuring services
+var services = new ServiceCollection();
+services.AddDbContextFactory<SampleContext>(options =>
+{
+    options.UseNpgsql("POSTGRESQL CONNECTION STRING",
+        npgsqlOptions => npgsqlOptions.UseAadAuthentication()); // Usage of this library
+});
+```
+
+### Sample with specific Managed Identity
+
+It uses _UseAadAuthentication_ passing the client id of the prefered managed identity in case the hosting service has more than one assigned. It uses [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) passing the preferred managed identity.
+
+```csharp
+// configuring services
+var services = new ServiceCollection();
+string managedIdentityClientId = "00000000-0000-0000-000000000000";
+services.AddDbContextFactory<SampleContext>(options =>
+{
+    options.UseNpgsql("POSTGRESQL CONNECTION STRING",
+        npgsqlOptions => npgsqlOptions.UseAadAuthentication(managedIdentityClientId)); // Usage of this library
+});
+```
+
+### Sample using TokenCredential
+
+It uses _UseAadAuthentication_ passing a TokenCredential provided by the caller. For simplicity, this sample use AzureCliCredential
+
+```csharp
+// configuring services
+AzureCliCredential tokenCredential = new AzureCliCredential();
+var services = new ServiceCollection();
+services.AddDbContextFactory<ChecklistContext>(options =>
+{
+    options.UseNpgsql("POSTGRESQL CONNECTION STRING",
+        options => options.UseAadAuthentication(tokenCredential)); // Usage of this library
+});
+```

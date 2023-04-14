@@ -45,7 +45,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
             services.AddDbContextFactory<ChecklistContext>(options =>
             {
                 options.UseNpgsql(configuration.GetConnectionString(),
-                    options => options.UseAadAuthentication());
+                    npgsqlOptions => npgsqlOptions.UseAadAuthentication());
             });
 
             var serviceProvider = services.BuildServiceProvider();
