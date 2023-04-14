@@ -310,6 +310,8 @@ builder.Services.AddDbContext<MyContext>(options =>
 });
 ```
 
+There are more usage examples in project [AzureDb.Passwordless.PostgresqlTests](./AzureDb.Passwordless.PostgresqlTests/)
+
 ## MySql
 
 ### MySql.Data
@@ -389,6 +391,8 @@ And for MySql Entity Framework Core provider:
 dotnet add <PROJECT> package MySql.EntityFrameworkCore --version 6.0.4
 ```
 
+There are more usage examples in project [AzureDb.Passwordless.MySqlTests](./AzureDb.Passwordless.MySqlTests/)
+
 ### MySqlConnector and Pomelo.EntityFrameworkCore.MySql
 
 [MySqlConnector](https://mysqlconnector.net/) is a popular and alternative driver for MySql and .Net. It is the driver used by [Pomelo](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql), a popular implementation of Entity Framework Core provider for MySql.
@@ -461,6 +465,8 @@ namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
 }
 ```
 
+There are more usage examples in project [AzureDb.Passwordless.MySqlConnectorTests](./AzureDb.Passwordless.MySqlConnectorTests/)
+
 ## Nuget packages
 
 This repository contains the following Nuget packages:
@@ -482,6 +488,66 @@ dotnet nuget add source --username [YOUR GITHUB USERID] --password [YOUR PAT] --
 ```
 
 You PAT should include the following scope `_read:packages_`.
+
+## Test projects
+
+* [AzureDb.Passwordless.PostgresqlTests](./AzureDb.Passwordless.PostgresqlTests/)
+* [AzureDb.Passwordless.MySqlConnectorTests](./AzureDb.Passwordless.MySqlConnectorTests/)
+* [AzureDb.Passwordless.MySqlTests](./AzureDb.Passwordless.MySqlTests/)
+
+### Entity Framework Core
+
+There is a sample Entity Framework Core project that can be used with all tests. It is located in [Sample.Repository](./Sample.Repository/). 
+To use it in your project:
+* Reference the project
+* Add a class implementing `IDesignTimeDbContextFactory<ChecklistContext>`
+
+Here an example for Postgresql:
+
+```csharp
+public class ChecklistContextFactory : IDesignTimeDbContextFactory<ChecklistContext>
+{
+    public ChecklistContext CreateDbContext(string[] args)
+    {
+        Console.WriteLine("args {0}", string.Join(",", args));
+        ConfigurationBuilder configBuilder = new ConfigurationBuilder();
+        configBuilder
+            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsettings.Deployment.json");
+        IConfigurationRoot config = configBuilder.Build();
+        ServiceCollection services = new ServiceCollection();
+        services.AddDbContext<ChecklistContext>(options =>
+        {
+            options.UseNpgsql(GetPGConnString(config), optionsBuilder =>
+            optionsBuilder
+                .MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)
+                .UseAadAuthentication());
+        });
+        var serviceProvider = services.BuildServiceProvider();
+        return serviceProvider.GetRequiredService<ChecklistContext>();
+    }
+    private string GetPGConnString(IConfiguration configuration)
+    {
+        return configuration.GetConnectionString("AZURE_POSTGRESQL_CONNECTIONSTRING");
+    }
+}
+```
+
+Then execute the following dotnet commands to initialize the database.
+
+```bash
+dotnet build
+# Get connections string
+CONNSTRING="YOUR CONNECTION STRING"
+ASPNETCORE_ENVIRONMENT=Deployment
+# replace AZURE_POSTGRESQL_CONNECTIONSTRING by the connection string referenced in your code
+echo "{\"ConnectionStrings\":{\"AZURE_POSTGRESQL_CONNECTIONSTRING\":\"${CONNSTRING}\"}}" >appsettings.Deployment.json
+dotnet tool install --global dotnet-ef
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+> [!NOTE] It is necessary to install entity framework tool `dotnet tool install --global dotnet-ef`
 
 ## Sample project
 
