@@ -112,97 +112,37 @@ az webapp connection create postgres-flexible \
 
 > [!NOTE] It can take few minutes to complete
 
-## AzureIdentityPostgresqlPasswordProvider
-
-[AzureIdentityPostgresqlPasswordProvider](./AzureIdentityPostgresqlPasswordProvider.cs) exposes _PeriodicPasswordProvider_ method that can be used as provider callback of [NpgsqlDataSourceBuilder.UsePeriodicPasswordProvider](https://www.npgsql.org/doc/api/Npgsql.NpgsqlDataSourceBuilder.html).
-
-AzureIdentityPostgresqlPasswordProvider can be configured in different ways to retrieve the access token.
-
-* Using [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
-* Specify an Azure Managed Identity. It uses DefaultAzureCredential, but tries to use a specific Managed Identity if the application hosting has more than one managed identity assigned.
-* Specify a [TokenCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
-
-### Sample Default AzureIdentityPostgresqlPasswordProvider
-
-This sample uses the default _AzureIdentityPostgresqlPasswordProvider_ constructor, that uses DefaultAzureCredential to obtain an access token. If you execute this sample in your local development environment it can take the credentials from environment variables, your IDE (Visual Studio, Visual Studio Code, IntelliJ) or Azure cli, see [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for more details.
-
-```csharp
-AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
-// Connection string does not contain password
-NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
-NpgsqlDataSource dataSource = dataSourceBuilder
-                .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
-                .Build();
-using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
-```
-
-### Sample AzureIdentityPostgresqlPasswordProvider using specific Managed Identity
-
-This sample uses the _AzureIdentityPostgresqlPasswordProvider_ constructor with a managed identity. It is necessary to pass the managed identity client id, not the object id.
-
-```csharp
-string managedIdentityClientId = "00000000-0000-0000-0000-000000000000";
-AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider(managedIdentityClientId);
-// Connection string does not contain password
-NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
-NpgsqlDataSource dataSource = dataSourceBuilder
-                .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
-                .Build();
-using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
-```
-
-You can use the following command to retrieve the managed identity client id:
-
-```bash
-az identity show --resource-group ${RESOURCE_GROUP} --name ${MSI_NAME} --query clientId -o tsv
-```
-
-### Sample AzureIdentityPostgresqlPasswordProvider using TokenCredential
-
-This sample uses the _AzureIdentityPostgresqlPasswordProvider_ constructor with a TokenCredential. For simplicity, this sample uses Azure cli credential
-
-```csharp
-AzureCliCredential credential = new AzureCliCredential();
-AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider(credential);
-NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
-NpgsqlDataSource dataSource = dataSourceBuilder
-                 .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
-                 .Build();
-using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
-```
-
 ## NpgsqlDataSourceBuilder extension methods
 
-Instead of creating the AzureIdentityPostgresqlPasswordProvider to be passed to _NpgsqlDataSourceBuilder.UsePeriodicPasswordProvider_ method, there are some extension methods that can be used to configure the _NpgsqlDataSourceBuilder_, simplifying the code. It provides some overloads of method `UseAadAuthentication`
+Instead of creating the TokenCredentialNpgsqlPasswordProvider to be passed to _NpgsqlDataSourceBuilder.UsePeriodicPasswordProvider_ method, there are some extension methods that can be used to configure the _NpgsqlDataSourceBuilder_, simplifying the code. It provides some overloads of method `UseAzureADAuthentication`
 
-It provides the following configuration options:
+It can be used with different implementations of TokenCredential, for example:
 
 * Using [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
 * Specify an Azure Managed Identity. It uses DefaultAzureCredential, but tries to use a specific Managed Identity if the application hosting has more than one managed identity assigned.
-* Specify a [TokenCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
-* Specify AzureIdentityPostgresqlPasswordProvider.
+* Specify a [AzureCliCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
 
-### Sample NpgsqlDataSourceBuilder UseAadAuthentication
+### Sample NpgsqlDataSourceBuilder UseAzureADAuthentication
 
-This is the simpler solution, as it only requires to invoke `UseAadAuthentication` extension method for NpgsqlDataSourceBuilder
+This is the simpler solution, as it only requires to invoke `UseAzureADAuthentication` extension method for NpgsqlDataSourceBuilder passing a DefaultAzureCredential
 
 ```csharp
 NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
 NpgsqlDataSource dataSource = dataSourceBuilder
-                .UseAadAuthentication()
+                .UseAzureADAuthentication(new DefaultAzureCredential())
                 .Build();
 using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
 ```
 
-### Sample NpgsqlDataSourceBuilder UseAadAuthentication with Managed Identity
+### Sample NpgsqlDataSourceBuilder UseAzureADAuthentication with Managed Identity
 
-This sample uses UseAadAuthentication passing a Managed Identity client id.
+This sample uses UseAzureADAuthentication passing a DefaultAzureCredential with a preferred Managed Identity client id.
 
 ```csharp
 string managedIdentityClientId = "00000000-0000-0000-0000-000000000000";
 NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
 NpgsqlDataSource dataSource = dataSourceBuilder
-                .UseAadAuthentication(managedIdentityClientId)
+                .UseAzureADAuthentication(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = managedIdentityClientId }))
                 .Build();
 using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
 ```
@@ -213,7 +153,7 @@ You can use the following command to retrieve the managed identity client id:
 az identity show --resource-group ${RESOURCE_GROUP} --name ${MSI_NAME} --query clientId -o tsv
 ```
 
-### Sample NpgsqlDataSourceBuilder UseAadAuthentication with TokenCredential
+### Sample NpgsqlDataSourceBuilder UseAzureADAuthentication with AzureCliCredential
 
 In this sample the caller provides a TokenCredential that will be used to retrieve the access token. For simplicity, this sample uses azure cli credential.
 
@@ -221,8 +161,69 @@ In this sample the caller provides a TokenCredential that will be used to retrie
 AzureCliCredential tokenCredential = new AzureCliCredential();
 NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
 NpgsqlDataSource dataSource = dataSourceBuilder
-                .UseAadAuthentication(tokenCredential)
+                .UseAzureADAuthentication(tokenCredential)
                 .Build();
 await ValidateDataSourceAsync(dataSource);
 ```
+
+## TokenCredentialNpgsqlPasswordProvider
+
+[TokenCredentialNpgsqlPasswordProvider](./TokenCredentialNpgsqlPasswordProvider.cs) exposes _PasswordProvider_ property that can be used as provider callback of [NpgsqlDataSourceBuilder.UsePeriodicPasswordProvider](https://www.npgsql.org/doc/api/Npgsql.NpgsqlDataSourceBuilder.html).
+
+TokenCredentialNpgsqlPasswordProvider requires a TokenCredential. Here some samples of usage of TokenCredential.
+
+* Using [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
+* Specify an Azure Managed Identity. Try to use a specific Managed Identity if the application hosting has more than one managed identity assigned.
+* Specify a [TokenCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
+
+### Sample TokenCredentialNpgsqlPasswordProvider with DefaultAzureCredential
+
+If you execute this sample in your local development environment it can take the credentials from environment variables, your IDE (Visual Studio, Visual Studio Code, IntelliJ) or Azure cli, see [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for more details.
+
+```csharp
+TokenCredentialNpgsqlPasswordProvider passwordProvider = new TokenCredentialNpgsqlPasswordProvider(new DefaultAzureCredential());
+// Connection string does not contain password
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
+NpgsqlDataSource dataSource = dataSourceBuilder
+                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                            .Build();
+using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
+```
+
+### Sample TokenCredentialNpgsqlPasswordProvider using specific Managed Identity
+
+This sample uses the _TokenCredentialNpgsqlPasswordProvider_ using a DefaultAzureCredential with a managed identity. It is necessary to pass the managed identity client id, not the object id.
+
+```csharp
+string managedIdentityClientId = "00000000-0000-0000-0000-000000000000";
+TokenCredentialNpgsqlPasswordProvider passwordProvider = new TokenCredentialNpgsqlPasswordProvider(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = managedIdentityClientId }));
+// Connection string does not contain password
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
+NpgsqlDataSource dataSource = dataSourceBuilder
+                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                            .Build();
+using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
+```
+
+You can use the following command to retrieve the managed identity client id:
+
+```bash
+az identity show --resource-group ${RESOURCE_GROUP} --name ${MSI_NAME} --query clientId -o tsv
+```
+
+### Sample TokenCredentialNpgsqlPasswordProvider using TokenCredential
+
+This sample uses the _TokenCredentialNpgsqlPasswordProvider_ constructor with a TokenCredential. For simplicity, this sample uses Azure cli credential
+
+```csharp
+AzureCliCredential credential = new AzureCliCredential();
+TokenCredentialNpgsqlPasswordProvider passwordProvider = new TokenCredentialNpgsqlPasswordProvider(credential);
+NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder("Server=psql-passwordless.postgres.database.azure.com;Database=sampledb;Port=5432;User Id=myuser@mydomain.onmicrosoft.com;Ssl Mode=Require;");
+NpgsqlDataSource dataSource = dataSourceBuilder
+                 .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                 .Build();
+using NpgsqlConnection connection = await dataSource.OpenConnectionAsync();
+```
+
+
 

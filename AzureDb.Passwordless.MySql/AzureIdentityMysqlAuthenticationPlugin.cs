@@ -22,16 +22,16 @@ namespace AzureDb.Passwordless.MySql
         private const string CLIENTID_PROPERTY_NAME = "azure.clientId";
         public override string PluginName => PLUGIN_NAME;
 
-        private AzureIdentityBaseAuthenticationProvider _aadAuthenticationPlugin;
-        private AzureIdentityBaseAuthenticationProvider AadAuthenticationPlugin
+        private TokenCredentialBaseAuthenticationProvider _aadAuthenticationPlugin;
+        private TokenCredentialBaseAuthenticationProvider AadAuthenticationPlugin
         {
             get
             {
                 if (_aadAuthenticationPlugin == null)
                 {
                     _aadAuthenticationPlugin = string.IsNullOrEmpty(ClientId) 
-                        ? new AzureIdentityBaseAuthenticationProvider() 
-                        : new AzureIdentityBaseAuthenticationProvider(ClientId);
+                        ? new TokenCredentialBaseAuthenticationProvider(new DefaultAzureCredential()) 
+                        : new TokenCredentialBaseAuthenticationProvider(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = ClientId }));
                 }
                 return _aadAuthenticationPlugin;
             }

@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MySql.Data.MySqlClient;
 using Microsoft.EntityFrameworkCore;
 using Sample.Repository;
+using Azure.Identity;
 
 namespace AzureDb.Passwordless.MysqlTests
 {
@@ -34,7 +35,7 @@ namespace AzureDb.Passwordless.MysqlTests
             };
             services.AddDbContextFactory<ChecklistContext>(options =>
             {
-                options.UseMySQL(connectionStringBuilder.ConnectionString, options => options.UseAadAuthentication());
+                options.UseMySQL(connectionStringBuilder.ConnectionString, options => options.UseAzureADAuthentication());
             });
 
             serviceProvider = services.BuildServiceProvider();
@@ -97,7 +98,7 @@ namespace AzureDb.Passwordless.MysqlTests
         public async Task TokenAsPassword()
         {
             Assert.IsNotNull(configuration);
-            AzureIdentityBaseAuthenticationProvider authenticationPlugin = new AzureIdentityBaseAuthenticationProvider();
+            TokenCredentialBaseAuthenticationProvider authenticationPlugin = new TokenCredentialBaseAuthenticationProvider(new DefaultAzureCredential());
             MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder
             {
                 Server = configuration.GetSection("mySqlInfo:host").Value,

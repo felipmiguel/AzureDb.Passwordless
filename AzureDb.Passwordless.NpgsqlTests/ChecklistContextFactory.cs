@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +25,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
                 options.UseNpgsql(GetPGConnString(config), optionsBuilder =>
                 optionsBuilder
                     .MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)
-                    .UseAadAuthentication());
+                    .UseAzureADAuthentication(new DefaultAzureCredential()));
             });
 
             var serviceProvider = services.BuildServiceProvider();

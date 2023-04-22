@@ -36,10 +36,10 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
 
 
         [TestMethod]
-        public async Task ProviderDefaultConstructor()
+        public async Task ProviderDefaultAzureCredential()
         {
             Assert.IsNotNull(configuration);
-            AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider();
+            TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(new DefaultAzureCredential());
             using MySqlConnection connection = new MySqlConnection(configuration.GetConnectionString());
             connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
             await ValidateConnectionAsync(connection);            
@@ -51,7 +51,7 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
             Assert.IsNotNull(configuration);
             string? managedIdentityClientId = configuration.GetManagedIdentityClientId();
             Assert.IsNotNull(managedIdentityClientId);
-            AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider(managedIdentityClientId);
+            TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = managedIdentityClientId }));
             using MySqlConnection connection = new MySqlConnection(configuration.GetConnectionString());
             connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
             await ValidateConnectionAsync(connection);
@@ -62,7 +62,7 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
         {
             Assert.IsNotNull(configuration);
             AzureCliCredential credential = new AzureCliCredential();
-            AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider(credential);
+            TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(credential);
             using MySqlConnection connection = new MySqlConnection(configuration.GetConnectionString());
             connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
             await ValidateConnectionAsync(connection);

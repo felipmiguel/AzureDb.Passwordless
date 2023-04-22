@@ -26,7 +26,7 @@ namespace AzureDb.Passwordless.MysqlTests
                 options.UseMySQL(GetMySqlConnString(config), options =>
                 options
                     .MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)
-                    .UseAadAuthentication());
+                    .UseAzureADAuthentication());
             });
 
             var serviceProvider = services.BuildServiceProvider();

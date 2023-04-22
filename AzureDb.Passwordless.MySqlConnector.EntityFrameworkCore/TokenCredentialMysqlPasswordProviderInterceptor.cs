@@ -9,37 +9,17 @@ namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
     /// <summary>
     /// DBConnectionInterceptor that assigns ProvidePasswordCallback to MySqlConnection just before opening.
     /// </summary>
-    internal class AzureIdentityMysqlPasswordProviderInterceptor : DbConnectionInterceptor
+    internal class TokenCredentialMysqlPasswordProviderInterceptor : DbConnectionInterceptor
     {
-        private readonly AzureIdentityMySqlPasswordProvider _passwordProvider;
-
-        /// <summary>
-        /// Constructor that allow specify the client id of the managed identity to be used. If no clientId is provided it will use DefaultAzureCredential with default behavior.
-        /// </summary>
-        /// <param name="clientId">Optional client id of the managed identity to be used</param>
-        public AzureIdentityMysqlPasswordProviderInterceptor(string? clientId = null)
-        {
-            if (clientId == null) 
-            {
-                _passwordProvider = new AzureIdentityMySqlPasswordProvider();
-            }
-            else
-            {
-                _passwordProvider = new AzureIdentityMySqlPasswordProvider(clientId);
-            }
-            // force initialization
-            _passwordProvider.GetAuthenticationToken();
-        }
+        private readonly TokenCredentialMysqlPasswordProvider _passwordProvider;
 
         /// <summary>
         /// Constructor that allows specify TokenCredential to be used to retrieve AAD access tokens
         /// </summary>
         /// <param name="credential">TokenCredential to be used to retrieve AAD access tokens</param>
-        public AzureIdentityMysqlPasswordProviderInterceptor(TokenCredential credential)
+        public TokenCredentialMysqlPasswordProviderInterceptor(TokenCredential credential)
         {
-            _passwordProvider = new AzureIdentityMySqlPasswordProvider(credential);
-            // force initialization
-            _passwordProvider.GetAuthenticationToken();
+            _passwordProvider = new TokenCredentialMysqlPasswordProvider(credential);
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
             Assert.IsNotNull(configuration);
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                .UseAadAuthentication()
+                .UseAzureADAuthentication(new DefaultAzureCredential())
                 .Build();
             await ValidateDataSourceAsync(dataSource);
         }
@@ -55,7 +55,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
 
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                .UseAadAuthentication(managedIdentityClientId)
+                .UseAzureADAuthentication(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = managedIdentityClientId }))
                 .Build();
             await ValidateDataSourceAsync(dataSource);
         }
@@ -68,7 +68,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
             AzureCliCredential tokenCredential = new AzureCliCredential();
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                .UseAadAuthentication(tokenCredential)
+                .UseAzureADAuthentication(tokenCredential)
                 .Build();
             await ValidateDataSourceAsync(dataSource);
         }

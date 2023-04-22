@@ -15,7 +15,7 @@ namespace Microsoft.EntityFrameworkCore
         /// <param name="optionsBuilder">builder to be configured with AAD authentication</param>
         /// <param name="clientId">If provided, indicates the managed identity to be used</param>
         /// <returns>MySQLDbContextOptionsBuilder configured with AAD authentication</returns>
-        public static MySQLDbContextOptionsBuilder UseAadAuthentication(this MySQLDbContextOptionsBuilder optionsBuilder, string? clientId = null)
+        public static MySQLDbContextOptionsBuilder UseAzureADAuthentication(this MySQLDbContextOptionsBuilder optionsBuilder, string? clientId = null)
         {
             AzureIdentityMysqlAuthenticationPlugin.RegisterAuthenticationPlugin();
             return optionsBuilder;

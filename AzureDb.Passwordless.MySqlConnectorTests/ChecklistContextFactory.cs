@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +32,7 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
                 var serverVersion = ServerVersion.Parse("5.7", Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql);
                 options.UseMySql(connectionString, serverVersion,
                     optionsBuilder => optionsBuilder.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))
-                .UseAadAuthentication();
+                .UseAzureADAuthentication(new DefaultAzureCredential());
             });
 
             var serviceProvider = services.BuildServiceProvider();
