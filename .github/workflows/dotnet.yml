@@ -33,17 +33,17 @@ jobs:
     - name: Publish Core
       run: dotnet nuget push "AzureDb.Passwordless.Core/bin/Release/AzureDb.Passwordless.Core.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     
-    - name: Package Postgres
+    - name: Package Npgsql
       run: dotnet pack --no-restore --configuration 'Release' -p:Version=$PACKAGE_VERSION
-      working-directory: AzureDb.Passwordless.Postgresql
-    - name: Publish Postgresql
-      run: dotnet nuget push "AzureDb.Passwordless.Postgresql/bin/Release/AzureDb.Passwordless.Postgresql.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      working-directory: AzureDb.Passwordless.Npgsql
+    - name: Publish Npgsql
+      run: dotnet nuget push "AzureDb.Passwordless.Npgsql/bin/Release/AzureDb.Passwordless.Npgsql.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     
     - name: Package Postgres EF Core
       run: dotnet pack --no-restore --configuration 'Release' -p:Version=$PACKAGE_VERSION
-      working-directory: AzureDb.Passwordless.Postgresql.EntityFrameworkCore
+      working-directory: AzureDb.Passwordless.Npgsql.EntityFrameworkCore
     - name: Publish Postgresql EF Core
-      run: dotnet nuget push "AzureDb.Passwordless.Postgresql.EntityFrameworkCore/bin/Release/AzureDb.Passwordless.Postgresql.EntityFrameworkCore.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push "AzureDb.Passwordless.Npgsql.EntityFrameworkCore/bin/Release/AzureDb.Passwordless.Npgsql.EntityFrameworkCore.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     
     - name: Package MySql
       run: dotnet pack --no-restore --configuration 'Release' -p:Version=$PACKAGE_VERSION
