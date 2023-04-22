@@ -9,34 +9,34 @@ For that purpose, this library provide extensions to [MySqlConnector](https://ww
 
 MySqlConnector exposes a property in MySqlConnection to assign a delegate to obtain a password when a new connection is being created. See [MySqlConnection.ProvidePasswordCallback property](https://mysqlconnector.net/api/mysqlconnector/mysqlconnection/providepasswordcallback/) for details.
 
-## AzureIdentityMySqlPasswordProvider
+## TokenCredentialMysqlPasswordProvider
 
-[AzureIdentityMySqlPasswordProvider](./AzureIdentityMySqlPasswordProvider.cs) provides the method `ProvidePasswordAsyncProvidePasswordAsync` that is compatible with [MySqlConnection.ProvidePasswordCallback](https://mysqlconnector.net/api/mysqlconnector/mysqlconnection/providepasswordcallback/).
+[TokenCredentialMysqlPasswordProvider](./TokenCredentialMysqlPasswordProvider.cs) provides the method `ProvidePasswordAsyncProvidePasswordAsync` that is compatible with [MySqlConnection.ProvidePasswordCallback](https://mysqlconnector.net/api/mysqlconnector/mysqlconnection/providepasswordcallback/).
 
-AzureIdentityMySqlPasswordProvider can be configured in different ways to retrieve the access token:
+TokenCredentialMysqlPasswordProvider can be configured in different ways to retrieve the access token:
 
 * Using [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
 * Specify an Azure Managed Identity. It uses DefaultAzureCredential, but tries to use a specific Managed Identity if the application hosting has more than one managed identity assigned.
 * Specify a [TokenCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
 
-### Sample default AzureIdentityMySqlPasswordProvider
+### Sample using DefaultAzureCredential with TokenCredentialMysqlPasswordProvider
 
-This sample uses the default _AzureIdentityMySqlPasswordProvider_ constructor, that uses DefaultAzureCredential to obtain an access token. If you execute this sample in your local development environment it can take the credentials from environment variables, your IDE (Visual Studio, Visual Studio Code, IntelliJ) or Azure cli, see [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for more details.
+This sample uses efaultAzureCredential to obtain an access token. If you execute this sample in your local development environment it can take the credentials from environment variables, your IDE (Visual Studio, Visual Studio Code, IntelliJ) or Azure cli, see [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for more details.
 
 ```csharp
-AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider();
-using MySqlConnection connection = new MySqlConnection(GetConnectionString());
+TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(new DefaultAzureCredential());
+using MySqlConnection connection = new MySqlConnection(configuration.GetConnectionString());
 connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
 await connection.OpenAsync();
 ```
 
-### Sample using AzureIdentityMySqlPasswordProvider with a Managed Identity
+### Sample using TokenCredentialMysqlPasswordProvider with a Managed Identity
 
-This sample uses the _AzureIdentityMySqlPasswordProvider_ constructor with a managed identity. It is necessary to pass the managed identity client id, not the object id.
+It is necessary to pass the managed identity client id, not the object id.
 
 ```csharp
 string managedIdentityClientId = "00000000-0000-0000-0000-000000000000";
-AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider(managedIdentityClientId);
+TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = managedIdentityClientId }));
 using MySqlConnection connection = new MySqlConnection(GetConnectionString());
 connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
 await connection.OpenAsync();
@@ -48,13 +48,13 @@ You can use the following command to retrieve the managed identity client id:
 az identity show --resource-group ${RESOURCE_GROUP} --name ${MSI_NAME} --query clientId -o tsv
 ```
 
-### Sample using AzureIdentityMySqlPasswordProvider using a TokenCredential
+### Sample using TokenCredentialMysqlPasswordProvider using an AzureCliCredential
 
-This sample uses the _AzureIdentityMySqlPasswordProvider_ constructor passing a TokenCredential. For simplicity this sample uses Azure cli credential
+This sample uses the _TokenCredentialMysqlPasswordProvider_ constructor passing a TokenCredential. For simplicity this sample uses Azure cli credential
 
 ```csharp
 AzureCliCredential credential = new AzureCliCredential();
-AzureIdentityMySqlPasswordProvider passwordProvider = new AzureIdentityMySqlPasswordProvider(credential);
+TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(credential);
 using MySqlConnection connection = new MySqlConnection(GetConnectionString());
 connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
 await connection.OpenAsync();
