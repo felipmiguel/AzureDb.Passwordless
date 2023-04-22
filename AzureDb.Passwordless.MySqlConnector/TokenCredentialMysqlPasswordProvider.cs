@@ -1,7 +1,6 @@
 ﻿using Azure.Core;
 using AzureDb.Passwordless.Core;
 using MySqlConnector;
-using MySqlConnector.Authentication;
 using System.Threading.Tasks;
 
 namespace AzureDb.Passwordless.MySqlConnector
@@ -10,26 +9,13 @@ namespace AzureDb.Passwordless.MySqlConnector
     /// Provides methods that implements MySqlConnection ProvidePasswordCallback. 
     /// <see href="https://mysqlconnector.net/api/mysqlconnector/mysqlconnection/providepasswordcallback/">MysqlConnection.ProvidePasswordCallback</see>
     /// </summary>
-    public class AzureIdentityMySqlPasswordProvider : AzureIdentityBaseAuthenticationProvider
+    public class TokenCredentialMysqlPasswordProvider : TokenCredentialBaseAuthenticationProvider
     {
-        /// <summary>
-        /// It will use <see href="https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential">DefaultAzureCredential</see> to get tokens to be used as password for MySQL in Azure
-        /// </summary>
-        public AzureIdentityMySqlPasswordProvider()
-            : base() { }
-
-        /// <summary>
-        /// Specify the managed identity client id to be used to retrieve tokens to be used as password.
-        /// </summary>
-        /// <param name="clientId">client id of the managed identity to be used</param>
-        public AzureIdentityMySqlPasswordProvider(string clientId)
-            : base(clientId) { }
-
         /// <summary>
         /// Let the caller specify the TokenCredential to be used to retrieve access tokens.
         /// </summary>
         /// <param name="credential">TokenCredential to be used to retrieve access tokens</param>
-        public AzureIdentityMySqlPasswordProvider(TokenCredential credential)
+        public TokenCredentialMysqlPasswordProvider(TokenCredential credential)
             : base(credential) { }
 
         /// <summary>

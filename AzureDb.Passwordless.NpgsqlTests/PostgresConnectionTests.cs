@@ -1,5 +1,5 @@
 ﻿using Azure.Identity;
-using AzureDb.Passwordless.Postgresql;
+using AzureDb.Passwordless.Npgsql;
 using AzureDb.Passwordless.PostgresqlTests.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,14 +34,14 @@ namespace AzureDb.Passwordless.PostgresqlTests
         }
 
         [TestMethod]
-        public async Task NoExtensionDefaultConstructor()
+        public async Task NoExtensionDefaultAzureCredential()
         {
             Assert.IsNotNull(configuration);
-            AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider();
+            TokenCredentialNpgsqlPasswordProvider passwordProvider = new TokenCredentialNpgsqlPasswordProvider(new DefaultAzureCredential());
             // Connection string does not contain password
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
                             .Build();
             await ValidateDataSourceAsync(dataSource);
         }
@@ -53,10 +53,10 @@ namespace AzureDb.Passwordless.PostgresqlTests
             Assert.IsNotNull(configuration);
             string? managedIdentityClientId = configuration.GetManagedIdentityClientId();
             Assert.IsNotNull(managedIdentityClientId);
-            AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider(managedIdentityClientId);
+            TokenCredentialNpgsqlPasswordProvider passwordProvider = new TokenCredentialNpgsqlPasswordProvider(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = managedIdentityClientId }));
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
                             .Build();
             await ValidateDataSourceAsync(dataSource);
         }
@@ -67,10 +67,10 @@ namespace AzureDb.Passwordless.PostgresqlTests
         {
             Assert.IsNotNull(configuration);
             AzureCliCredential credential = new AzureCliCredential();
-            AzureIdentityPostgresqlPasswordProvider passwordProvider = new AzureIdentityPostgresqlPasswordProvider(credential);
+            TokenCredentialNpgsqlPasswordProvider passwordProvider = new TokenCredentialNpgsqlPasswordProvider(credential);
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(configuration.GetConnectionString());
             NpgsqlDataSource dataSource = dataSourceBuilder
-                            .UsePeriodicPasswordProvider(passwordProvider.PeriodicPasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
+                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))
                             .Build();
             await ValidateDataSourceAsync(dataSource);
         }

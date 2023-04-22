@@ -45,7 +45,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
             services.AddDbContextFactory<ChecklistContext>(options =>
             {
                 options.UseNpgsql(configuration.GetConnectionString(),
-                    npgsqlOptions => npgsqlOptions.UseAadAuthentication());
+                    npgsqlOptions => npgsqlOptions.UseAzureADAuthentication(new DefaultAzureCredential()));
             });
 
             var serviceProvider = services.BuildServiceProvider();
@@ -62,7 +62,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
             services.AddDbContextFactory<ChecklistContext>(options =>
             {
                 options.UseNpgsql(configuration.GetConnectionString(),
-                    options => options.UseAadAuthentication(managedIdentityClientId));
+                    options => options.UseAzureADAuthentication(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = managedIdentityClientId })));
             });
 
             var serviceProvider = services.BuildServiceProvider();
@@ -78,7 +78,7 @@ namespace AzureDb.Passwordless.PostgresqlTests
             services.AddDbContextFactory<ChecklistContext>(options =>
             {
                 options.UseNpgsql(configuration.GetConnectionString(),
-                    options => options.UseAadAuthentication(tokenCredential));
+                    options => options.UseAzureADAuthentication(tokenCredential));
             });
 
             var serviceProvider = services.BuildServiceProvider();

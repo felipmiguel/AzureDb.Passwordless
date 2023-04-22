@@ -46,7 +46,7 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
             {
                 options
                     .UseMySql(configuration.GetConnectionString(), serverVersion)
-                    .UseAadAuthentication();
+                    .UseAzureADAuthentication(new DefaultAzureCredential());
             });
 
             using var serviceProvider = services.BuildServiceProvider();
@@ -64,7 +64,7 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
             {
                 options
                     .UseMySql(configuration.GetConnectionString(), serverVersion)
-                    .UseAadAuthentication(managedIdentityClientId);
+                    .UseAzureADAuthentication(new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = managedIdentityClientId }));
             });
 
             using var serviceProvider = services.BuildServiceProvider();
@@ -77,12 +77,12 @@ namespace AzureDb.Passwordless.MySqlConnectorTests
             Assert.IsNotNull(configuration);
             AzureCliCredential tokenCredential = new AzureCliCredential();
             var services = new ServiceCollection();
-            services.AddDbContextFactory<ChecklistContext>(options =>
+            services.AddDbContextFactory<ChecklistContext>((Action<DbContextOptionsBuilder>)(options =>
             {
                 options
                     .UseMySql(configuration.GetConnectionString(), serverVersion)
-                    .UseAadAuthentication(tokenCredential);
-            });
+                    .UseAzureADAuthentication(tokenCredential);
+            }));
 
             using var serviceProvider = services.BuildServiceProvider();
             await ValidateDbContextAsync(serviceProvider);

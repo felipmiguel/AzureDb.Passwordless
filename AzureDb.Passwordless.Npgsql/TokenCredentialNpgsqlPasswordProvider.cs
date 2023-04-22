@@ -4,38 +4,20 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Azure.Core;
-using Azure.Identity;
 
-namespace AzureDb.Passwordless.Postgresql
+namespace AzureDb.Passwordless.Npgsql
 {
     /// <summary>
     /// Provides implementations for Npgsql delegates to get passwords that can be used with Azure Database for Postgresql
     /// Passwords provided are access tokens issued by Azure AD.
     /// </summary>
-    public class AzureIdentityPostgresqlPasswordProvider : AzureIdentityBaseAuthenticationProvider
+    public class TokenCredentialNpgsqlPasswordProvider : TokenCredentialBaseAuthenticationProvider
     {
-        /// <summary>
-        /// Default constructor. DefaultAzureCredential will be used to get AAD tokens as passwords.
-        /// </summary>
-        public AzureIdentityPostgresqlPasswordProvider() : base()
-        {
-
-        }
-
-        /// <summary>
-        /// Allow specify a managed identity by providing its client id. The managed identity will be used to get AAD tokens as passwords.
-        /// This options allow select specific managed identity when the app hosting has more than one managed identity assigned
-        /// </summary>
-        /// <param name="clientId">client id of the managed identity to be used</param>
-        public AzureIdentityPostgresqlPasswordProvider(string clientId): base(clientId)
-        {
-        }
-
         /// <summary>
         /// Token credential provided by the caller that will be used to retrieve AAD access tokens.
         /// </summary>
         /// <param name="credential">TokenCredential to use to retrieve AAD access tokens</param>
-        public AzureIdentityPostgresqlPasswordProvider(TokenCredential credential):base(credential)
+        public TokenCredentialNpgsqlPasswordProvider(TokenCredential credential):base(credential)
         { }
 
         /// <summary>
@@ -59,9 +41,14 @@ namespace AzureDb.Passwordless.Postgresql
         /// <param name="settings">ConnectionString settings</param>
         /// <param name="cancellationToken">token to propagate cancellation</param>
         /// <returns>AAD issued access token that can be used as password for Azure Database for Postgresql</returns>
-        public ValueTask<string> PeriodicPasswordProvider(NpgsqlConnectionStringBuilder settings, CancellationToken cancellationToken=default)
+        private ValueTask<string> PeriodicPasswordProvider(NpgsqlConnectionStringBuilder settings, CancellationToken cancellationToken=default)
         {
             return GetAuthenticationTokenAsync(cancellationToken);
+        }
+
+        public Func<NpgsqlConnectionStringBuilder, CancellationToken, ValueTask<string>> PasswordProvider
+        {
+            get { return PeriodicPasswordProvider; }
         }
     }
 }
