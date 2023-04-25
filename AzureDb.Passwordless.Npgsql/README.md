@@ -118,9 +118,9 @@ Instead of creating the TokenCredentialNpgsqlPasswordProvider to be passed to _N
 
 It can be used with different implementations of TokenCredential, for example:
 
-* Using [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
+* Using [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
 * Specify an Azure Managed Identity. It uses DefaultAzureCredential, but tries to use a specific Managed Identity if the application hosting has more than one managed identity assigned.
-* Specify a [AzureCliCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
+* Specify a [AzureCliCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
 
 ### Sample NpgsqlDataSourceBuilder UseAzureADAuthentication
 
@@ -172,13 +172,13 @@ await ValidateDataSourceAsync(dataSource);
 
 TokenCredentialNpgsqlPasswordProvider requires a TokenCredential. Here some samples of usage of TokenCredential.
 
-* Using [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
+* Using [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
 * Specify an Azure Managed Identity. Try to use a specific Managed Identity if the application hosting has more than one managed identity assigned.
-* Specify a [TokenCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
+* Specify a [TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
 
 ### Sample TokenCredentialNpgsqlPasswordProvider with DefaultAzureCredential
 
-If you execute this sample in your local development environment it can take the credentials from environment variables, your IDE (Visual Studio, Visual Studio Code, IntelliJ) or Azure cli, see [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for more details.
+If you execute this sample in your local development environment it can take the credentials from environment variables, your IDE (Visual Studio, Visual Studio Code, IntelliJ) or Azure cli, see [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for more details.
 
 ```csharp
 TokenCredentialNpgsqlPasswordProvider passwordProvider = new TokenCredentialNpgsqlPasswordProvider(new DefaultAzureCredential());
