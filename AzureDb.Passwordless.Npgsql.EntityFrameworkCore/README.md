@@ -7,6 +7,7 @@ This library provides some extension methods to facilitate the usage of Azure AD
 DbContextOptionsBuilder is used to configure the Entity Framework context. This library provides the `UseAzureADAuthentication` method to configure PostgreSQL connections.
 
 This library uses AzureDb.Passwordless.Npgsql library to get an Azure AD access token that can be used to authenticate to Postgresql. This method expects a TokenCredential, here some examples that can be used:
+
 * Using [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet). This component has a fallback mechanism trying to get an access token using different mechanisms. This is the default implementation.
 * Specify an Azure Managed Identity. It uses DefaultAzureCredential, but tries to use a specific Managed Identity if the application hosting has more than one managed identity assigned.
 * Specify a [TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet). It uses a TokenCredential provided by the caller to retrieve an access token.
@@ -26,6 +27,7 @@ services.AddDbContextFactory<SampleContext>(options =>
 ```
 
 ### Sample with specific Managed Identity
+
 
 It uses _UseAzureADAuthentication_ passing the client id of the prefered managed identity in case the hosting service has more than one assigned. It uses [DefaultAzureCredential](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) passing the preferred managed identity.
 
