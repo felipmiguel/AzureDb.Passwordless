@@ -85,7 +85,7 @@ namespace Driver
 ```
 
 > [!NOTE]
-> Code snippet extracted from https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-connect-with-managed-identity#connect-using-managed-identity-in-c
+> Code snippet extracted from https://learn.microsoft.com/azure/postgresql/flexible-server/how-to-connect-with-managed-identity#connect-using-managed-identity-in-c
 
 > [!WARNING]
 > This is not the recommended way to connect to use Azure AD authentication as it will be explained later in this document.

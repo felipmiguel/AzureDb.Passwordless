@@ -37,7 +37,7 @@ namespace AzureDb.Passwordless.MSSqlTests
         public async Task OpenMSSqlConnection()
         {
             Assert.IsNotNull(configuration);
-            string connectionString = configuration.GetSection("mssqlconnstring").Value;
+            string? connectionString = configuration.GetSection("mssqlconnstring").Value;
             using SqlConnection connection = new SqlConnection(connectionString);
             await connection.OpenAsync();
             SqlCommand cmd = new SqlCommand("SELECT GETDATE()", connection);
@@ -49,7 +49,7 @@ namespace AzureDb.Passwordless.MSSqlTests
         public async Task OpenMSSqlConnectionWithToken()
         {
             Assert.IsNotNull(configuration);
-            string connectionString = configuration.GetSection("mssqlconnstringNoAuth").Value;
+            string? connectionString = configuration.GetSection("mssqlconnstringNoAuth").Value;
             string RDBMS_SCOPE = "https://database.windows.net/.default";
             TokenRequestContext requestContext = new TokenRequestContext(new string[] { RDBMS_SCOPE });
             DefaultAzureCredential creds = new DefaultAzureCredential();
@@ -66,7 +66,7 @@ namespace AzureDb.Passwordless.MSSqlTests
         public async Task OpenMSSqlConnectionEntityFrameworkCore()
         {
             Assert.IsNotNull(configuration);
-            string connectionString = configuration.GetSection("mssqlconnstring").Value;
+            string? connectionString = configuration.GetSection("mssqlconnstring").Value;
             ServiceCollection services = new ServiceCollection();
             services.AddDbContext<ChecklistContext>(options => options.UseSqlServer(connectionString));
 
@@ -82,8 +82,8 @@ namespace AzureDb.Passwordless.MSSqlTests
         public async Task OpenMSSqlConnectionEntityWithConnectringStringBuilder()
         {
             Assert.IsNotNull(configuration);
-            string server = configuration.GetSection("server").Value;
-            string database = configuration.GetSection("database").Value;
+            string? server = configuration.GetSection("server").Value;
+            string? database = configuration.GetSection("database").Value;
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = server;
             builder.InitialCatalog = database;

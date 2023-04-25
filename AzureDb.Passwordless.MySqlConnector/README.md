@@ -21,7 +21,7 @@ TokenCredentialMysqlPasswordProvider can be configured in different ways to retr
 
 ### Sample using DefaultAzureCredential with TokenCredentialMysqlPasswordProvider
 
-This sample uses efaultAzureCredential to obtain an access token. If you execute this sample in your local development environment it can take the credentials from environment variables, your IDE (Visual Studio, Visual Studio Code, IntelliJ) or Azure cli, see [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for more details.
+This sample uses `DefaultAzureCredential` to obtain an access token. If you execute this sample in your local development environment it can take the credentials from environment variables, your IDE (Visual Studio, Visual Studio Code, IntelliJ) or Azure cli, see [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) for more details.
 
 ```csharp
 TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(new DefaultAzureCredential());
