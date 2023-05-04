@@ -9,7 +9,7 @@ using Sample.Repository;
 
 #nullable disable
 
-namespace AzureDb.Passwordless.MSSqlTests.Migrations
+namespace Microsoft.Azure.Data.Extensions.MSSqlTests.Migrations
 {
     [DbContext(typeof(ChecklistContext))]
     [Migration("20221024201441_InitialCreate")]

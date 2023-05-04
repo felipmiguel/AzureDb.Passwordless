@@ -1,4 +1,4 @@
-# AzureDb.Passwordless
+# Microsoft.Azure.Data.Extensions
 
 This repository contains helper libraries that can be used to connect to Azure Database for Postgresql and Mysql using Azure AD authentication. Many Azure services support Azure AD authentication, they require an Azure AD access token with specific scopes. Azure Database for Postgres and Azure Database for MySql expect an Azure AD access token with <https://ossrdbms-aad.database.windows.net> audience. It is possible to get an access of this kind using Azure.Identity library or even using Azure CLI.
 

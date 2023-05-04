@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sample.Repository;
 
-namespace AzureDb.Passwordless.MSSqlTests
+namespace Microsoft.Azure.Data.Extensions.MSSqlTests
 {
     [TestClass]
     public class MSSqlConnectionTests

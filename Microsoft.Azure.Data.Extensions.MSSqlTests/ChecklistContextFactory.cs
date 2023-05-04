@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureDb.Passwordless.MSSqlTests
+namespace Microsoft.Azure.Data.Extensions.MSSqlTests
 {
     public class ChecklistContextFactory : IDesignTimeDbContextFactory<ChecklistContext>
     {

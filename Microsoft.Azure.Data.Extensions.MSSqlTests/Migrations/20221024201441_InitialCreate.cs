@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AzureDb.Passwordless.MSSqlTests.Migrations
+namespace Microsoft.Azure.Data.Extensions.MSSqlTests.Migrations
 {
     public partial class InitialCreate : Migration
     {
