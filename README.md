@@ -1,4 +1,4 @@
-# AzureDb.Passwordless
+# Microsoft.Azure.Data.Extensions
 
 This repository contains helper libraries that can be used to connect to Azure Database for Postgresql and Mysql using Azure AD authentication. Many Azure services support Azure AD authentication, they require an Azure AD access token with specific scopes. Azure Database for Postgres and Azure Database for MySql expect an Azure AD access token with <https://ossrdbms-aad.database.windows.net> audience. It is possible to get an access of this kind using Azure.Identity library or even using Azure CLI.
 
@@ -102,11 +102,11 @@ The proposed solution is using Azure.Identity library in a way that it retrieves
 
 The implication should retrieve an access token before creating a connection, cache the access token, and retrieve a new access token only if it expires. Each database driver provides different solutions:
 
-* Postgresql: Npgsql library provides a mechanism to obtain a password periodically. That is using NpgsqlDataSourceBuilder and [_UsePeriodicPasswordProvider_ method](https://www.npgsql.org/doc/api/Npgsql.NpgsqlDataSourceBuilder.html#Npgsql_NpgsqlDataSourceBuilder_UsePeriodicPasswordProvider_System_Nullable_Func_Npgsql_NpgsqlConnectionStringBuilder_CancellationToken_ValueTask_System_String____TimeSpan_TimeSpan_). The library AzureDb.Passwordless.Npgsql contains a class that provides a callback that obtains the password from Azure AD.
+* Postgresql: Npgsql library provides a mechanism to obtain a password periodically. That is using NpgsqlDataSourceBuilder and [_UsePeriodicPasswordProvider_ method](https://www.npgsql.org/doc/api/Npgsql.NpgsqlDataSourceBuilder.html#Npgsql_NpgsqlDataSourceBuilder_UsePeriodicPasswordProvider_System_Nullable_Func_Npgsql_NpgsqlConnectionStringBuilder_CancellationToken_ValueTask_System_String____TimeSpan_TimeSpan_). The library Microsoft.Azure.Data.Extensions.Npgsql contains a class that provides a callback that obtains the password from Azure AD.
 * Mysql:
-  * MySql.Data library provides a mechanism to configure an authentication plugin. The library AzureDb.Passwordless.Mysql provides a class that implements the authentication plugin and obtains the password from Azure AD. The problem of this library is that the configuration uses old System.Configuration library, which is not supported in .Net Core. So, the library is not usable in .Net Core applications.
+  * MySql.Data library provides a mechanism to configure an authentication plugin. The library Microsoft.Azure.Data.Extensions.MySql provides a class that implements the authentication plugin and obtains the password from Azure AD. The problem of this library is that the configuration uses old System.Configuration library, which is not supported in .Net Core. So, the library is not usable in .Net Core applications.
   This library was tested with Azure Database for MySQL Flexible Server and Azure Database for MySQL Single Server, but **token as password only works in Azure Database for MySQL Single Server**.
-  * [MySqlConnector](https://mysqlconnector.net/) is an open source driver for dotnet. It provides a similar mechanism to Postgresql for this scenario. It provides a [_ProvidePasswordCallback_ delegate](https://mysqlconnector.net/api/mysqlconnector/mysqlconnection/providepasswordcallback/). The library AzureDb.Passwordless.MysqlConnector provides a class that implements the delegate signature and obtains the password from Azure AD. This driver works with Azure Database for MySQL Flexible Server and Azure Database for MySQL Single Server. It doesn't provide an Entity Framework implementation, but it is possible to use [Pomelo](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql).
+  * [MySqlConnector](https://mysqlconnector.net/) is an open source driver for dotnet. It provides a similar mechanism to Postgresql for this scenario. It provides a [_ProvidePasswordCallback_ delegate](https://mysqlconnector.net/api/mysqlconnector/mysqlconnection/providepasswordcallback/). The library Microsoft.Azure.Data.Extensions.MySqlConnector provides a class that implements the delegate signature and obtains the password from Azure AD. This driver works with Azure Database for MySQL Flexible Server and Azure Database for MySQL Single Server. It doesn't provide an Entity Framework implementation, but it is possible to use [Pomelo](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql).
 
 > [!NOTE] This [fork of MySql.Data](https://github.com/mysql/mysql-connector-net/compare/8.0...felipmiguel:mysql-connector-net:8.0.tunned) library implements a couple of experimental workarounds to make it work in .Net Core applications.
 
@@ -176,11 +176,11 @@ The `TokenCredential` will be used to retrieve the access token.
 
 Developers need to test their application from their development machine. It means that the solution should be tested from their machines using credentials different to Managed Identities. For instance, their IDE Azure credentials (Visual Studio, Visual Studio Code, IntelliJ) or their azure cli credentials. As the implementation is based on `Azure.Identity.DefaultAzureCredential` it allows to use all mentioned mechanisms.
 
-The library AzureDb.Passwordless.Core implements a caching mechanism, so the access token is retrieved only once per application execution, and it is refreshed if it is expired. Even if some of the DefaultAzureCredential mechanism already implement caching, it causes to try all fallback mechanisms, which is not necessary.
+The library Microsoft.Azure.Data.Extensions.Core implements a caching mechanism, so the access token is retrieved only once per application execution, and it is refreshed if it is expired. Even if some of the DefaultAzureCredential mechanism already implement caching, it causes to try all fallback mechanisms, which is not necessary.
 
 ## Postgresql
 
-[Npgsql](https://www.npgsql.org/doc/security.html?tabs=tabid-1) library offers a mechanism that periodically retrieves a password that can be used to create a physical connection to the database. That is `UsePeriodicPasswordProvider` method. The library AzureDb.Passwordless.Npgsql provides a class that implements with a property that can be used to retrieved to obtains the password from Azure AD.
+[Npgsql](https://www.npgsql.org/doc/security.html?tabs=tabid-1) library offers a mechanism that periodically retrieves a password that can be used to create a physical connection to the database. That is `UsePeriodicPasswordProvider` method. The library Microsoft.Azure.Data.Extensions.Npgsql provides a class that implements with a property that can be used to retrieved to obtains the password from Azure AD.
 
 It is provided an extension method for NpgsqlDataSource named `UseAzureADAuthentication` that simplifies the code and is the recomended option:
 
@@ -275,13 +275,13 @@ builder.Services.AddDbContext<MyContext>(options =>
 });
 ```
 
-There are more usage examples in project [AzureDb.Passwordless.NpgsqlTests](./AzureDb.Passwordless.NpgsqlTests/)
+There are more usage examples in project [Microsoft.Azure.Data.Extensions.NpgsqlTests](./Microsoft.Azure.Data.Extensions.NpgsqlTests/)
 
 ## MySql
 
 ### MySql.Data
 
-MySql allows to configure a custom [authentication plugin](https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-user-plugin.html). It should derive from `MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin`. Active Directory authentication is very similar to Clear Text authentication. For that reason, the [AzureIdentityMysqlAuthenticationPlugin](AzureDb.Passwordless.MySql/AzureIdentityMysqlAuthenticationPlugin.cs) implementation in this repository is based on the [ClearPasswordPlugin](https://github.com/mysql/mysql-connector-net/blob/8.0/MySQL.Data/src/Authentication/ClearPasswordPlugin.cs) from MySql.Data library.
+MySql allows to configure a custom [authentication plugin](https://dev.mysql.com/doc/connector-net/en/connector-net-programming-authentication-user-plugin.html). It should derive from `MySql.Data.MySqlClient.Authentication.MySqlAuthenticationPlugin`. Active Directory authentication is very similar to Clear Text authentication. For that reason, the [AzureIdentityMysqlAuthenticationPlugin](Microsoft.Azure.Data.Extensions.MySql/AzureIdentityMysqlAuthenticationPlugin.cs) implementation in this repository is based on the [ClearPasswordPlugin](https://github.com/mysql/mysql-connector-net/blob/8.0/MySQL.Data/src/Authentication/ClearPasswordPlugin.cs) from MySql.Data library.
 
 To override the default client/server negotiation of the plugin to use, it is necessary to specify _DefaultAuthenticationPlugin_ in the connection string.
 
@@ -301,7 +301,7 @@ MySql.Data"/>
   <MySQL>
     <AuthenticationPlugins>
       <add name="mysql_clear_password"
-type="AzureDb.Passwordless.MySql.AzureIdentityMysqlAuthenticationPlugin, AzureDb.Passwordless.MySql"></add>
+type="Microsoft.Azure.Data.Extensions.MySql.AzureIdentityMysqlAuthenticationPlugin, Microsoft.Azure.Data.Extensions.MySql"></add>
     </AuthenticationPlugins>  
   </MySQL>
 ...
@@ -312,7 +312,7 @@ This configuration implementation has a major issue. It is based on legacy Syste
 
 #### Experimental plugin implementation
 
-AzureDb.Passwordless.MySql.AzureIdentityMysqlAuthenticationPlugin implements a workaround for the configuration issue described above. To set the configuration it uses reflection to update the internal configuration of the client. This is not a recommended approach, but it is the only way to configure the plugin without using the configuration file.
+Microsoft.Azure.Data.Extensions.MySql.AzureIdentityMysqlAuthenticationPlugin implements a workaround for the configuration issue described above. To set the configuration it uses reflection to update the internal configuration of the client. This is not a recommended approach, but it is the only way to configure the plugin without using the configuration file.
 
 The purpose is configuring the private field [_Plugins_](https://github.com/mysql/mysql-connector-net/blob/a53e0c62cf416116ae650aa84065e45385019612/MySQL.Data/src/Authentication/AuthenticationManager.cs#L37), setting the plugin implemented in this library.
 
@@ -337,7 +337,7 @@ public static void RegisterAuthenticationPlugin()
 I created an [experimental implementation](https://github.com/felipmiguel/mysql-connector-net) that can configure the authentication plugin using the connection string. In this case, the connection string should contain the _AuthenticationPlugins_ parameter, with a list of the plugins to use. Then the connection string looks like this:
 
 ```bash
-server=myserver.mysql.database.azure.com;user id=myuser@myserver;database=mydb;sslmode=Required;defaultauthenticationplugin=mysql_clear_password;authenticationplugins=mysql_clear_password:AzureDb.Passwordless.MySql.AzureIdentityMysqlAuthenticationPlugin# AzureDb.Passwordless.MySql# Version=1.0.0.0# Culture=neutral# PublicKeyToken=null;
+server=myserver.mysql.database.azure.com;user id=myuser@myserver;database=mydb;sslmode=Required;defaultauthenticationplugin=mysql_clear_password;authenticationplugins=mysql_clear_password:Microsoft.Azure.Data.Extensions.MySql.AzureIdentityMysqlAuthenticationPlugin# Microsoft.Azure.Data.Extensions.MySql# Version=1.0.0.0# Culture=neutral# PublicKeyToken=null;
 ```
 
 > [!NOTE] the plugin list replaced character , with character #. This is because the attribute is an array it can be confused with item separator.
@@ -356,7 +356,7 @@ And for MySql Entity Framework Core provider:
 dotnet add <PROJECT> package MySql.EntityFrameworkCore --version 6.0.4
 ```
 
-There are more usage examples in project [AzureDb.Passwordless.MySqlTests](./AzureDb.Passwordless.MySqlTests/)
+There are more usage examples in project [Microsoft.Azure.Data.Extensions.MySqlTests](./Microsoft.Azure.Data.Extensions.MySqlTests/)
 
 ### MySqlConnector and Pomelo.EntityFrameworkCore.MySql
 
@@ -364,7 +364,7 @@ There are more usage examples in project [AzureDb.Passwordless.MySqlTests](./Azu
 
 MySqlConnector provides the same mechanism than Postgresql driver to delegate the password acquisition. It is necessary to provide a delegate for [_ProvidePasswordCallback_](https://mysqlconnector.net/api/mysqlconnector/mysqlconnection/providepasswordcallback/).
 
-There is an implementation of this delegate in [AzureDb.Passwordless.MySqlConnector.TokenCredentialMysqlPasswordProvider](./AzureDb.Passwordless.MySqlConnector/TokenCredentialMysqlPasswordProvider.cs) class.
+There is an implementation of this delegate in [Microsoft.Azure.Data.Extensions.MySqlConnector.TokenCredentialMysqlPasswordProvider](./Microsoft.Azure.Data.Extensions.MySqlConnector/TokenCredentialMysqlPasswordProvider.cs) class.
 
 Here an example of usage:
 
@@ -377,10 +377,10 @@ MySqlCommand cmd = new MySqlCommand("SELECT now()", connection);
 DateTime? serverDate = (DateTime?) await cmd.ExecuteScalarAsync();
 ```
 
-To facilitate the usage in Entity Framework Core, there is an extension method in [AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore](AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore/DbContextOptionsBuilderExtension.cs) class. It has the same signature as the extension method provided for Postgresql driver.
+To facilitate the usage in Entity Framework Core, there is an extension method in [Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore](Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/DbContextOptionsBuilderExtension.cs) class. It has the same signature as the extension method provided for Postgresql driver.
 
 ```csharp
-using AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore;
+usingMicrosoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore;
 
 namespace Microsoft.EntityFrameworkCore;
 
@@ -397,12 +397,12 @@ public static class DbContextOptionsBuilderExtension
 In this case, the implementation is a bit more complex, as Pomelo does not provide a way to configure the password provider. To do it, there is an interceptor that is registered in the context. The interceptor is responsible for setting the password provider just before opening the connector.
 
 ```csharp
-using AzureDb.Passwordless.MySqlConnector;
+using Microsoft.Azure.Data.Extensions.MySqlConnector;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using MySqlConnector;
 using System.Data.Common;
 
-namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
+namespaceMicrosoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore
 {
     internal class TokenCredentialMysqlPasswordProviderInterceptor : DbConnectionInterceptor
     {
@@ -430,21 +430,21 @@ namespace AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore
 }
 ```
 
-There are more usage examples in project [AzureDb.Passwordless.MySqlConnectorTests](./AzureDb.Passwordless.MySqlConnectorTests/)
+There are more usage examples in project [Microsoft.Azure.Data.Extensions.MySqlConnectorTests](./Microsoft.Azure.Data.Extensions.MySqlConnectorTests/)
 
 ## Nuget packages
 
 This repository contains the following Nuget packages:
 
-* [AzureDb.Passwordless.Npgsql](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/AzureDb.Passwordless.Npgsql)
-* [AzureDb.Passwordless.MySql](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/AzureDb.Passwordless.MySql). This package references [MySql.Data experimental implementation](https://github.com/felipmiguel?tab=packages&repo_name=mysql-connector-net). [!WARNING] This is an experimental and not recommended approach. It can break in future versions of the driver.
-* [AzureDb.Passwordless.MySqlConnector](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/AzureDb.Passwordless.MySqlConnector)
-* [AzureDb.Passwordless.Core](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/AzureDb.Passwordless.Core). This package is referenced by the other two packages.
+* [Microsoft.Azure.Data.Extensions.Npgsql](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.Npgsql)
+* [Microsoft.Azure.Data.Extensions.MySql](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.MySql). This package references [MySql.Data experimental implementation](https://github.com/felipmiguel?tab=packages&repo_name=mysql-connector-net). [!WARNING] This is an experimental and not recommended approach. It can break in future versions of the driver.
+* [Microsoft.Azure.Data.Extensions.MySqlConnector](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.MySqlConnector)
+* [Microsoft.Azure.Data.Extensions.Core](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.Core). This package is referenced by the other two packages.
 
 And here the Entity Framework packages:
-* [AzureDb.Passwordless.Npgsql.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/AzureDb.Passwordless.Npgsql.EntityFrameworkCore)
-* [AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/AzureDb.Passwordless.MySqlConnector.EntityFrameworkCore)
-* [AzureDb.Passwordless.MySql.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/AzureDb.Passwordless.MySql.EntityFrameworkCore)
+* [Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore)
+* [Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore)
+* [Microsoft.Azure.Data.Extensions.MySql.EntityFrameworkCore](https://github.com/felipmiguel/AzureDb.Passwordless/pkgs/nuget/Microsoft.Azure.Data.Extensions.MySql.EntityFrameworkCore)
 
 If you want to use above packages you should add the nuget feed to your project:
 
@@ -456,9 +456,9 @@ You PAT should include the following scope `_read:packages_`.
 
 ## Test projects
 
-* [AzureDb.Passwordless.NpgsqlTests](./AzureDb.Passwordless.NpgsqlTests/)
-* [AzureDb.Passwordless.MySqlConnectorTests](./AzureDb.Passwordless.MySqlConnectorTests/)
-* [AzureDb.Passwordless.MySqlTests](./AzureDb.Passwordless.MySqlTests/)
+* [Microsoft.Azure.Data.Extensions.NpgsqlTests](./Microsoft.Azure.Data.Extensions.NpgsqlTests/)
+* [Microsoft.Azure.Data.Extensions.MySqlConnectorTests](./Microsoft.Azure.Data.Extensions.MySqlConnectorTests/)
+* [Microsoft.Azure.Data.Extensions.MySqlTests](./Microsoft.Azure.Data.Extensions.MySqlTests/)
 
 ### Entity Framework Core
 
