@@ -9,6 +9,6 @@ output "database" {
 }
 
 output "aad_admin" {
-  value       = data.azuread_user.aad_admin.user_principal_name
+  value       = local.login_name
   description = "MySql Azure AD admin."
 }
