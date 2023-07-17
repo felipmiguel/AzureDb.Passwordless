@@ -60,7 +60,7 @@ resource "azurerm_mysql_flexible_server" "database" {
   administrator_login    = var.administrator_login
   administrator_password = random_password.password.result
 
-  sku_name                     = "B_Standard_B1ms"
+  sku_name                     = "B_Standard_B1s"
   version                      = "8.0.21"
   backup_retention_days        = 7
   geo_redundant_backup_enabled = false
@@ -84,6 +84,11 @@ data "azuread_user" "aad_admin" {
   object_id = data.azurerm_client_config.current_client.object_id
 }
 
+locals {
+  # login_name = strcontains(data.azuread_user.aad_admin.user_principal_name, "#EXT#") ? data.azuread_user.aad_admin.other_mails[0] : data.azuread_user.aad_admin.user_principal_name
+  login_name = data.azuread_user.aad_admin.user_principal_name
+}
+
 resource "azapi_resource" "mysql_aad_admin" {
   type = "Microsoft.DBforMySQL/flexibleServers/administrators@2021-12-01-preview"
   name = "ActiveDirectory"
@@ -95,7 +100,7 @@ resource "azapi_resource" "mysql_aad_admin" {
     properties = {
       administratorType  = "ActiveDirectory"
       identityResourceId = azurerm_user_assigned_identity.mysql_umi.id
-      login              = data.azuread_user.aad_admin.user_principal_name
+      login              = local.login_name
       sid                = data.azuread_user.aad_admin.object_id
       tenantId           = data.azurerm_client_config.current_client.tenant_id
     }
@@ -112,8 +117,8 @@ resource "azurerm_mysql_flexible_database" "database" {
   name                = var.database_name
   resource_group_name = azurerm_resource_group.resource_group.name
   server_name         = azurerm_mysql_flexible_server.database.name
-  charset             = "utf8"
-  collation           = "utf8_unicode_ci"
+  charset             = "utf8mb3"
+  collation           = "utf8mb3_unicode_ci"
 }
 
 resource "azurecaf_name" "mysql_firewall_rule" {
