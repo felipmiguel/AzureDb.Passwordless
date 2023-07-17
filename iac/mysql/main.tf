@@ -8,7 +8,7 @@ terraform {
       source = "azure/azapi"
     }
     azuread = {
-      source  = "hashicorp/azuread"
+      source = "hashicorp/azuread"
     }
   }
 }
@@ -64,6 +64,7 @@ resource "azurerm_mysql_flexible_server" "database" {
   version                      = "8.0.21"
   backup_retention_days        = 7
   geo_redundant_backup_enabled = false
+  zone                         = "3"
 
   identity {
     identity_ids = [azurerm_user_assigned_identity.mysql_umi.id]
@@ -128,4 +129,27 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "database" {
   server_name         = azurerm_mysql_flexible_server.database.name
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
+}
+
+resource "azurecaf_name" "mysql_firewall_rule_allow_iac_machine" {
+  name          = var.application_name
+  resource_type = "azurerm_mysql_firewall_rule"
+  suffixes      = [var.environment, "iac"]
+}
+
+data "http" "myip" {
+  url = "http://whatismyip.akamai.com"
+}
+
+locals {
+  myip = chomp(data.http.myip.response_body)
+}
+
+# This rule is to enable current machine
+resource "azurerm_mysql_flexible_server_firewall_rule" "rule_allow_iac_machine" {
+  name                = azurecaf_name.mysql_firewall_rule_allow_iac_machine.result
+  resource_group_name = azurerm_resource_group.resource_group.name
+  server_name         = azurerm_mysql_flexible_server.database.name
+  start_ip_address    = local.myip
+  end_ip_address      = local.myip
 }

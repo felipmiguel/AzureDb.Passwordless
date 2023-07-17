@@ -13,6 +13,10 @@ namespace Bili.Core.TestFramework
     /// <typeparam name="TEnvironment"></typeparam>
     public class LiveTestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
     {
+        protected LiveTestBase()
+        {
+            TestEnvironment = new TEnvironment();
+        }
         /// <summary>
         /// Facilities to access to the test environment
         /// </summary>

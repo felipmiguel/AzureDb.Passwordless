@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
 
 namespace Bili.Core.TestFramework
 {
@@ -12,19 +13,20 @@ namespace Bili.Core.TestFramework
     /// </summary>
     public class TestEnvironment
     {
+        private Lazy<TokenCredential> _credential = new Lazy<TokenCredential>(() => new DefaultAzureCredential(), true);
         /// <summary>
         /// TokenCredential of the test
         /// </summary>
-        public TokenCredential Credential => null;
+        public TokenCredential Credential => _credential.Value;
 
         internal Task WaitForEnvironmentAsync()
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         internal Task WaitForEnvironmentShutdown()
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         /// <summary>
