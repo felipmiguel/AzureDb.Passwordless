@@ -19,7 +19,12 @@ namespace Microsoft.Azure.Data.Extensions.MySqlConnector
         /// </summary>
         /// <param name="credential">TokenCredential to be used to retrieve access tokens</param>
         public TokenCredentialMysqlPasswordProvider(TokenCredential credential)
-            : base(credential) { }
+            : base(credential)
+        {
+            // this call is intended to retrieve an access token and cache it before it starts the login protocol.
+            // if token is retrieved during login conversation with mysql it could cause a timeout error
+            _ = base.GetAuthenticationToken();
+        }
 
         /// <summary>
         /// ProvidePasswordCallback delegate implementation that can used to retrieve Azure Active Directory access tokens that can be used as password in Azure Database for MySql.

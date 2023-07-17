@@ -13,7 +13,8 @@ namespace Bili.Core.TestFramework
     /// </summary>
     public class TestEnvironment
     {
-        private Lazy<TokenCredential> _credential = new Lazy<TokenCredential>(() => new AzureCliCredential(), true);
+        private Lazy<TokenCredential> _credential = new Lazy<TokenCredential>(() => new DefaultAzureCredential(), true);
+
         /// <summary>
         /// TokenCredential of the test
         /// </summary>
