@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Sample.Repository;
+using Sample.Repository.Model;
 using System;
 using System.Threading.Tasks;
 
@@ -35,8 +36,20 @@ namespace Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests
             var contextFactory = serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
             using var dbContext = await contextFactory.CreateDbContextAsync();
             await dbContext.Database.OpenConnectionAsync();
-            var rows = await dbContext.Database.ExecuteSqlRawAsync("SELECT now()");
-            Assert.AreEqual(1, rows);
+            var chk = await dbContext.Checklists.AddAsync(new Checklist
+            {
+                Date = DateTime.Now,
+                Description = "Test sample item",
+                Name = "Test Item"
+            });
+            await dbContext.SaveChangesAsync();
+
+            var chk2 = await dbContext.Checklists.FindAsync(chk.Entity.ID);
+            Assert.IsNotNull(chk2);
+            dbContext.Checklists.Remove(chk2);
+            await dbContext.SaveChangesAsync();
+
+            
         }
     }
 }
