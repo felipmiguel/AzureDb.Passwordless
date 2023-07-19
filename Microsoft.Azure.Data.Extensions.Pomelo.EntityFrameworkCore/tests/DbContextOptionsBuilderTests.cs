@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using Bili.Core.TestFramework;
+using Microsoft.Azure.Data.Extensions.MySqlConnector;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Sample.Repository;
+using System;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests
@@ -18,6 +20,9 @@ namespace Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests
         [Test]
         public async Task EFDefault()
         {
+            TokenCredentialMysqlPasswordProvider provider = new TokenCredentialMysqlPasswordProvider(TestEnvironment.Credential);
+            string token= await provider.GetAuthenticationTokenAsync();
+            Console.WriteLine(token);
             var services = new ServiceCollection();
             services.AddDbContextFactory<ChecklistContext>(options =>
             {
