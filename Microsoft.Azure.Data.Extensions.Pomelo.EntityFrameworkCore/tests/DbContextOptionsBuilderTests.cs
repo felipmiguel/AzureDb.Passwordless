@@ -21,9 +21,6 @@ namespace Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests
         [Test]
         public async Task EFDefault()
         {
-            TokenCredentialMysqlPasswordProvider provider = new TokenCredentialMysqlPasswordProvider(TestEnvironment.Credential);
-            string token= await provider.GetAuthenticationTokenAsync();
-            Console.WriteLine(token);
             var services = new ServiceCollection();
             services.AddDbContextFactory<ChecklistContext>(options =>
             {
