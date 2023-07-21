@@ -13,9 +13,9 @@ namespace Microsoft.Azure.Data.Extensions.Npgsql.Tests
 {
     public class NpgsqlTestEnvironment : TestEnvironment
     {
-        private string FQDN => GetVariable("POSTGRES_FQDN");
-        private string Database => GetVariable("POSTGRES_DATABASE");
-        private string User => GetVariable("POSTGRES_SERVER_ADMIN");
+        private string FQDN => GetVariable("POSTGRESQL_FQDN");
+        private string Database => GetVariable("POSTGRESQL_DATABASE");
+        private string User => GetVariable("POSTGRESQL_SERVER_ADMIN");
 
         public string ConnectionString
         {

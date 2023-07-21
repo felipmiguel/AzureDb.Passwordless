@@ -64,8 +64,7 @@ resource "azurerm_mysql_flexible_server" "database" {
   version                      = "8.0.21"
   backup_retention_days        = 7
   geo_redundant_backup_enabled = false
-  zone                         = "3"
-
+  
   identity {
     identity_ids = [azurerm_user_assigned_identity.mysql_umi.id]
     type         = "UserAssigned"
@@ -74,6 +73,10 @@ resource "azurerm_mysql_flexible_server" "database" {
   tags = {
     "environment"      = var.environment
     "application-name" = var.application_name
+  }
+
+  lifecycle {
+    ignore_changes = [ zone, high_availability.0.standby_availability_zone ]
   }
 }
 

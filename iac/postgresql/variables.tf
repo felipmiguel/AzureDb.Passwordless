@@ -1,7 +1,7 @@
 variable "application_name" {
   type        = string
   description = "The name of your application"
-  default     = "netmysqlpwdless"
+  default     = "netpsqlpwdless"
 }
 
 variable "environment" {
@@ -16,14 +16,8 @@ variable "location" {
   default     = "eastus"
 }
 
-variable "administrator_login" {
-  type        = string
-  description = "The MySQL administrator login"
-  default     = "myadmin"
-}
-
 variable "database_name" {
   type        = string
-  description = "The MySQL database name"
+  description = "The Postgresql database name"
   default     = "db"
 }
