@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>net6.0;net7.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
@@ -23,9 +22,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bili.Core.TestFramework\Bili.Core.TestFramework.csproj" />
-    <ProjectReference
-      Include="..\src\Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\Sample.Repository\Sample.Repository.csproj" />
+    <ProjectReference Include="..\..\Sample.Repository.Tests\Sample.Repository.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
