@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bili.Core.TestFramework\Bili.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\Sample.Repository.Tests\Sample.Repository.Tests.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\Sample.Repository\Sample.Repository.csproj" />
     

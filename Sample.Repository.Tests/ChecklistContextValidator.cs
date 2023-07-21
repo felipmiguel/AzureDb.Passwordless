@@ -1,17 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Sample.Repository.Model;
+
 namespace Sample.Repository.Tests;
 
 public class ChecklistContextValidator
 {
-    public async Task ValidateChecklist(ServiceProvider serviceProvider)
+    public static async Task ValidateChecklistAsync(ServiceProvider serviceProvider)
     {
         var contextFactory = serviceProvider.GetRequiredService<IDbContextFactory<ChecklistContext>>();
-            using var dbContext = await contextFactory.CreateDbContextAsync();
-            await dbContext.Database.OpenConnectionAsync();
+        using var dbContext = await contextFactory.CreateDbContextAsync();
+        //await dbContext.Database.OpenConnectionAsync();
+        if (dbContext.Checklists != null)
+        {
             var chk = await dbContext.Checklists.AddAsync(new Checklist
             {
-                Date = DateTime.Now,
+                Date = DateTime.UtcNow,
                 Description = "Test sample item",
                 Name = "Test Item"
             });
@@ -19,7 +23,11 @@ public class ChecklistContextValidator
 
             var chk2 = await dbContext.Checklists.FindAsync(chk.Entity.ID);
             Assert.IsNotNull(chk2);
-            dbContext.Checklists.Remove(chk2);
-            await dbContext.SaveChangesAsync();
+            if (chk2 != null)
+            {
+                dbContext.Checklists.Remove(chk2);
+                await dbContext.SaveChangesAsync();
+            }
+        }
     }
 }
