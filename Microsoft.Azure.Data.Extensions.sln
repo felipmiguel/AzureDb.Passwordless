@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Data.Extens
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Data.Extensions.MySqlConnector.Tests", "Microsoft.Azure.Data.Extensions.MySqlConnector\tests\Microsoft.Azure.Data.Extensions.MySqlConnector.Tests.csproj", "{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Repository.Tests", "Sample.Repository.Tests\Sample.Repository.Tests.csproj", "{A8D36AE5-D95D-4744-83DE-C69053A57B12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,10 @@ Global
 		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{AB986AE2-B8AE-4A6E-8995-D995FF79B90F} = {31C03DC9-34F1-42E5-8AA9-91D2EEF69FE2}
 		{234F16F2-2BEE-4BF3-9BD4-18726E1A9CEF} = {71E996D5-C67B-43AC-8C07-0ECD5C692BE8}
 		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9} = {71E996D5-C67B-43AC-8C07-0ECD5C692BE8}
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12} = {66E21FE8-208E-4570-93BC-7F880E744B1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ED098F7B-46CA-4E09-B40E-A8539FD3EC58}
