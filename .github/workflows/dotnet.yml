@@ -50,42 +50,42 @@ jobs:
     
     - name: Package Core
       run: dotnet pack --no-restore --configuration 'Release' -p:Version=$PACKAGE_VERSION
-      working-directory: Microsoft.Azure.Data.Extensions.Core
+      working-directory: Sfinks.Azure.Data.Extensions.Core
     - name: Publish Core
-      run: dotnet nuget push "Microsoft.Azure.Data.Extensions.Core/bin/Release/Microsoft.Azure.Data.Extensions.Core.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push "Sfinks.Azure.Data.Extensions.Core/bin/Release/Sfinks.Azure.Data.Extensions.Core.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     
     - name: Package Npgsql
       run: dotnet pack --no-restore --configuration 'Release' -p:Version=$PACKAGE_VERSION
-      working-directory: Microsoft.Azure.Data.Extensions.Npgsql
+      working-directory: Sfinks.Azure.Data.Extensions.Npgsql
     - name: Publish Npgsql
-      run: dotnet nuget push "Microsoft.Azure.Data.Extensions.Npgsql/bin/Release/Microsoft.Azure.Data.Extensions.Npgsql.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push "Sfinks.Azure.Data.Extensions.Npgsql/bin/Release/Sfinks.Azure.Data.Extensions.Npgsql.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     
     - name: Package Postgres EF Core
       run: dotnet pack --no-restore --configuration 'Release' -p:Version=$PACKAGE_VERSION
-      working-directory: Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore
+      working-directory: Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore
     - name: Publish Postgresql EF Core
-      run: dotnet nuget push "Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/bin/Release/Microsoft.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push "Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/bin/Release/Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     
     - name: Package MySql
       run: dotnet pack --no-restore --configuration 'Release' -p:Version=$PACKAGE_VERSION
-      working-directory: Microsoft.Azure.Data.Extensions.MySql    
+      working-directory: Sfinks.Azure.Data.Extensions.MySql    
     - name: Publish MySql
-      run: dotnet nuget push "Microsoft.Azure.Data.Extensions.MySql/bin/Release/Microsoft.Azure.Data.Extensions.MySql.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push "Sfinks.Azure.Data.Extensions.MySql/bin/Release/Sfinks.Azure.Data.Extensions.MySql.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
       
     - name: Package MySql EF Core
       run: dotnet pack --no-restore --configuration 'Release' -p:Version=$PACKAGE_VERSION
-      working-directory: Microsoft.Azure.Data.Extensions.MySql.EntityFrameworkCore    
+      working-directory: Sfinks.Azure.Data.Extensions.MySql.EntityFrameworkCore    
     - name: Publish MySql EF Core
-      run: dotnet nuget push "Microsoft.Azure.Data.Extensions.MySql.EntityFrameworkCore/bin/Release/Microsoft.Azure.Data.Extensions.MySql.EntityFrameworkCore.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push "Sfinks.Azure.Data.Extensions.MySql.EntityFrameworkCore/bin/Release/Sfinks.Azure.Data.Extensions.MySql.EntityFrameworkCore.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
     
     - name: Package MySqlConnector
       run: dotnet pack --no-restore --configuration 'Release' -p -p:Version=$PACKAGE_VERSION
-      working-directory: Microsoft.Azure.Data.Extensions.MySqlConnector    
+      working-directory: Sfinks.Azure.Data.Extensions.MySqlConnector    
     - name: Publish MySqlConnector
-      run: dotnet nuget push "Microsoft.Azure.Data.Extensions.MySqlConnector/bin/Release/Microsoft.Azure.Data.Extensions.MySqlConnector.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push "Sfinks.Azure.Data.Extensions.MySqlConnector/bin/Release/Sfinks.Azure.Data.Extensions.MySqlConnector.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
      
     - name: Package MySqlConnector EF Core
       run: dotnet pack --no-restore --configuration 'Release' -p -p:Version=$PACKAGE_VERSION
-      working-directory:Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore    
+      working-directory:Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore    
     - name: Publish MySqlConnector EF Core
-      run: dotnet nuget push "Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/bin/Release/Microsoft.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+      run: dotnet nuget push "Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/bin/Release/Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.${PACKAGE_VERSION}.nupkg" --source "github" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate

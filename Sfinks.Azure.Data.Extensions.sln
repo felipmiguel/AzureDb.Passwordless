@@ -1,0 +1,128 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{66E21FE8-208E-4570-93BC-7F880E744B1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Repository", "Sample.Repository\Sample.Repository.csproj", "{53F7297F-4765-48DF-AAD3-850E9A6EDAC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DE7DCCC0-BF13-4796-A25F-18641FC197C0}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{73D262CE-7B86-49DC-B1B4-650C8C5CB53F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.Common", "Sfinks.Azure.Data.Extensions.Common\src\Sfinks.Azure.Data.Extensions.Common.csproj", "{64F98A11-4041-418E-B25B-D13A592BFA1A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.Common.Tests", "Sfinks.Azure.Data.Extensions.Common\tests\Sfinks.Azure.Data.Extensions.Common.Tests.csproj", "{845462D0-2C02-4EE5-9E8E-15C90E28746C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySqlConnector", "MySqlConnector", "{71E996D5-C67B-43AC-8C07-0ECD5C692BE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EF.Pomelo", "EF.Pomelo", "{AB554881-D43F-4159-8E5D-4FB22DC0CC2D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Npgsql", "Npgsql", "{B89A93AD-C747-4A8D-B490-7CBE321A8E0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EF.Npgsql", "EF.Npgsql", "{31C03DC9-34F1-42E5-8AA9-91D2EEF69FE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.Npgsql", "Sfinks.Azure.Data.Extensions.Npgsql\src\Sfinks.Azure.Data.Extensions.Npgsql.csproj", "{958ED338-73CD-447D-928C-4B8FF8E11FB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.Npgsql.Tests", "Sfinks.Azure.Data.Extensions.Npgsql\tests\Sfinks.Azure.Data.Extensions.Npgsql.Tests.csproj", "{D5D268AC-5C82-4522-A4F0-560EEA4D5247}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore", "Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\src\Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.csproj", "{A7D5113C-8FC9-4A8B-A71A-91FF77F5E159}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests", "Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\tests\Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj", "{B79A93DB-2972-40DB-A54F-A172F226D23E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore", "Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\src\Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.csproj", "{08C7B0B6-AE09-4005-BCE7-889D36119D49}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests", "Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\tests\Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj", "{AB986AE2-B8AE-4A6E-8995-D995FF79B90F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sfinks.Core.TestFramework", "Sfinks.Core.TestFramework\Sfinks.Core.TestFramework.csproj", "{80FF8031-C79E-487A-9DF9-1122264A9367}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.MySqlConnector", "Sfinks.Azure.Data.Extensions.MySqlConnector\src\Sfinks.Azure.Data.Extensions.MySqlConnector.csproj", "{234F16F2-2BEE-4BF3-9BD4-18726E1A9CEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sfinks.Azure.Data.Extensions.MySqlConnector.Tests", "Sfinks.Azure.Data.Extensions.MySqlConnector\tests\Sfinks.Azure.Data.Extensions.MySqlConnector.Tests.csproj", "{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Repository.Tests", "Sample.Repository.Tests\Sample.Repository.Tests.csproj", "{A8D36AE5-D95D-4744-83DE-C69053A57B12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53F7297F-4765-48DF-AAD3-850E9A6EDAC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53F7297F-4765-48DF-AAD3-850E9A6EDAC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53F7297F-4765-48DF-AAD3-850E9A6EDAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53F7297F-4765-48DF-AAD3-850E9A6EDAC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64F98A11-4041-418E-B25B-D13A592BFA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64F98A11-4041-418E-B25B-D13A592BFA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64F98A11-4041-418E-B25B-D13A592BFA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64F98A11-4041-418E-B25B-D13A592BFA1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{845462D0-2C02-4EE5-9E8E-15C90E28746C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{845462D0-2C02-4EE5-9E8E-15C90E28746C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{845462D0-2C02-4EE5-9E8E-15C90E28746C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{845462D0-2C02-4EE5-9E8E-15C90E28746C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{958ED338-73CD-447D-928C-4B8FF8E11FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{958ED338-73CD-447D-928C-4B8FF8E11FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{958ED338-73CD-447D-928C-4B8FF8E11FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{958ED338-73CD-447D-928C-4B8FF8E11FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5D268AC-5C82-4522-A4F0-560EEA4D5247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D268AC-5C82-4522-A4F0-560EEA4D5247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D268AC-5C82-4522-A4F0-560EEA4D5247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D268AC-5C82-4522-A4F0-560EEA4D5247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D5113C-8FC9-4A8B-A71A-91FF77F5E159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D5113C-8FC9-4A8B-A71A-91FF77F5E159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D5113C-8FC9-4A8B-A71A-91FF77F5E159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D5113C-8FC9-4A8B-A71A-91FF77F5E159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B79A93DB-2972-40DB-A54F-A172F226D23E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79A93DB-2972-40DB-A54F-A172F226D23E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79A93DB-2972-40DB-A54F-A172F226D23E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79A93DB-2972-40DB-A54F-A172F226D23E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C7B0B6-AE09-4005-BCE7-889D36119D49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C7B0B6-AE09-4005-BCE7-889D36119D49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C7B0B6-AE09-4005-BCE7-889D36119D49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C7B0B6-AE09-4005-BCE7-889D36119D49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB986AE2-B8AE-4A6E-8995-D995FF79B90F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB986AE2-B8AE-4A6E-8995-D995FF79B90F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB986AE2-B8AE-4A6E-8995-D995FF79B90F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB986AE2-B8AE-4A6E-8995-D995FF79B90F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80FF8031-C79E-487A-9DF9-1122264A9367}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80FF8031-C79E-487A-9DF9-1122264A9367}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80FF8031-C79E-487A-9DF9-1122264A9367}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80FF8031-C79E-487A-9DF9-1122264A9367}.Release|Any CPU.Build.0 = Release|Any CPU
+		{234F16F2-2BEE-4BF3-9BD4-18726E1A9CEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{234F16F2-2BEE-4BF3-9BD4-18726E1A9CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{234F16F2-2BEE-4BF3-9BD4-18726E1A9CEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{234F16F2-2BEE-4BF3-9BD4-18726E1A9CEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{53F7297F-4765-48DF-AAD3-850E9A6EDAC8} = {66E21FE8-208E-4570-93BC-7F880E744B1F}
+		{64F98A11-4041-418E-B25B-D13A592BFA1A} = {73D262CE-7B86-49DC-B1B4-650C8C5CB53F}
+		{845462D0-2C02-4EE5-9E8E-15C90E28746C} = {73D262CE-7B86-49DC-B1B4-650C8C5CB53F}
+		{958ED338-73CD-447D-928C-4B8FF8E11FB0} = {B89A93AD-C747-4A8D-B490-7CBE321A8E0D}
+		{D5D268AC-5C82-4522-A4F0-560EEA4D5247} = {B89A93AD-C747-4A8D-B490-7CBE321A8E0D}
+		{A7D5113C-8FC9-4A8B-A71A-91FF77F5E159} = {AB554881-D43F-4159-8E5D-4FB22DC0CC2D}
+		{B79A93DB-2972-40DB-A54F-A172F226D23E} = {AB554881-D43F-4159-8E5D-4FB22DC0CC2D}
+		{08C7B0B6-AE09-4005-BCE7-889D36119D49} = {31C03DC9-34F1-42E5-8AA9-91D2EEF69FE2}
+		{AB986AE2-B8AE-4A6E-8995-D995FF79B90F} = {31C03DC9-34F1-42E5-8AA9-91D2EEF69FE2}
+		{234F16F2-2BEE-4BF3-9BD4-18726E1A9CEF} = {71E996D5-C67B-43AC-8C07-0ECD5C692BE8}
+		{EDD66D0A-10CF-4F94-A5C3-9DD2C92387A9} = {71E996D5-C67B-43AC-8C07-0ECD5C692BE8}
+		{A8D36AE5-D95D-4744-83DE-C69053A57B12} = {66E21FE8-208E-4570-93BC-7F880E744B1F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ED098F7B-46CA-4E09-B40E-A8539FD3EC58}
+	EndGlobalSection
+EndGlobal
