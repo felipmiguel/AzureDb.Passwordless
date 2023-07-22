@@ -19,8 +19,6 @@ namespace Sfinks.Azure.Data.Extensions.MySqlConnectorTests
     {
         public ChecklistContext CreateDbContext(string[] args)
         {
-            Console.WriteLine("args {0}", string.Join(",", args));
-
             ConfigurationBuilder configBuilder = new ConfigurationBuilder();
             configBuilder.AddJsonFile("appsettings.json");
             IConfigurationRoot config = configBuilder.Build();

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sfinks.Azure.Data.Extensions.Common.Tests
 {
-    public class TokenCredentialBaseAuthenticationProviderTests : LiveTestBase<ConfigurationTestEnvironment>
+    public class TokenCredentialBaseAuthenticationProviderTests : TestBase<ConfigurationTestEnvironment>
     {
         [Test]
         public async Task CachingCreds()

@@ -11,9 +11,9 @@ namespace Sfinks.Core.TestFramework
     /// Base test that executes tests using Azure resources
     /// </summary>
     /// <typeparam name="TEnvironment"></typeparam>
-    public class LiveTestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
+    public class TestBase<TEnvironment> where TEnvironment : TestEnvironment, new()
     {
-        protected LiveTestBase()
+        protected TestBase()
         {
             TestEnvironment = new TEnvironment();
         }

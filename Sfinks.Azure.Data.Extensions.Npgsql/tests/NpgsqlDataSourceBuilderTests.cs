@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sfinks.Azure.Data.Extensions.Npgsql.Tests
 {
-    public class NpgsqlDataSourceBuilderTests : LiveTestBase<NpgsqlTestEnvironment>
+    public class NpgsqlDataSourceBuilderTests : TestBase<NpgsqlTestEnvironment>
     {
         private static async Task ValidateDataSourceAsync(NpgsqlDataSource dataSource)
         {

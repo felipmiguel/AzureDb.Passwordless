@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests
 {
-    public class DbContextOptionsBuilderTests : LiveTestBase<MySqlTestEnvironment>
+    public class DbContextOptionsBuilderTests : TestBase<MySqlTestEnvironment>
     {
         private static readonly ServerVersion serverVersion = ServerVersion.Parse("5.7", ServerType.MySql);
 

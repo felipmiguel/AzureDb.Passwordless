@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests
 {
-    public class DbContextOptionsBuilderTests : LiveTestBase<NpgsqlTestEnvironment>
+    public class DbContextOptionsBuilderTests : TestBase<NpgsqlTestEnvironment>
     {
         [Test]
         public async Task EFDefault()

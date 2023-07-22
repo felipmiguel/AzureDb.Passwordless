@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sfinks.Azure.Data.Extensions.MySqlConnector.Tests
 {
-    public class MySqlConnectionTests : LiveTestBase<MySqlConnectorTestEnvironment>
+    public class MySqlConnectionTests : TestBase<MySqlConnectorTestEnvironment>
     {
         private static async Task ValidateConnectionAsync(MySqlConnection connection)
         {

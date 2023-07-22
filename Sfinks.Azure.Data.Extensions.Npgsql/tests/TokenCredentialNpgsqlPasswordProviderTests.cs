@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Sfinks.Azure.Data.Extensions.Npgsql.Tests
 {
-    public class TokenCredentialNpgsqlPasswordProviderTests : LiveTestBase<NpgsqlTestEnvironment>
+    public class TokenCredentialNpgsqlPasswordProviderTests : TestBase<NpgsqlTestEnvironment>
     {
         private static async Task ValidateDataSourceAsync(NpgsqlDataSource dataSource)
         {

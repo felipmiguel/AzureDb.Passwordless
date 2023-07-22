@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{66E21FE8-208E-4570-93BC-7F880E744B1F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{66E21FE8-208E-4570-93BC-7F880E744B1F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Repository", "Sample.Repository\Sample.Repository.csproj", "{53F7297F-4765-48DF-AAD3-850E9A6EDAC8}"
 EndProject
