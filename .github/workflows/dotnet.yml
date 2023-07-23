@@ -21,9 +21,9 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore Sflinks.Azure.Data.Extensions.sln
+      run: dotnet restore Batec.Azure.Data.Extensions.sln
     - name: Build
-      run: dotnet build --no-restore Sflinks.Azure.Data.Extensions.sln
+      run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
       
     - name: Azure CLI Login
       uses: azure/login@v1
