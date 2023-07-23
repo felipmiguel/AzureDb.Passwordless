@@ -5,21 +5,21 @@ terraform {
       version = "1.2.24"
     }
   }
+  backend "azurerm" {
+      # change this to your own storage account name
+      resource_group_name  = "rg-sfinks-tfstate"
+      storage_account_name = "sfinksstate"
+      container_name       = "tfstate-pgsql"
+      key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
   features {}
 }
 
-resource "azurecaf_name" "resource_group" {
-  name          = var.application_name
-  resource_type = "azurerm_resource_group"
-  suffixes      = [var.environment]
-}
-
-resource "azurerm_resource_group" "resource_group" {
-  name     = azurecaf_name.resource_group.result
-  location = var.location
+data "azurerm_resource_group" "resource_group" {
+  name = var.resource_group_name
 }
 
 resource "azurecaf_name" "psql_umi" {
@@ -30,7 +30,7 @@ resource "azurecaf_name" "psql_umi" {
 
 resource "azurerm_user_assigned_identity" "psql_umi" {
   name                = azurecaf_name.psql_umi.result
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
   location            = var.location
 }
 
@@ -42,7 +42,7 @@ resource "azurecaf_name" "postgresql_server" {
 
 resource "azurerm_postgresql_flexible_server" "database" {
   name                = azurecaf_name.postgresql_server.result
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
   location            = var.location
 
   sku_name                     = "B_Standard_B1ms"
@@ -80,7 +80,7 @@ data "azuread_user" "aad_admin" {
 
 resource "azurerm_postgresql_flexible_server_active_directory_administrator" "aad_admin" {
   server_name         = azurerm_postgresql_flexible_server.database.name
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = data.azuread_user.aad_admin.object_id
   principal_name      = data.azuread_user.aad_admin.user_principal_name

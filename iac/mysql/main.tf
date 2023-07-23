@@ -11,21 +11,32 @@ terraform {
       source = "hashicorp/azuread"
     }
   }
+  backend "azurerm" {
+      # change this to your own storage account name
+      resource_group_name  = "rg-sfinks-tfstate"
+      storage_account_name = "sfinksstate"
+      container_name       = "tfstate-mysql"
+      key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
   features {}
 }
 
-resource "azurecaf_name" "resource_group" {
-  name          = var.application_name
-  resource_type = "azurerm_resource_group"
-  suffixes      = [var.environment]
-}
+# resource "azurecaf_name" "resource_group" {
+#   name          = var.application_name
+#   resource_type = "azurerm_resource_group"
+#   suffixes      = [var.environment]
+# }
 
-resource "azurerm_resource_group" "resource_group" {
-  name     = azurecaf_name.resource_group.result
-  location = var.location
+# resource "azurerm_resource_group" "resource_group" {
+#   name     = azurecaf_name.resource_group.result
+#   location = var.location
+# }
+
+data "azurerm_resource_group" "resource_group" {
+  name = var.resource_group_name
 }
 
 resource "azurecaf_name" "mysql_umi" {
@@ -36,7 +47,7 @@ resource "azurecaf_name" "mysql_umi" {
 
 resource "azurerm_user_assigned_identity" "mysql_umi" {
   name                = azurecaf_name.mysql_umi.result
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
   location            = var.location
 }
 
@@ -54,7 +65,7 @@ resource "random_password" "password" {
 
 resource "azurerm_mysql_flexible_server" "database" {
   name                = azurecaf_name.mysql_server.result
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
   location            = var.location
 
   administrator_login    = var.administrator_login
@@ -118,7 +129,7 @@ resource "azapi_resource" "mysql_aad_admin" {
 
 resource "azurerm_mysql_flexible_database" "database" {
   name                = var.database_name
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
   server_name         = azurerm_mysql_flexible_server.database.name
   charset             = "utf8mb3"
   collation           = "utf8mb3_unicode_ci"
@@ -133,7 +144,7 @@ resource "azurecaf_name" "mysql_firewall_rule" {
 # This rule is to enable the 'Allow access to Azure services' checkbox
 resource "azurerm_mysql_flexible_server_firewall_rule" "database" {
   name                = azurecaf_name.mysql_firewall_rule.result
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
   server_name         = azurerm_mysql_flexible_server.database.name
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
@@ -156,7 +167,7 @@ locals {
 # This rule is to enable current machine
 resource "azurerm_mysql_flexible_server_firewall_rule" "rule_allow_iac_machine" {
   name                = azurecaf_name.mysql_firewall_rule_allow_iac_machine.result
-  resource_group_name = azurerm_resource_group.resource_group.name
+  resource_group_name = data.azurerm_resource_group.resource_group.name
   server_name         = azurerm_mysql_flexible_server.database.name
   start_ip_address    = local.myip
   end_ip_address      = local.myip

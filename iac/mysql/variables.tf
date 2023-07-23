@@ -4,6 +4,12 @@ variable "application_name" {
   default     = "netmysqlpwdless"
 }
 
+variable "resource_group_name" {
+  type        = string
+  description = "The name of the resource group in which to create the resources"
+  default     = "rg-sfinks-stage"
+}
+
 variable "environment" {
   type        = string
   description = "The environment (dev, test, prod...)"
