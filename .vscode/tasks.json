@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+                "${workspaceFolder}/Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+                "${workspaceFolder}/Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/Sfinks.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj"
+                "${workspaceFolder}/Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

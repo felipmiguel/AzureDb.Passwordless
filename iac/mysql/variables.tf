@@ -7,7 +7,7 @@ variable "application_name" {
 variable "resource_group_name" {
   type        = string
   description = "The name of the resource group in which to create the resources"
-  default     = "rg-sfinks-stage"
+  default     = "rg-Batec-stage"
 }
 
 variable "environment" {

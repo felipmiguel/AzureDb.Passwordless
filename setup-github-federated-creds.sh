@@ -1,9 +1,9 @@
 location=westeurope
-resource_group=rg-sfinks-stage
-tfstate_storage_account=sfinksstate
-tfstate_group_name=rg-sfinks-tfstate
+resource_group=rg-Batec-stage
+tfstate_storage_account=Batecstate
+tfstate_group_name=rg-Batec-tfstate
 echo 'Create an app registration for GitHub Actions'
-gh_id=$(az ad app create --display-name "GitHub Actions dotnet Sfinks" --output tsv --query appId)
+gh_id=$(az ad app create --display-name "GitHub Actions dotnet Batec" --output tsv --query appId)
 az ad app federated-credential create --id $gh_id --parameters gh_credential.json
 gh_sp_oid=$(az ad sp create --id $gh_id --output tsv --query id)
 echo 'Create a resource group for servers'

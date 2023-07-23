@@ -33,7 +33,7 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         
     - name: Test Common
-      working-directory: ./Sfinks.Azure.Data.Extensions.Common/tests/
+      working-directory: ./Batec.Azure.Data.Extensions.Common/tests/
       run: dotnet test        
 
     # Install the latest version of the Terraform CLI
@@ -65,7 +65,7 @@ jobs:
       
     
     - name: Test MySqlConnector
-      working-directory: ./Sfinks.Azure.Data.Extensions.MySqlConnector/tests/
+      working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/tests/
       run: dotnet test
       continue-on-error: true
       env:
@@ -89,7 +89,7 @@ jobs:
       
         
     - name: Test MySqlConnector Entity Framework
-      working-directory: ./Sfinks.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
+      working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
       run: dotnet test
       continue-on-error: true
       env:
