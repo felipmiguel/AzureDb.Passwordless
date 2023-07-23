@@ -11,6 +11,7 @@ terraform {
     storage_account_name = "Batecstate"
     container_name       = "tfstate-pgsql"
     key                  = "terraform.tfstate"
+    use_oidc             = true
   }
 }
 

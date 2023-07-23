@@ -1,5 +1,9 @@
 terraform {
   required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=3.7.0"
+    }
     azurecaf = {
       source  = "aztfmod/azurecaf"
       version = "1.2.24"
@@ -17,6 +21,7 @@ terraform {
     storage_account_name = "batecstate"
     container_name       = "tfstate-mysql"
     key                  = "terraform.tfstate"
+    use_oidc             = true
   }
 }
 
