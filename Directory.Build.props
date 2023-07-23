@@ -1,0 +1,79 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+      <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+    <PlatformName Condition="'$(PlatformName)' == ''">$(Platform)</PlatformName>
+  </PropertyGroup>
+  <!-- Setup common output paths -->
+  
+  
+<PropertyGroup>
+  <IsTestProject Condition="'$(IsTestProject)' == 'true' or $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+  <IsSampleProject Condition="'$(IsSampleProject)' == 'true' or $(MSBuildProjectName.EndsWith('.Samples'))">true</IsSampleProject>
+</PropertyGroup>
+<PropertyGroup Condition="'$(IsTestProject)' == 'false'">
+  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+</PropertyGroup>
+
+ <!-- Setup default project properties -->
+  <PropertyGroup>
+    <LangVersion>11.0</LangVersion>
+    <!--
+      Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
+      SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
+    -->
+    <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <!--
+      https://github.com/dotnet/roslyn-analyzers/issues/5628
+    -->
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
+    <!--
+      Disable some NetAnalyzers rules
+     -->
+    <NoWarn>
+      $(NoWarn);
+      CA1716; <!-- avoid using method names that are reserved in other languages -->
+      CA1308; <!-- prefer ToUpperInvariant  -->
+      CA1819; <!-- Properties should not return arrays -->
+      CA1710; <!-- Use Collection sufix -->
+      CA1028; <!-- Enum backing type should be int -->
+      CA1032; <!-- Add default exception ctors -->
+      CA1063; <!-- Dispose implementation -->
+      CA1066; <!-- Implement IEquatable -->
+      CA1815; <!-- Equality members on structs -->
+      CA2007; <!-- Do not directly await a Task without calling ConfigureAwait (replaced by AZC0012) -->
+      CA2231; <!-- Override Equality operators -->
+      CA2225; <!-- Provide alternative to implicit operators -->
+      CA1714; <!-- Flags should have plural names -->
+      CA1062; <!-- Public parameter should be checked for null -->
+      CA1031; <!-- Don't catch generic exceptions -->
+      CA2000; <!-- Call dispose on IDisposable objects -->
+      CA2012; <!-- ValueTask should only be awaited once - conflicts with EnsureCompleted check -->
+    </NoWarn>
+    <!--
+      Disable some MSBuild warnings
+    -->
+    <NoWarn>
+      $(NoWarn);
+      MSB3245; <!-- Do not warn if a package reference is unavailable -->
+    </NoWarn>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <!-- TargetFramework default properties -->
+  <!-- Update pipelines/templates/steps/install-dotnet.yml as needed, without re-installing SDKs already found on all supported agents -->
+  <PropertyGroup>
+    <RequiredTargetFrameworks>net462;netstandard2.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSampleProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
+    <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+</Project>
