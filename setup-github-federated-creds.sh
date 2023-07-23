@@ -1,7 +1,7 @@
 location=westeurope
-resource_group=rg-Batec-stage
-tfstate_storage_account=Batecstate
-tfstate_group_name=rg-Batec-tfstate
+resource_group=rg-batec-stage
+tfstate_storage_account=batecstate
+tfstate_group_name=rg-batec-tfstate
 echo 'Create an app registration for GitHub Actions'
 gh_id=$(az ad app create --display-name "GitHub Actions dotnet Batec" --output tsv --query appId)
 az ad app federated-credential create --id $gh_id --parameters gh_credential.json

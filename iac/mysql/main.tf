@@ -12,28 +12,18 @@ terraform {
     }
   }
   backend "azurerm" {
-      # change this to your own storage account name
-      resource_group_name  = "rg-Batec-tfstate"
-      storage_account_name = "Batecstate"
-      container_name       = "tfstate-mysql"
-      key                  = "terraform.tfstate"
+    # change this to your own storage account name
+    resource_group_name  = "rg-batec-tfstate"
+    storage_account_name = "batecstate"
+    container_name       = "tfstate-mysql"
+    key                  = "terraform.tfstate"
   }
 }
 
 provider "azurerm" {
+  use_oidc = true
   features {}
 }
-
-# resource "azurecaf_name" "resource_group" {
-#   name          = var.application_name
-#   resource_type = "azurerm_resource_group"
-#   suffixes      = [var.environment]
-# }
-
-# resource "azurerm_resource_group" "resource_group" {
-#   name     = azurecaf_name.resource_group.result
-#   location = var.location
-# }
 
 data "azurerm_resource_group" "resource_group" {
   name = var.resource_group_name
@@ -75,7 +65,7 @@ resource "azurerm_mysql_flexible_server" "database" {
   version                      = "8.0.21"
   backup_retention_days        = 7
   geo_redundant_backup_enabled = false
-  
+
   identity {
     identity_ids = [azurerm_user_assigned_identity.mysql_umi.id]
     type         = "UserAssigned"
@@ -87,7 +77,7 @@ resource "azurerm_mysql_flexible_server" "database" {
   }
 
   lifecycle {
-    ignore_changes = [ zone, high_availability.0.standby_availability_zone ]
+    ignore_changes = [zone, high_availability.0.standby_availability_zone]
   }
 }
 
