@@ -9,7 +9,7 @@ terraform {
       version = "1.2.24"
     }
     azapi = {
-      source = "azure/azapi"
+      source  = "azure/azapi"
       version = ">=1.3.0"
     }
     azuread = {
@@ -109,14 +109,14 @@ data "azuread_user" "aad_admin" {
 }
 
 data "azuread_application" "aad_admin" {
-  count     = data.azuread_directory_object.current_client.type == "ServicePrincipal" ? 1 : 0
+  count          = data.azuread_directory_object.current_client.type == "ServicePrincipal" ? 1 : 0
   application_id = data.azurerm_client_config.current_client.client_id
 }
 
 locals {
   # login_name = strcontains(data.azuread_user.aad_admin.user_principal_name, "#EXT#") ? data.azuread_user.aad_admin.other_mails[0] : data.azuread_user.aad_admin.user_principal_name
   login_name = data.azuread_directory_object.current_client.type == "User" ? data.azuread_user.aad_admin[0].user_principal_name : data.azuread_application.aad_admin[0].display_name
-  login_sid = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_application.aad_admin[0].object_id
+  login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_application.aad_admin[0].object_id
 }
 
 resource "azapi_resource" "mysql_aad_admin" {
@@ -187,4 +187,26 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "rule_allow_iac_machine" 
   server_name         = azurerm_mysql_flexible_server.database.name
   start_ip_address    = local.myip
   end_ip_address      = local.myip
+}
+
+resource "azurerm_key_vault" "bateckv4455" {
+  resource_group_name      = data.azurerm_resource_group.resource_group.name
+  location                 = var.location
+  name                     = "bateckv4455"
+  sku_name                 = "standard"
+  purge_protection_enabled = false
+  access_policy {
+    tenant_id = data.azurerm_client_config.current_client.tenant_id
+    object_id = data.azurerm_client_config.current_client.object_id
+    secret_permissions = [
+      "get",
+      "list",
+      "set",
+      "delete",
+      "backup",
+      "restore",
+      "recover",
+      "purge"
+    ]
+  }
 }

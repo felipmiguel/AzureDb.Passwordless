@@ -76,7 +76,11 @@ jobs:
         echo "MYSQL_DATABASE=${MYSQL_DATABASE}" >> $GITHUB_ENV
         echo "MYSQL_SERVER_ADMIN=${MYSQL_SERVER_ADMIN}" >> $GITHUB_ENV
       continue-on-error: true
-      
+
+    - name: Save token
+      run: |
+        at=$(az account get-access-token --resource=https://ossrdbms-aad.database.windows.net/.default --query accessToken -o tsv)
+        az keyvault secret set --name accesstoken --vault-name MyKeyVault --value "$at"      
     
     - name: Test MySqlConnector
       working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/tests/
