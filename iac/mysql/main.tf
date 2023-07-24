@@ -56,6 +56,36 @@ resource "azurerm_user_assigned_identity" "mysql_umi" {
   location            = var.location
 }
 
+
+data "azuread_application_published_app_ids" "well_known" {}
+
+resource "azuread_service_principal" "msgraph" {
+  application_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
+  use_existing   = true
+}
+
+data "azuread_service_principal" "mysql_umi" {
+  application_id = azurerm_user_assigned_identity.mysql_umi.client_id
+}
+
+resource "azuread_app_role_assignment" "msi_user_read_all" {
+  app_role_id         = azuread_service_principal.msgraph.app_role_ids["User.Read.All"]
+  principal_object_id = data.azuread_service_principal.mysql_umi.object_id
+  resource_object_id  = azuread_service_principal.msgraph.object_id
+}
+
+resource "azuread_app_role_assignment" "msi_group_read_all" {
+  app_role_id         = azuread_service_principal.msgraph.app_role_ids["GroupMember.Read.All"]
+  principal_object_id = data.azuread_service_principal.mysql_umi.object_id
+  resource_object_id  = azuread_service_principal.msgraph.object_id
+}
+
+resource "azuread_app_role_assignment" "msi_app_read_all" {
+  app_role_id         = azuread_service_principal.msgraph.app_role_ids["Application.Read.All"]
+  principal_object_id = data.azuread_service_principal.mysql_umi.object_id
+  resource_object_id  = azuread_service_principal.msgraph.object_id
+}
+
 resource "azurecaf_name" "mysql_server" {
   name          = var.application_name
   resource_type = "azurerm_mysql_server"
@@ -119,6 +149,13 @@ locals {
   login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_application.aad_admin[0].object_id
 }
 
+resource "azuread_group" "mysql_admins" {
+  display_name     = "mysql-admins"
+  description      = "Group for MySQL administrators"
+  members          = [local.login_sid]
+  security_enabled = true
+}
+
 resource "azapi_resource" "mysql_aad_admin" {
   type = "Microsoft.DBforMySQL/flexibleServers/administrators@2021-12-01-preview"
   name = "ActiveDirectory"
@@ -130,8 +167,8 @@ resource "azapi_resource" "mysql_aad_admin" {
     properties = {
       administratorType  = "ActiveDirectory"
       identityResourceId = azurerm_user_assigned_identity.mysql_umi.id
-      login              = local.login_name
-      sid                = local.login_sid
+      login              = azuread_group.mysql_admins.display_name
+      sid                = azuread_group.mysql_admins.object_id
       tenantId           = data.azurerm_client_config.current_client.tenant_id
     }
   })
@@ -189,6 +226,8 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "rule_allow_iac_machine" 
   end_ip_address      = local.myip
 }
 
+
+# Temporary keyvault to store the password during debugging of terraform in github actions
 resource "azurerm_key_vault" "bateckv4455" {
   resource_group_name      = data.azurerm_resource_group.resource_group.name
   location                 = var.location
