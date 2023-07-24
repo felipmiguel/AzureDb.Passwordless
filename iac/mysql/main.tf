@@ -105,7 +105,7 @@ data "azuread_user" "aad_admin" {
 
 data "azuread_application" "aad_admin" {
   count     = data.azuread_directory_object.current_client.type == "ServicePrincipal" ? 1 : 0
-  object_id = data.azurerm_client_config.current_client.object_id
+  application_id = data.azurerm_client_config.current_client.client_id
 }
 
 locals {
