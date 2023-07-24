@@ -5,6 +5,7 @@ using Batec.Core.TestFramework;
 using MySqlConnector;
 using NUnit.Framework;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Batec.Azure.Data.Extensions.MySqlConnector.Tests
@@ -24,6 +25,9 @@ namespace Batec.Azure.Data.Extensions.MySqlConnector.Tests
         public async Task ProviderDefaultAzureCredential()
         {
             TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(TestEnvironment.Credential);
+            var sampleToken = await passwordProvider.GetAuthenticationTokenAsync();
+            Debug.WriteLine(sampleToken);
+            Debug.WriteLine(TestEnvironment.ConnectionString);
             using MySqlConnection connection = new MySqlConnection(TestEnvironment.ConnectionString);
             connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
             await ValidateConnectionAsync(connection);
