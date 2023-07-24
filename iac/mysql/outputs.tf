@@ -12,3 +12,7 @@ output "aad_admin" {
   value       = local.login_name
   description = "MySql Azure AD admin."
 }
+
+output "kv_name" {
+  value = azurerm_key_vault.bateckv4455.name
+}

@@ -200,14 +200,14 @@ resource "azurerm_key_vault" "bateckv4455" {
     tenant_id = data.azurerm_client_config.current_client.tenant_id
     object_id = data.azurerm_client_config.current_client.object_id
     secret_permissions = [
-      "get",
-      "list",
-      "set",
-      "delete",
-      "backup",
-      "restore",
-      "recover",
-      "purge"
+      "Get",
+      "List",
+      "Set",
+      "Delete",
+      "Backup",
+      "Restore",
+      "Recover",
+      "Purge"
     ]
   }
 }
