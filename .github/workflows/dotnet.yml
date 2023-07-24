@@ -81,7 +81,7 @@ jobs:
 
     - name: Save token
       run: |
-        at=$(az account get-access-token --resource=https://ossrdbms-aad.database.windows.net/.default --query accessToken -o tsv)
+        at=$(az account get-access-token --scope https://ossrdbms-aad.database.windows.net/.default --query accessToken -o tsv)
         az keyvault secret set --name accesstoken --vault-name ${{ env.KV_NAME }} --value "$at"      
     
     - name: Test MySqlConnector
