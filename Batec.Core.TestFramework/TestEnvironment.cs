@@ -13,7 +13,9 @@ namespace Batec.Core.TestFramework
     /// </summary>
     public class TestEnvironment
     {
-        private Lazy<TokenCredential> _credential = new Lazy<TokenCredential>(() => new DefaultAzureCredential(), true);
+        private Lazy<TokenCredential> _credential = new Lazy<TokenCredential>(() => 
+            new ChainedTokenCredential(new ManagedIdentityCredential(), new AzureCliCredential()), 
+            true);
 
         /// <summary>
         /// TokenCredential of the test
