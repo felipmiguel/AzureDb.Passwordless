@@ -12,7 +12,7 @@ terraform {
       source = "azure/azapi"
     }
     azuread = {
-      source = "hashicorp/azuread"
+      source  = "hashicorp/azuread"
       version = ">=2.23.0"
     }
   }
@@ -94,13 +94,23 @@ resource "azurerm_mysql_flexible_server" "database" {
 data "azurerm_client_config" "current_client" {
 }
 
+data "azuread_directory_object" "current_client" {
+  object_id = data.azurerm_client_config.current_client.object_id
+}
+
 data "azuread_user" "aad_admin" {
+  count     = data.azuread_directory_object.current_client.type == "User" ? 1 : 0
+  object_id = data.azurerm_client_config.current_client.object_id
+}
+
+data "azuread_application" "aad_admin" {
+  count     = data.azuread_directory_object.current_client.type == "ServicePrincipal" ? 1 : 0
   object_id = data.azurerm_client_config.current_client.object_id
 }
 
 locals {
   # login_name = strcontains(data.azuread_user.aad_admin.user_principal_name, "#EXT#") ? data.azuread_user.aad_admin.other_mails[0] : data.azuread_user.aad_admin.user_principal_name
-  login_name = data.azuread_user.aad_admin.user_principal_name
+  login_name = data.azuread_directory_object.current_client.type == "User" ? data.azuread_user.aad_admin[0].user_principal_name : data.azuread_application.aad_admin[0].display_name
 }
 
 resource "azapi_resource" "mysql_aad_admin" {
@@ -115,7 +125,7 @@ resource "azapi_resource" "mysql_aad_admin" {
       administratorType  = "ActiveDirectory"
       identityResourceId = azurerm_user_assigned_identity.mysql_umi.id
       login              = local.login_name
-      sid                = data.azuread_user.aad_admin.object_id
+      sid                = data.azurerm_client_config.current_client.object_id
       tenantId           = data.azurerm_client_config.current_client.tenant_id
     }
   })
