@@ -10,6 +10,7 @@ terraform {
     }
     azapi = {
       source = "azure/azapi"
+      version = ">=1.3.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -32,6 +33,10 @@ provider "azurerm" {
 }
 
 provider "azuread" {
+  use_oidc = true
+}
+
+provider "azapi" {
   use_oidc = true
 }
 
