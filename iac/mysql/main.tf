@@ -33,7 +33,6 @@ provider "azurerm" {
 
 provider "azuread" {
   use_oidc = true
-  features {}
 }
 
 data "azurerm_resource_group" "resource_group" {
