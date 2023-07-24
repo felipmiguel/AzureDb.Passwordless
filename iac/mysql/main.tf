@@ -194,6 +194,7 @@ resource "azurerm_key_vault" "bateckv4455" {
   location                 = var.location
   name                     = "bateckv4455"
   sku_name                 = "standard"
+  tenant_id                = data.azurerm_client_config.current_client.tenant_id
   purge_protection_enabled = false
   access_policy {
     tenant_id = data.azurerm_client_config.current_client.tenant_id
