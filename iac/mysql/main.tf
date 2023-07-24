@@ -13,6 +13,7 @@ terraform {
     }
     azuread = {
       source = "hashicorp/azuread"
+      version = ">=2.23.0"
     }
   }
   backend "azurerm" {
@@ -26,6 +27,11 @@ terraform {
 }
 
 provider "azurerm" {
+  use_oidc = true
+  features {}
+}
+
+provider "azuread" {
   use_oidc = true
   features {}
 }
