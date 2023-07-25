@@ -7,8 +7,8 @@ terraform {
   }
   backend "azurerm" {
     # change this to your own storage account name
-    resource_group_name  = "rg-Batec-tfstate"
-    storage_account_name = "Batecstate"
+    resource_group_name  = "rg-batec-tfstate"
+    storage_account_name = "batecstate"
     container_name       = "tfstate-pgsql"
     key                  = "terraform.tfstate"
     use_oidc             = true
