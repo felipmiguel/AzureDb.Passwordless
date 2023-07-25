@@ -104,7 +104,7 @@ locals {
 resource "azurerm_postgresql_flexible_server_active_directory_administrator" "aad_admin" {
   server_name         = azurerm_postgresql_flexible_server.database.name
   resource_group_name = data.azurerm_resource_group.resource_group.name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
+  tenant_id           = data.azurerm_client_config.current_client.tenant_id
   object_id           = local.login_sid
   principal_name      = local.login_name
   principal_type      = "User"
