@@ -148,6 +148,22 @@ locals {
   login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_service_principal.current_client[0].object_id
 }
 
+resource "azuread_application" "aad_admin" {
+  display_name = "${var.application_name}-aad-admin"
+}
+
+# resource "azuread_application_password" "aad_admin_password" {
+#   application_object_id = azuread_application.aad_admin.object_id
+# }
+
+resource "azuread_service_principal" "aad_admin" {
+  application_id = azuread_application.aad_admin.application_id
+}
+
+resource "azuread_service_principal_password" "aad_admin_password" {
+  service_principal_id = azuread_service_principal.aad_admin.id
+}
+
 resource "azapi_resource" "mysql_aad_admin" {
   type = "Microsoft.DBforMySQL/flexibleServers/administrators@2021-12-01-preview"
   name = "ActiveDirectory"
@@ -159,8 +175,8 @@ resource "azapi_resource" "mysql_aad_admin" {
     properties = {
       administratorType  = "ActiveDirectory"
       identityResourceId = azurerm_user_assigned_identity.mysql_umi.id
-      login              = local.login_name
-      sid                = local.login_sid
+      login              = azuread_service_principal.aad_admin.display_name
+      sid                = azuread_service_principal.aad_admin.application_id
       tenantId           = data.azurerm_client_config.current_client.tenant_id
     }
   })
