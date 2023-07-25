@@ -78,18 +78,35 @@ resource "azurerm_postgresql_flexible_server" "database" {
   }
 }
 
-data "azurerm_client_config" "current" {}
+data "azurerm_client_config" "current_client" {
+}
+
+data "azuread_directory_object" "current_client" {
+  object_id = data.azurerm_client_config.current_client.object_id
+}
 
 data "azuread_user" "aad_admin" {
-  object_id = data.azurerm_client_config.current.object_id
+  count     = data.azuread_directory_object.current_client.type == "User" ? 1 : 0
+  object_id = data.azurerm_client_config.current_client.object_id
+}
+
+data "azuread_application" "aad_admin" {
+  count          = data.azuread_directory_object.current_client.type == "ServicePrincipal" ? 1 : 0
+  application_id = data.azurerm_client_config.current_client.client_id
+}
+
+locals {
+  # login_name = strcontains(data.azuread_user.aad_admin.user_principal_name, "#EXT#") ? data.azuread_user.aad_admin.other_mails[0] : data.azuread_user.aad_admin.user_principal_name
+  login_name = data.azuread_directory_object.current_client.type == "User" ? data.azuread_user.aad_admin[0].user_principal_name : data.azuread_application.aad_admin[0].display_name
+  login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_application.aad_admin[0].object_id
 }
 
 resource "azurerm_postgresql_flexible_server_active_directory_administrator" "aad_admin" {
   server_name         = azurerm_postgresql_flexible_server.database.name
   resource_group_name = data.azurerm_resource_group.resource_group.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  object_id           = data.azuread_user.aad_admin.object_id
-  principal_name      = data.azuread_user.aad_admin.user_principal_name
+  object_id           = local.login_sid
+  principal_name      = local.login_name
   principal_type      = "User"
 }
 
