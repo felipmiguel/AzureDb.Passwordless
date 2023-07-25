@@ -131,6 +131,7 @@ jobs:
     # Terraform Destroy
     - name: Terraform Destroy
       if: steps.terraform-apply-mysql.outcome == 'success'
+      working-directory: "./iac/mysql"
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
@@ -227,6 +228,7 @@ jobs:
     # Terraform Destroy
     - name: Terraform Destroy
       if: steps.terraform-apply-postgresql.outcome == 'success'
+      working-directory: "./iac/postgresql"
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}

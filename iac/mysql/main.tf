@@ -133,24 +133,19 @@ data "azuread_directory_object" "current_client" {
   object_id = data.azurerm_client_config.current_client.object_id
 }
 
+data "azuread_service_principal" "current_client" {
+  count     = data.azuread_directory_object.current_client.type == "ServicePrincipal" ? 1 : 0
+  object_id = data.azurerm_client_config.current_client.object_id
+}
+
 data "azuread_user" "aad_admin" {
   count     = data.azuread_directory_object.current_client.type == "User" ? 1 : 0
   object_id = data.azurerm_client_config.current_client.object_id
 }
 
-data "azuread_application" "aad_admin" {
-  count          = data.azuread_directory_object.current_client.type == "ServicePrincipal" ? 1 : 0
-  application_id = data.azurerm_client_config.current_client.client_id
-}
-
 locals {
-  # login_name = strcontains(data.azuread_user.aad_admin.user_principal_name, "#EXT#") ? data.azuread_user.aad_admin.other_mails[0] : data.azuread_user.aad_admin.user_principal_name
-  login_name = data.azuread_directory_object.current_client.type == "User" ? data.azuread_user.aad_admin[0].user_principal_name : data.azuread_application.aad_admin[0].display_name
-  login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_application.aad_admin[0].object_id
-}
-
-data "azuread_group" "mysql_admins" {
-  display_name = "mysql-admins"
+  login_name = data.azuread_directory_object.current_client.type == "User" ? data.azuread_user.aad_admin[0].user_principal_name : data.azuread_service_principal.current_client[0].display_name
+  login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_service_principal.current_client[0].object_id
 }
 
 resource "azapi_resource" "mysql_aad_admin" {
@@ -164,8 +159,8 @@ resource "azapi_resource" "mysql_aad_admin" {
     properties = {
       administratorType  = "ActiveDirectory"
       identityResourceId = azurerm_user_assigned_identity.mysql_umi.id
-      login              = data.azuread_group.mysql_admins.display_name
-      sid                = data.azuread_group.mysql_admins.object_id
+      login              = local.login_name
+      sid                = local.login_sid
       tenantId           = data.azurerm_client_config.current_client.tenant_id
     }
   })
