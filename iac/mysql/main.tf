@@ -56,36 +56,6 @@ resource "azurerm_user_assigned_identity" "mysql_umi" {
   location            = var.location
 }
 
-
-# data "azuread_application_published_app_ids" "well_known" {}
-
-# resource "azuread_service_principal" "msgraph" {
-#   application_id = data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
-#   use_existing   = true
-# }
-
-# data "azuread_service_principal" "mysql_umi" {
-#   application_id = azurerm_user_assigned_identity.mysql_umi.client_id
-# }
-
-# resource "azuread_app_role_assignment" "msi_user_read_all" {
-#   app_role_id         = azuread_service_principal.msgraph.app_role_ids["User.Read.All"]
-#   principal_object_id = data.azuread_service_principal.mysql_umi.object_id
-#   resource_object_id  = azuread_service_principal.msgraph.object_id
-# }
-
-# resource "azuread_app_role_assignment" "msi_group_read_all" {
-#   app_role_id         = azuread_service_principal.msgraph.app_role_ids["GroupMember.Read.All"]
-#   principal_object_id = data.azuread_service_principal.mysql_umi.object_id
-#   resource_object_id  = azuread_service_principal.msgraph.object_id
-# }
-
-# resource "azuread_app_role_assignment" "msi_app_read_all" {
-#   app_role_id         = azuread_service_principal.msgraph.app_role_ids["Application.Read.All"]
-#   principal_object_id = data.azuread_service_principal.mysql_umi.object_id
-#   resource_object_id  = azuread_service_principal.msgraph.object_id
-# }
-
 resource "azurecaf_name" "mysql_server" {
   name          = var.application_name
   resource_type = "azurerm_mysql_server"
@@ -200,29 +170,4 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "rule_allow_iac_machine" 
   server_name         = azurerm_mysql_flexible_server.database.name
   start_ip_address    = local.myip
   end_ip_address      = local.myip
-}
-
-
-# Temporary keyvault to store the password during debugging of terraform in github actions
-resource "azurerm_key_vault" "bateckv4455" {
-  resource_group_name      = data.azurerm_resource_group.resource_group.name
-  location                 = var.location
-  name                     = "bateckv4455"
-  sku_name                 = "standard"
-  tenant_id                = data.azurerm_client_config.current_client.tenant_id
-  purge_protection_enabled = false
-  access_policy {
-    tenant_id = data.azurerm_client_config.current_client.tenant_id
-    object_id = data.azurerm_client_config.current_client.object_id
-    secret_permissions = [
-      "Get",
-      "List",
-      "Set",
-      "Delete",
-      "Backup",
-      "Restore",
-      "Recover",
-      "Purge"
-    ]
-  }
 }
