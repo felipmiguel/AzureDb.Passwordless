@@ -12,3 +12,7 @@ output "aad_admin" {
   value       = azurerm_postgresql_flexible_server_active_directory_administrator.aad_admin.principal_name
   description = "Postgresql Azure AD admin."
 }
+
+output "principal_type" {
+  value = data.azuread_directory_object.current_client.type
+}
