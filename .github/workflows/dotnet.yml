@@ -29,6 +29,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:        
+    - uses: actions/checkout@v3
     - name: Test Common
       working-directory: ./Batec.Azure.Data.Extensions.Common/tests/
       run: dotnet test        
@@ -36,6 +37,7 @@ jobs:
     needs: basic-tests
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: Azure CLI Login
       uses: azure/login@v1
       with:
@@ -132,6 +134,7 @@ jobs:
     needs: basic-tests
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: Azure CLI Login
       uses: azure/login@v1
       with:
