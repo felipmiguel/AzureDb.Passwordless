@@ -30,6 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:        
     - uses: actions/checkout@v3
+    - name: Azure CLI Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - name: Test Common
       working-directory: ./Batec.Azure.Data.Extensions.Common/tests/
       run: dotnet test        
