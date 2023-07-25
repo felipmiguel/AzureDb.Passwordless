@@ -145,47 +145,15 @@ data "azuread_user" "aad_admin" {
 
 locals {
   login_name = data.azuread_directory_object.current_client.type == "User" ? data.azuread_user.aad_admin[0].user_principal_name : data.azuread_service_principal.current_client[0].display_name
-  login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_service_principal.current_client[0].object_id
+  login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_service_principal.current_client[0].application_id
 }
 
-resource "azuread_application" "aad_admin" {
-  display_name = "${var.application_name}-aad-admin"
-}
-
-# resource "azuread_application_password" "aad_admin_password" {
-#   application_object_id = azuread_application.aad_admin.object_id
-# }
-
-resource "azuread_service_principal" "aad_admin" {
-  application_id = azuread_application.aad_admin.application_id
-}
-
-resource "azuread_service_principal_password" "aad_admin_password" {
-  service_principal_id = azuread_service_principal.aad_admin.id
-}
-
-resource "azapi_resource" "mysql_aad_admin" {
-  type = "Microsoft.DBforMySQL/flexibleServers/administrators@2021-12-01-preview"
-  name = "ActiveDirectory"
-  depends_on = [
-    azurerm_mysql_flexible_server.database
-  ]
-  parent_id = azurerm_mysql_flexible_server.database.id
-  body = jsonencode({
-    properties = {
-      administratorType  = "ActiveDirectory"
-      identityResourceId = azurerm_user_assigned_identity.mysql_umi.id
-      login              = azuread_service_principal.aad_admin.display_name
-      sid                = azuread_service_principal.aad_admin.application_id
-      tenantId           = data.azurerm_client_config.current_client.tenant_id
-    }
-  })
-  timeouts {
-    create = "10m"
-    update = "5m"
-    delete = "10m"
-    read   = "3m"
-  }
+resource "azurerm_mysql_flexible_server_active_directory_administrator" "aad_admin" {
+  server_id   = azurerm_mysql_flexible_server.database.id
+  identity_id = azurerm_user_assigned_identity.mysql_umi.id
+  login       = local.login_name
+  object_id   = local.login_sid
+  tenant_id   = data.azurerm_client_config.current_client.tenant_id
 }
 
 resource "azurerm_mysql_flexible_database" "database" {

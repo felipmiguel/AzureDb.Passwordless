@@ -25,8 +25,6 @@ namespace Batec.Azure.Data.Extensions.MySqlConnector.Tests
         public async Task ProviderDefaultAzureCredential()
         {
             TokenCredentialMysqlPasswordProvider passwordProvider = new TokenCredentialMysqlPasswordProvider(TestEnvironment.Credential);
-            var sampleToken = await passwordProvider.GetAuthenticationTokenAsync();
-            Console.WriteLine(sampleToken);
             using MySqlConnection connection = new MySqlConnection(TestEnvironment.ConnectionString);
             connection.ProvidePasswordCallback = passwordProvider.ProvidePassword;
             await ValidateConnectionAsync(connection);
