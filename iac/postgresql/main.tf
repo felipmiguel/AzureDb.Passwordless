@@ -107,7 +107,7 @@ resource "azurerm_postgresql_flexible_server_active_directory_administrator" "aa
   tenant_id           = data.azurerm_client_config.current_client.tenant_id
   object_id           = local.login_sid
   principal_name      = local.login_name
-  principal_type      = "User"
+  principal_type      = data.azuread_directory_object.current_client.type
 }
 
 resource "azurecaf_name" "postgresql_database" {
