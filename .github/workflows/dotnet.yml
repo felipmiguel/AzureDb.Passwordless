@@ -200,12 +200,18 @@ jobs:
       continue-on-error: true
       
     - name: Setup POSTGRESQL EF connection string
+      working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
+      env:
+        POSTGRESQL_FQDN: ${{ env.POSTGRESQL_FQDN }}
+        POSTGRESQL_DATABASE: ${{ env.POSTGRESQL_DATABASE }}
+        POSTGRESQL_SERVER_ADMIN: ${{ env.POSTGRESQL_SERVER_ADMIN }}
       run: |
         POSTGRESQL_CONNECTION_STRING="Server=$POSTGRESQL_FQDN;Port=5432;User ID=$POSTGRESQL_SERVER_ADMIN;Database=$POSTGRESQL_DATABASE;SSL Mode=Require;Trust Server Certificate=true"
         echo "{\"ConnectionStrings\":{\"DefaultConnection\":\"${POSTGRESQL_CONNECTION_STRING}\"}}" >appsettings.json
       continue-on-error: true
       
     - name: Setup PostgreSQL EF database
+      working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
       run: dotnet ef database update
       continue-on-error: true      
         
