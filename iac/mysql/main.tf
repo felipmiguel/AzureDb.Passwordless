@@ -128,7 +128,7 @@ resource "azurerm_mysql_flexible_server_active_directory_administrator" "aad_adm
 
 resource "azurecaf_name" "mysql_database" {
   name          = var.application_name
-  resource_type = "azurerm_mysql_flexible_database"
+  resource_type = "azurerm_mysql_flexible_server_database"
   suffixes      = [var.environment]
 }
 
