@@ -59,6 +59,7 @@ resource "azurerm_user_assigned_identity" "mysql_umi" {
 resource "azurecaf_name" "mysql_server" {
   name          = var.application_name
   resource_type = "azurerm_mysql_server"
+  random_length = 3
   suffixes      = [var.environment]
 }
 
