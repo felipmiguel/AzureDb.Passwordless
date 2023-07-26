@@ -1,4 +1,4 @@
-name: .NET
+name: Full validation
 
 on:
   push:
@@ -75,6 +75,7 @@ jobs:
       run: terraform apply -auto-approve
       
     - name: Get Terraform output
+      id: get-terraform-output-mysql
       working-directory: "./iac/mysql"
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
@@ -90,6 +91,8 @@ jobs:
       continue-on-error: true
     
     - name: Test MySqlConnector
+      id: test-mysqlconnector
+      if: steps.get-terraform-output-mysql.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/tests/
       run: dotnet test
       continue-on-error: true
@@ -103,6 +106,7 @@ jobs:
       continue-on-error: true
       
     - name: Setup MySQL EF connection string
+      id: setup-mysql-ef-connection-string
       working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
       run: |
         MYSQL_CONNECTION_STRING="Server=${{ env.MYSQL_FQDN }};Port=3306;User ID=${{ env.MYSQL_SERVER_ADMIN }};Database=${{ env.MYSQL_DATABASE }};SSL Mode=Required;Allow Public Key Retrieval=True;Connection Timeout=30"
@@ -110,11 +114,15 @@ jobs:
       continue-on-error: true
       
     - name: Setup MySQL EF database
+      id: setup-mysql-ef-database
+      if: steps.setup-mysql-ef-connection-string.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
       run: dotnet ef database update
       continue-on-error: true      
         
     - name: Test MySqlConnector Entity Framework
+      id: test-mysqlconnector-ef
+      if: steps.setup-mysql-ef-database.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
       run: dotnet test
       continue-on-error: true
@@ -132,6 +140,13 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       run: terraform destroy -auto-approve
+    
+    - name: Tests failed
+      if: steps.test-mysqlconnector.outcome != 'success' || steps.test-mysqlconnector-ef.outcome != 'success'
+      run: |
+        echo "Tests failed"
+        exit 1
+  
   tests-postgresql:
     needs: basic-tests
     runs-on: ubuntu-latest
@@ -183,6 +198,7 @@ jobs:
       continue-on-error: true
 
     - name: Test Npgsql
+      id: tests-postgresql
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql/tests/
       run: dotnet test
       continue-on-error: true
@@ -196,6 +212,7 @@ jobs:
       continue-on-error: true
       
     - name: Setup POSTGRESQL EF connection string
+      id: setup-postgresql-ef-connetion-string
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
       env:
         POSTGRESQL_FQDN: ${{ env.POSTGRESQL_FQDN }}
@@ -207,11 +224,15 @@ jobs:
       continue-on-error: true
       
     - name: Setup PostgreSQL EF database
+      id: setup-postgresql-ef-db
+      if: steps.setup-postgresql-ef-connetion-string.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
       run: dotnet ef database update
       continue-on-error: true      
         
     - name: Test Postgresql Entity Framework
+      id: tests-postgresql-ef
+      if: steps.setup-postgresql-ef-db.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
       run: dotnet test
       continue-on-error: true
@@ -229,3 +250,9 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       run: terraform destroy -auto-approve
+
+    - name: Tests failed
+      if: steps.tests-postgresql.outcome != 'success' || steps.tests-postgresql-ef.outcome != 'success'
+      run: |
+        echo "Tests failed"
+        exit 1
