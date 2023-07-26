@@ -126,8 +126,14 @@ resource "azurerm_mysql_flexible_server_active_directory_administrator" "aad_adm
   tenant_id   = data.azurerm_client_config.current_client.tenant_id
 }
 
+resource "azurecaf_name" "mysql_database" {
+  name          = var.application_name
+  resource_type = "azurerm_mysql_flexible_database"
+  suffixes      = [var.environment]
+}
+
 resource "azurerm_mysql_flexible_database" "database" {
-  name                = var.database_name
+  name                = azurecaf_name.mysql_database.result
   resource_group_name = data.azurerm_resource_group.resource_group.name
   server_name         = azurerm_mysql_flexible_server.database.name
   charset             = "utf8mb3"
