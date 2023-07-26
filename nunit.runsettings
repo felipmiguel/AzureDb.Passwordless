@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<NUnit>
+		<ConsoleOut>0</ConsoleOut>
+	</NUnit>
+	<RunConfiguration>
+		<TargetPlatform>x64</TargetPlatform>
+		<EnvironmentVariables>
+			<!-- Batec required environment variables -->
+			<!-- Change following environment variables with your environment, ideally using the output from terraform execution -->
+			<MYSQL_FQDN>##REPLACE WITH MYSQL FQDN##</MYSQL_FQDN>
+			<MYSQL_DATABASE>##REPLACE WITH MYSQL DATABASE##</MYSQL_DATABASE>
+			<MYSQL_SERVER_ADMIN>##REPLACE WITH MYSQL USERNAME, IF TESTING LOCALLY USUALLY IS YOUR UPN##</MYSQL_SERVER_ADMIN>
+			<POSTGRESQL_FQDN>##REPLACE WITH POSTGRESQL FQDN##</POSTGRESQL_FQDN>
+			<POSTGRESQL_DATABASE>>##REPLACE WITH POSTGRESQL DATABASE##</POSTGRESQL_DATABASE>
+			<POSTGRESQL_SERVER_ADMIN>##REPLACE WITH POSTGRESQL USERNAME, IF TESTING LOCALLY USUALLY IS YOUR UPN##</POSTGRESQL_SERVER_ADMIN>
+			<!-- End of Batec required environment variables -->
+		  </EnvironmentVariables>
+	</RunConfiguration>
+	
+
+	<TestRunParameters>
+	</TestRunParameters>
+
+</RunSettings>
