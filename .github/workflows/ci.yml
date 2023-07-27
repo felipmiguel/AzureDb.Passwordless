@@ -25,7 +25,7 @@ jobs:
           working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
           run: dotnet pack -c Release -o ./../../artifacts/
         - name: Restore Solution
-          run: dotnet restore -s ./artifacts/   
+          run: dotnet restore -s ./artifacts/ -s https://api.nuget.org/v3/index.json Batec.Azure.Data.Extensions.sln  
         - name: Build
           run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
         - name: Azure CLI Login
