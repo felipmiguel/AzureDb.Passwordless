@@ -122,6 +122,10 @@ jobs:
     - name: Setup MySQL EF connection string
       id: setup-mysql-ef-connection-string
       working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
+      env:
+        POSTGRESQL_FQDN: ${{ env.POSTGRESQL_FQDN }}
+        POSTGRESQL_DATABASE: ${{ env.POSTGRESQL_DATABASE }}
+        POSTGRESQL_SERVER_ADMIN: ${{ env.POSTGRESQL_SERVER_ADMIN }}
       run: |
         MYSQL_CONNECTION_STRING="Server=${{ env.MYSQL_FQDN }};Port=3306;User ID=${{ env.MYSQL_SERVER_ADMIN }};Database=${{ env.MYSQL_DATABASE }};SSL Mode=Required;Allow Public Key Retrieval=True;Connection Timeout=30"
         echo "{\"ConnectionStrings\":{\"DefaultConnection\":\"${MYSQL_CONNECTION_STRING}\"}}" >appsettings.json
