@@ -7,16 +7,14 @@
 		<PackageTags>Azure Batec.Azure.Data.Extensions.Npgsql Postgresql AzureAD Passwordless EntityFrameworkCore</PackageTags>
 		<RequiredTargetFrameworks>net6.0;net7.0</RequiredTargetFrameworks>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-    <Authors>Felip Miguel</Authors>
-    <Company>Felip Miguel</Company>
-    <Product>Batec Data extensions</Product>
-
+    <Authors>$(ProjectAuthor)</Authors>
+    <Company>$(ProjectCompany)</Company>
+    <Product>$(ProjectProduct)</Product>
+    <ProjectUrl>$(ProjectUrl)</ProjectUrl>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
  </PropertyGroup>
-
   <ItemGroup>
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
   </ItemGroup>

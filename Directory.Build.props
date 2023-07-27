@@ -76,4 +76,11 @@
     <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
     <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <ProjectUrl>https://github.com/felipmiguel/AzureDb.Passwordless</ProjectUrl>
+    <ProjectAuthor>Felip Miguel</ProjectAuthor>
+    <ProjectCompany>Felip Miguel</ProjectCompany>
+    <ProjectProduct>Batec Data extensions</ProjectProduct>
+  </PropertyGroup>
 </Project>

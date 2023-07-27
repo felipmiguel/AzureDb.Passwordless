@@ -6,20 +6,17 @@
     <AssemblyTitle>Batec.Azure.Data.Extensions.Npgsql for Azure Data Plane</AssemblyTitle>
     <Version>1.0.0</Version>
     <PackageTags>Azure Batec.Azure.Data.Extensions.Npgsql Postgresql AzureAD Passwordless</PackageTags>
-    <Authors>Felip Miguel</Authors>
-    <Company>Felip Miguel</Company>
-    <Product>Batec Data extensions</Product>
-
+    <Authors>$(ProjectAuthor)</Authors>
+    <Company>$(ProjectCompany)</Company>
+    <Product>$(ProjectProduct)</Product>
+    <ProjectUrl>$(ProjectUrl)</ProjectUrl>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
-
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile
       Include="..\..\Batec.Azure.Data.Extensions.Common\src\TokenCredentialBaseAuthenticationProvider.cs"
