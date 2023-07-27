@@ -7,6 +7,7 @@ on:
 jobs:
     package:
       runs-on: ubuntu-latest
+      environment: nuget
       strategy:
         matrix:
             dotnet-version: [ '7.0.x', '6.0.x' ]
@@ -35,6 +36,22 @@ jobs:
       - name: Package Npgsql.EntityFrameworkCore.MySql
         working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/src
         run: dotnet pack -c Release -p:PackageVersion=${{ env.PACKAGE_VERSION }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output ../../package -s ../../package
+      
+      - name: Publish MySqlConnector
+        working-directory: ./package
+        run: dotnet nuget publish --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.MySqlConnector.${{ env.PACKAGE_VERSION }}.nupkg
+    
+      - name: Publish Npgsql
+        working-directory: ./package
+        run: dotnet nuget publish --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.${{ env.PACKAGE_VERSION }}.nupkg
+        
+      - name: Publish Pomelo.EntityFrameworkCore.MySql
+        working-directory: ./package
+        run: dotnet nuget publish --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
+
+      - name: Publish Npgsql.EntityFrameworkCore
+        working-directory: ./package
+        run: dotnet nuget publish --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
 
       
       
