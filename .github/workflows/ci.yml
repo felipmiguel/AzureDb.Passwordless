@@ -22,7 +22,7 @@ jobs:
           working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
           run: dotnet pack -c Release -o ./../../artifacts/   
         - name: Pack Npgsql Extension
-          working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
+          working-directory: ./Batec.Azure.Data.Extensions.Npgsql/src
           run: dotnet pack -c Release -o ./../../artifacts/
         - name: Restore Solution
           run: dotnet restore -s ./artifacts/ -s https://api.nuget.org/v3/index.json Batec.Azure.Data.Extensions.sln  
