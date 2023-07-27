@@ -18,8 +18,14 @@ jobs:
             dotnet-version: |
                 6.0.x
                 7.0.x
-        - name: Restore dependencies
-          run: dotnet restore Batec.Azure.Data.Extensions.sln
+        - name: Pack MySqlConnector Extension
+          working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
+          run: dotnet pack -c Release -o ./../../artifacts/   
+        - name: Pack Npgsql Extension
+          working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
+          run: dotnet pack -c Release -o ./../../artifacts/
+        - name: Restore Solution
+          run: dotnet restore -s ./artifacts/   
         - name: Build
           run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
         - name: Azure CLI Login
