@@ -30,6 +30,7 @@ jobs:
   basic-tests:
     needs: build
     runs-on: ubuntu-latest
+    environment: staging
     steps:        
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -49,6 +50,7 @@ jobs:
       run: dotnet test        
   tests-mysql:
     needs: basic-tests
+    environment: staging
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -167,6 +169,7 @@ jobs:
   
   tests-postgresql:
     needs: basic-tests
+    environment: staging
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
