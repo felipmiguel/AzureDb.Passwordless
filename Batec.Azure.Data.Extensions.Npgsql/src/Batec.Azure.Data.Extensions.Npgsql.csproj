@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-		<Description>This is the Batec.Azure.Data.Extensions.Npgsql client library for developing .NET applications that uses AzureAD authentication to connect to Postgresql databases.</Description>
-		<AssemblyTitle>Azure SDK Code Generation Batec.Azure.Data.Extensions.Npgsql for Azure Data Plane</AssemblyTitle>
-		<Version>1.0.3-beta.20</Version>
-		<PackageTags>Azure Batec.Azure.Data.Extensions.Npgsql Postgresql AzureAD Passwordless</PackageTags>
+    <Description>This is the Batec.Azure.Data.Extensions.Npgsql client library for developing .NET
+      applications that uses AzureAD authentication to connect to Postgresql databases.</Description>
+    <AssemblyTitle>Batec.Azure.Data.Extensions.Npgsql for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.0</Version>
+    <PackageTags>Azure Batec.Azure.Data.Extensions.Npgsql Postgresql AzureAD Passwordless</PackageTags>
+    <Authors>Felip Miguel</Authors>
+    <Company>Felip Miguel</Company>
+    <Product>Batec Data extensions</Product>
+
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
@@ -13,15 +18,17 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
- </PropertyGroup>
+  </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Batec.Azure.Data.Extensions.Common\src\TokenCredentialBaseAuthenticationProvider.cs" Link="TokenCredentialBaseAuthenticationProvider.cs" />
+    <Compile
+      Include="..\..\Batec.Azure.Data.Extensions.Common\src\TokenCredentialBaseAuthenticationProvider.cs"
+      Link="TokenCredentialBaseAuthenticationProvider.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-		<PackageReference Include="Npgsql" />
+    <PackageReference Include="Npgsql" />
   </ItemGroup>
 
 
