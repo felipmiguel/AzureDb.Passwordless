@@ -9,7 +9,8 @@
     <Authors>$(ProjectAuthor)</Authors>
     <Company>$(ProjectCompany)</Company>
     <Product>$(ProjectProduct)</Product>
-    <ProjectUrl>$(ProjectUrl)</ProjectUrl>
+    <RepositoryUrl>$(ProjectUrl)</RepositoryUrl>
+    <PackageProjectUrl>$(ProjectUrl)</PackageProjectUrl>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
