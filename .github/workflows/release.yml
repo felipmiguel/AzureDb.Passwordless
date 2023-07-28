@@ -26,7 +26,7 @@ jobs:
         run: dotnet pack -c Release -p:PackageVersion=${{ env.PACKAGE_VERSION }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output ../../package
     
       - name: Package Npgsql
-        working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
+        working-directory: ./Batec.Azure.Data.Extensions.Npgsql/src
         run: dotnet pack -c Release -p:PackageVersion=${{ env.PACKAGE_VERSION }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output ../../package
         
 
