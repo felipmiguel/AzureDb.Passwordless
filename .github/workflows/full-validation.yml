@@ -11,9 +11,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: staging
     env:
         PACKAGE_VERSION: 1.0.0-beta.1
-
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -22,22 +22,16 @@ jobs:
         dotnet-version: |
             6.0.x
             7.0.x
-    - name: Restore dependencies
-      run: dotnet restore Batec.Azure.Data.Extensions.sln
+    - name: Pack MySqlConnector Extension
+      working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
+      run: dotnet pack -c Release -o ./../../artifacts/   
+    - name: Pack Npgsql Extension
+      working-directory: ./Batec.Azure.Data.Extensions.Npgsql/src
+      run: dotnet pack -c Release -o ./../../artifacts/
+    - name: Restore Solution
+      run: dotnet restore -s ./artifacts/ -s https://api.nuget.org/v3/index.json Batec.Azure.Data.Extensions.sln  
     - name: Build
       run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
-  
-  basic-tests:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:        
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: |
-            6.0.x
-            7.0.x
     - name: Azure CLI Login
       uses: azure/login@v1
       with:
@@ -47,8 +41,10 @@ jobs:
     - name: Test Common
       working-directory: ./Batec.Azure.Data.Extensions.Common/tests/
       run: dotnet test        
+  
   tests-mysql:
-    needs: basic-tests
+    needs: build
+    environment: staging
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -103,7 +99,16 @@ jobs:
         echo "MYSQL_DATABASE=${MYSQL_DATABASE}" >> $GITHUB_ENV
         echo "MYSQL_SERVER_ADMIN=${MYSQL_SERVER_ADMIN}" >> $GITHUB_ENV
       continue-on-error: true
-    
+    - name: Pack MySqlConnector Extension
+      working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
+      run: dotnet pack -c Release -o ./../../artifacts/   
+    - name: Pack Npgsql Extension
+      working-directory: ./Batec.Azure.Data.Extensions.Npgsql/src
+      run: dotnet pack -c Release -o ./../../artifacts/
+    - name: Restore Solution
+      run: dotnet restore -s ./artifacts/ -s https://api.nuget.org/v3/index.json Batec.Azure.Data.Extensions.sln  
+    - name: Build
+      run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
     - name: Test MySqlConnector
       id: test-mysqlconnector
       if: steps.get-terraform-output-mysql.outcome == 'success'
@@ -166,7 +171,8 @@ jobs:
         exit 1
   
   tests-postgresql:
-    needs: basic-tests
+    needs: build
+    environment: staging
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -221,6 +227,16 @@ jobs:
         echo "POSTGRESQL_SERVER_ADMIN=${POSTGRESQL_SERVER_ADMIN}" >> $GITHUB_ENV
       continue-on-error: true
 
+    - name: Pack MySqlConnector Extension
+      working-directory: ./Batec.Azure.Data.Extensions.MySqlConnector/src
+      run: dotnet pack -c Release -o ./../../artifacts/   
+    - name: Pack Npgsql Extension
+      working-directory: ./Batec.Azure.Data.Extensions.Npgsql/src
+      run: dotnet pack -c Release -o ./../../artifacts/
+    - name: Restore Solution
+      run: dotnet restore -s ./artifacts/ -s https://api.nuget.org/v3/index.json Batec.Azure.Data.Extensions.sln  
+    - name: Build
+      run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
     - name: Test Npgsql
       id: tests-postgresql
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql/tests/

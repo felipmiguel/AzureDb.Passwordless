@@ -11,6 +11,8 @@
     <PackageVersion Include="Azure.Core" Version="1.34.0" />
     <PackageVersion Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageVersion Include="Azure.Identity" Version="1.9.0" />
+    <PackageVersion Include="Batec.Azure.Data.Extensions.MySqlConnector" Version="1.0.0" />
+    <PackageVersion Include="Batec.Azure.Data.Extensions.Npgsql" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSampleProject)' == 'true')">
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />

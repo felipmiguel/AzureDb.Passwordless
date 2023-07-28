@@ -3,27 +3,23 @@
   <PropertyGroup>
 		<Description>This is the Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore client library for developing .NET applications that uses AzureAD authentication for EntityFrameworkCore to connect to Postgresql databases.</Description>
 		<AssemblyTitle>Azure SDK Code Generation Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore for Azure Data Plane</AssemblyTitle>
-		<Version>1.0.3-beta.20</Version>
+		<Version>1.0.0</Version>
 		<PackageTags>Azure Batec.Azure.Data.Extensions.Npgsql Postgresql AzureAD Passwordless EntityFrameworkCore</PackageTags>
 		<RequiredTargetFrameworks>net6.0;net7.0</RequiredTargetFrameworks>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-    <!-- Make sure that we don't pull in additional dependencies during build or package -->
-    <ImportDefaultReferences>false</ImportDefaultReferences>
-
+    <Authors>$(ProjectAuthor)</Authors>
+    <Company>$(ProjectCompany)</Company>
+    <Product>$(ProjectProduct)</Product>
+    <RepositoryUrl>$(ProjectUrl)</RepositoryUrl>
+    <PackageProjectUrl>$(ProjectUrl)</PackageProjectUrl>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
  </PropertyGroup>
-
   <ItemGroup>
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Batec.Azure.Data.Extensions.Npgsql\src\Batec.Azure.Data.Extensions.Npgsql.csproj" />
+    <PackageReference Include="Batec.Azure.Data.Extensions.Npgsql" />
   </ItemGroup>
-
-
-
 </Project>
