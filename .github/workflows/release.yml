@@ -44,19 +44,19 @@ jobs:
       
       - name: Publish MySqlConnector
         working-directory: ./package
-        run: dotnet nuget push --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.MySqlConnector.${{ env.PACKAGE_VERSION }}.nupkg
+        run: dotnet nuget push --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.MySqlConnector.${{ env.PACKAGE_VERSION }}.nupkg
     
       - name: Publish Npgsql
         working-directory: ./package
-        run: dotnet nuget push --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.${{ env.PACKAGE_VERSION }}.nupkg
+        run: dotnet nuget push --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.${{ env.PACKAGE_VERSION }}.nupkg
         
       - name: Publish Pomelo.EntityFrameworkCore
         working-directory: ./package
-        run: dotnet nuget push --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
+        run: dotnet nuget push --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
 
       - name: Publish Npgsql.EntityFrameworkCore
         working-directory: ./package
-        run: dotnet nuget push --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
+        run: dotnet nuget push --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
 
       
       
