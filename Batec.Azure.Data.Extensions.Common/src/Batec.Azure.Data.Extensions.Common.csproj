@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>This is the Batec.Azure.Data.Extensions.Common client library for developing .NET applications with rich experience.</Description>
@@ -9,5 +9,8 @@
  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="properties\" />
   </ItemGroup>
 </Project>

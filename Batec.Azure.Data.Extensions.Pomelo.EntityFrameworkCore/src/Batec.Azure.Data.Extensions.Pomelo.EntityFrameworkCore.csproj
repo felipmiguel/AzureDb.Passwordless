@@ -24,6 +24,9 @@
   <ItemGroup>
     <PackageReference Include="Batec.Azure.Data.Extensions.MySqlConnector" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 
 
 

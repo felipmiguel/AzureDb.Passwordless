@@ -1,16 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+﻿// Licensed under the MIT License.
 
 using Batec.Core.TestFramework;
-using Batec.Azure.Data.Extensions.MySqlConnector;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Sample.Repository;
-using Sample.Repository.Model;
 using Sample.Repository.Tests;
-using System;
 using System.Threading.Tasks;
 
 namespace Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests

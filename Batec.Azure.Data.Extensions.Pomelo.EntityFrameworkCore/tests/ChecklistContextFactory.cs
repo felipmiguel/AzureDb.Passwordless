@@ -3,14 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MySqlConnector;
 using Sample.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace Batec.Azure.Data.Extensions.MySqlConnectorTests

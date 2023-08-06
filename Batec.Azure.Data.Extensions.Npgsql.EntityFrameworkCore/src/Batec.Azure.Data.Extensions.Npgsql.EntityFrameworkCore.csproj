@@ -22,4 +22,7 @@
   <ItemGroup>
     <PackageReference Include="Batec.Azure.Data.Extensions.Npgsql" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>
