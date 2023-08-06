@@ -27,4 +27,11 @@
   <ItemGroup>
     <Folder Include="properties\" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 </Project>
