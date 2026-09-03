@@ -6,10 +6,10 @@
 ## Tasks
 
   - ✅ 02.01-target-framework-matrix: Retarget framework matrices and project overrides ([Content](tasks/02.01-target-framework-matrix/task.md), [Progress](tasks/02.01-target-framework-matrix/progress-details.md))
-  - ✅ 02.02-package-updates-and-cleanup: Upgrade vulnerable/recommended packages and remove framework-included package references ([Content](tasks/02.02-package-updates-and-cleanup/task.md), [Progress](tasks/02.02-package-updates-and-cleanup/progress-details.md))
-  - ✅ 02.03-api-fixes-and-validation: Fix API incompatibilities and validate full solution ([Content](tasks/02.03-api-fixes-and-validation/task.md), [Progress](tasks/02.03-api-fixes-and-validation/progress-details.md))
-  - 🔄 02.03-api-fixes-and-validation: Fix API incompatibilities and validate full solution ([Content](tasks/02.03-api-fixes-and-validation/task.md))
-  - 🔲 02.03-api-fixes-and-validation: Fix API incompatibilities and validate full solution
+- ✅ 03-final-validation-and-cleanup: Run full validation and capture post-migration cleanup ([Content](tasks/03-final-validation-and-cleanup/task.md), [Progress](tasks/03-final-validation-and-cleanup/progress-details.md))
+- 🔄 03-final-validation-and-cleanup: Run full validation and capture post-migration cleanup ([Content](tasks/03-final-validation-and-cleanup/task.md), [Progress](tasks/03-final-validation-and-cleanup/progress-details.md))
+- ❌ 03-final-validation-and-cleanup: Run full validation and capture post-migration cleanup ([Content](tasks/03-final-validation-and-cleanup/task.md), [Progress](tasks/03-final-validation-and-cleanup/progress-details.md))
+- 🔄 03-final-validation-and-cleanup: Run full validation and capture post-migration cleanup ([Content](tasks/03-final-validation-and-cleanup/task.md))
 - 🔲 03-final-validation-and-cleanup: Run full validation and capture post-migration cleanup ([Content](tasks/03-final-validation-and-cleanup/task.md))
 
 **Legend**: ✅ Complete | 🔄 In Progress | 🔲 Pending | ⚠️ Blocked | ❌ Failed

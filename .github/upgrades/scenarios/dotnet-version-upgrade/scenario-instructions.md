@@ -33,3 +33,8 @@
 - Keep package management per-project during migration; defer central package management until post-migration stabilization.
 - Resolve API incompatibilities inline during upgrade tasks (no deferred stub tracks).
 - Validate build and tests after each completed task before proceeding.
+
+## User Preferences
+### Custom Instructions
+#### 03-final-validation-and-cleanup
+- Skip integration tests when required DB environment variables are missing.
