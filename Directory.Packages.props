@@ -8,7 +8,7 @@
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageVersion Include="MySqlConnector" Version="2.2.6" />
     <PackageVersion Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
-    <PackageVersion Include="Azure.Core" Version="1.53.0" />
+    <PackageVersion Include="Azure.Core" Version="1.62.0" />
     <PackageVersion Include="Azure.Identity" Version="1.21.0" />
     <PackageVersion Include="Batec.Azure.Data.Extensions.MySqlConnector" Version="1.0.0" />
     <PackageVersion Include="Batec.Azure.Data.Extensions.Npgsql" Version="1.0.0" />
