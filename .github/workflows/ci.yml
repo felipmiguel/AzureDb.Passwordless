@@ -30,6 +30,8 @@ jobs:
           run: dotnet restore -s ./artifacts/ -s https://api.nuget.org/v3/index.json Batec.Azure.Data.Extensions.sln  
         - name: Build
           run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
+        - name: Debug subscription
+          run: echo ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         - name: Azure CLI Login
           uses: azure/login@v3
           with:
