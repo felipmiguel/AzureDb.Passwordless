@@ -24,16 +24,4 @@
     <ProjectReference Include="..\..\Sample.Repository\Sample.Repository.csproj" />
     <ProjectReference Include="..\..\Sample.Repository.Tests\Sample.Repository.Tests.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
 </Project>
