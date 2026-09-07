@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">=3.7.0"
+      version = ">=5.4.0"
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"
@@ -10,11 +10,11 @@ terraform {
     }
     azapi = {
       source  = "azure/azapi"
-      version = ">=1.3.0"
+      version = ">=2.12.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = ">=2.23.0"
+      version = ">=3.9.0"
     }
   }
   backend "azurerm" {
@@ -77,8 +77,8 @@ resource "azurerm_mysql_flexible_server" "database" {
   administrator_login    = var.administrator_login
   administrator_password = random_password.password.result
 
-  sku_name                     = "B_Standard_B1s"
-  version                      = "8.0.21"
+  sku_name                     = "GP_Standard_D2ds_v4"
+  version                      = "8.4"
   backup_retention_days        = 7
   geo_redundant_backup_enabled = false
 
@@ -116,7 +116,7 @@ data "azuread_user" "aad_admin" {
 
 locals {
   login_name = data.azuread_directory_object.current_client.type == "User" ? data.azuread_user.aad_admin[0].user_principal_name : data.azuread_service_principal.current_client[0].display_name
-  login_sid  = data.azuread_directory_object.current_client.type == "User" ? data.azurerm_client_config.current_client.object_id : data.azuread_service_principal.current_client[0].application_id
+  login_sid  = data.azurerm_client_config.current_client.object_id 
 }
 
 resource "azurerm_mysql_flexible_server_active_directory_administrator" "aad_admin" {

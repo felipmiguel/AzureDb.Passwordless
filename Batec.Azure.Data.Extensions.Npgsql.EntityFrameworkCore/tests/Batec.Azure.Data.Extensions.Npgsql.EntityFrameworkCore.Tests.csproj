@@ -10,7 +10,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
 
@@ -24,17 +23,5 @@
     <ProjectReference Include="..\src\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\Sample.Repository\Sample.Repository.csproj" />
     <ProjectReference Include="..\..\Sample.Repository.Tests\Sample.Repository.Tests.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="appsettings.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
   </ItemGroup>
 </Project>

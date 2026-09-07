@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Batec.Core.TestFramework
 {
@@ -31,11 +32,17 @@ namespace Batec.Core.TestFramework
 
         /// <summary>
         /// Returns an environment variable value.
-        /// Throws when variable is not found.
+        /// Skips integration tests when variable is not found.
         /// </summary>
         protected string GetVariable(string name)
         {
-            return Environment.GetEnvironmentVariable(name);
+            string variable = Environment.GetEnvironmentVariable(name);
+            if (string.IsNullOrWhiteSpace(variable))
+            {
+                Assert.Ignore($"Skipping integration test because required environment variable '{name}' is missing.");
+            }
+
+            return variable;
         }
     }
 }

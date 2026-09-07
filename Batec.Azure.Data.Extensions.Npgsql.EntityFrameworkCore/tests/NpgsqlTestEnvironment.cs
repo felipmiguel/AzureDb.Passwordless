@@ -23,7 +23,6 @@ namespace Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests
                     Username = User,
                     Port = 5432,
                     SslMode = SslMode.Require,
-                    TrustServerCertificate = true,
                     Timeout = 30
                 };
                 return connectionStringBuilder.ConnectionString;

@@ -2,6 +2,7 @@
 
 using Azure.Core;
 using Batec.Azure.Data.Extensions.Npgsql;
+using Npgsql;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 using System;
 
@@ -25,7 +26,8 @@ public static class DbContextOptionsBuilderExtension
             throw new ArgumentNullException(nameof(optionsBuilder));
         if (credential == null)
             throw new ArgumentNullException(nameof(credential));
-        TokenCredentialNpgsqlPasswordProvider passwordProvider = new TokenCredentialNpgsqlPasswordProvider(credential);
-        return optionsBuilder.ProvidePasswordCallback(passwordProvider.ProvidePasswordCallback);
+
+        return optionsBuilder.ConfigureDataSource(dataSourceBuilder =>
+            dataSourceBuilder.UseAzureADAuthentication(credential));
     }
 }
