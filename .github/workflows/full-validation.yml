@@ -62,6 +62,10 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         auth-type: "SERVICE_PRINCIPAL"
+    
+    - name: Refresh Azure CLI token
+      run: az account get-access-token > /dev/null
+    
     # Install the latest version of the Terraform CLI
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
@@ -111,6 +115,8 @@ jobs:
       run: dotnet restore -s ./artifacts/ -s https://api.nuget.org/v3/index.json Batec.Azure.Data.Extensions.sln  
     - name: Build
       run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
+    - name: Refresh Azure CLI token
+      run: az account get-access-token > /dev/null
     - name: Test MySqlConnector
       id: test-mysqlconnector
       if: steps.get-terraform-output-mysql.outcome == 'success'
@@ -185,6 +191,8 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         auth-type: "SERVICE_PRINCIPAL"
+    - name: Refresh Azure CLI token
+      run: az account get-access-token > /dev/null
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -240,6 +248,8 @@ jobs:
       run: dotnet restore -s ./artifacts/ -s https://api.nuget.org/v3/index.json Batec.Azure.Data.Extensions.sln  
     - name: Build
       run: dotnet build --no-restore Batec.Azure.Data.Extensions.sln
+    - name: Refresh Azure CLI token
+      run: az account get-access-token > /dev/null
     - name: Test Npgsql
       id: tests-postgresql
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql/tests/
@@ -265,6 +275,9 @@ jobs:
         POSTGRESQL_CONNECTION_STRING="Server=$POSTGRESQL_FQDN;Port=5432;User ID=$POSTGRESQL_SERVER_ADMIN;Database=$POSTGRESQL_DATABASE;SSL Mode=Require;Trust Server Certificate=true"
         echo "{\"ConnectionStrings\":{\"DefaultConnection\":\"${POSTGRESQL_CONNECTION_STRING}\"}}" >appsettings.json
       continue-on-error: true
+    
+    - name: Refresh Azure CLI token
+      run: az account get-access-token > /dev/null
       
     - name: Setup PostgreSQL EF database
       id: setup-postgresql-ef-db
