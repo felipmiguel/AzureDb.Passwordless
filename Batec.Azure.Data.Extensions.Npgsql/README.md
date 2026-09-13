@@ -18,7 +18,7 @@ The following samples require an Azure Database for Postgresql server, a databas
 ```bash
 # Define some constants
 RESOURCE_GROUP=rg-passwordless
-LOCATION=eastus
+LOCATION=northeurope
 SERVER_NAME=psql-passwordless
 DATABASE_NAME=sampledb
 ADMIN_USER=azureuser
