@@ -148,8 +148,8 @@ jobs:
       id: setup-mysql-ef-database
       if: steps.setup-mysql-ef-connection-string.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
-      run: dotnet ef database update
-      continue-on-error: true      
+      run: dotnet ef database update --framework net8.0
+      continue-on-error: true
         
     - name: Test MySqlConnector Entity Framework
       id: test-mysqlconnector-ef
@@ -283,8 +283,8 @@ jobs:
       id: setup-postgresql-ef-db
       if: steps.setup-postgresql-ef-connetion-string.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
-      run: dotnet ef database update
-      continue-on-error: true      
+      run: dotnet ef database update --framework net8.0
+      continue-on-error: true
         
     - name: Test Postgresql Entity Framework
       id: tests-postgresql-ef
