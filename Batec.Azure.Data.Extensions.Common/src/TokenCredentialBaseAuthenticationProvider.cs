@@ -34,6 +34,11 @@ namespace Batec.Azure.Data.Extensions.Common
         private AccessToken? accessToken;
 
         /// <summary>
+        /// Semaphore to ensure thread-safe token fetching and caching
+        /// </summary>
+        private readonly SemaphoreSlim tokenFetchSemaphore = new SemaphoreSlim(1, 1);
+
+        /// <summary>
         /// The TokenCredential is provided by the caller
         /// </summary>
         /// <param name="credential">TokenCredential provided by the caller</param>
@@ -54,10 +59,22 @@ namespace Batec.Azure.Data.Extensions.Common
             {
                 return accessToken?.Token;
             }
-            else
+
+            await tokenFetchSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
             {
+                // Check again after acquiring the lock in case another thread fetched the token
+                if (accessToken?.ExpiresOn > DateTimeOffset.UtcNow.AddMinutes(20))
+                {
+                    return accessToken?.Token;
+                }
+
                 accessToken = await credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
                 return accessToken?.Token;
+            }
+            finally
+            {
+                tokenFetchSemaphore.Release();
             }
         }
 
@@ -73,10 +90,22 @@ namespace Batec.Azure.Data.Extensions.Common
             {
                 return accessToken?.Token;
             }
-            else
+
+            tokenFetchSemaphore.Wait(cancellationToken);
+            try
             {
+                // Check again after acquiring the lock in case another thread fetched the token
+                if (accessToken?.ExpiresOn > DateTimeOffset.UtcNow.AddMinutes(20))
+                {
+                    return accessToken?.Token;
+                }
+
                 accessToken = credential.GetToken(requestContext, cancellationToken);
                 return accessToken?.Token;
+            }
+            finally
+            {
+                tokenFetchSemaphore.Release();
             }
         }
     }
