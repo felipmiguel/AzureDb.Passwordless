@@ -143,10 +143,17 @@ jobs:
         MYSQL_CONNECTION_STRING="Server=${{ env.MYSQL_FQDN }};Port=3306;User ID=${{ env.MYSQL_SERVER_ADMIN }};Database=${{ env.MYSQL_DATABASE }};SSL Mode=Required;Allow Public Key Retrieval=True;Connection Timeout=30"
         echo "{\"ConnectionStrings\":{\"DefaultConnection\":\"${MYSQL_CONNECTION_STRING}\"}}" >appsettings.json
       continue-on-error: true
-      
+
+    - name: Build MySQL EF test project
+      id: build-mysql-ef-test
+      if: steps.setup-mysql-ef-connection-string.outcome == 'success'
+      working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
+      run: dotnet build --framework net8.0 --no-restore
+      continue-on-error: true
+
     - name: Setup MySQL EF database
       id: setup-mysql-ef-database
-      if: steps.setup-mysql-ef-connection-string.outcome == 'success'
+      if: steps.build-mysql-ef-test.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore/tests/
       run: dotnet ef database update --framework net8.0
       continue-on-error: true
@@ -275,13 +282,20 @@ jobs:
         POSTGRESQL_CONNECTION_STRING="Server=$POSTGRESQL_FQDN;Port=5432;User ID=$POSTGRESQL_SERVER_ADMIN;Database=$POSTGRESQL_DATABASE;SSL Mode=Require;Trust Server Certificate=true"
         echo "{\"ConnectionStrings\":{\"DefaultConnection\":\"${POSTGRESQL_CONNECTION_STRING}\"}}" >appsettings.json
       continue-on-error: true
-    
+
+    - name: Build PostgreSQL EF test project
+      id: build-postgresql-ef-test
+      if: steps.setup-postgresql-ef-connetion-string.outcome == 'success'
+      working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
+      run: dotnet build --framework net8.0 --no-restore
+      continue-on-error: true
+
     - name: Refresh Azure CLI token
       run: az account get-access-token > /dev/null
-      
+
     - name: Setup PostgreSQL EF database
       id: setup-postgresql-ef-db
-      if: steps.setup-postgresql-ef-connetion-string.outcome == 'success'
+      if: steps.build-postgresql-ef-test.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
       run: dotnet ef database update --framework net8.0
       continue-on-error: true
