@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sample.Repository;
+using System.IO;
 using System.Reflection;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
@@ -14,7 +15,8 @@ namespace Batec.Azure.Data.Extensions.MySqlConnectorTests
         public ChecklistContext CreateDbContext(string[] args)
         {
             ConfigurationBuilder configBuilder = new ConfigurationBuilder();
-            configBuilder.AddJsonFile("appsettings.json");
+            configBuilder.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
             IConfigurationRoot config = configBuilder.Build();
 
             ServiceCollection services = new ServiceCollection();
