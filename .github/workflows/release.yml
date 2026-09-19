@@ -6,6 +6,8 @@ on:
 
 jobs:
     package:
+      permissions:
+        id-token: write  # enable GitHub OIDC token issuance for this job
       runs-on: ubuntu-latest
       environment: nuget
       env:
@@ -41,21 +43,27 @@ jobs:
             dotnet restore -s ../../package -s https://api.nuget.org/v3/index.json
             dotnet pack --no-restore -c Release -p:PackageVersion=${{ env.PACKAGE_VERSION }} -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output ../../package
       
+      # Get a short-lived NuGet API key
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: secrets.NUGET_USER
       - name: Publish MySqlConnector
         working-directory: ./package
-        run: dotnet nuget push --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.MySqlConnector.${{ env.PACKAGE_VERSION }}.nupkg
+        run: dotnet nuget push --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.MySqlConnector.${{ env.PACKAGE_VERSION }}.nupkg
     
       - name: Publish Npgsql
         working-directory: ./package
-        run: dotnet nuget push --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.${{ env.PACKAGE_VERSION }}.nupkg
+        run: dotnet nuget push --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.${{ env.PACKAGE_VERSION }}.nupkg
         
       - name: Publish Pomelo.EntityFrameworkCore
         working-directory: ./package
-        run: dotnet nuget push --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
+        run: dotnet nuget push --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
 
       - name: Publish Npgsql.EntityFrameworkCore
         working-directory: ./package
-        run: dotnet nuget push --api-key ${{ secrets.NUGET_APIKEY }} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
+        run: dotnet nuget push --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.${{ env.PACKAGE_VERSION }}.nupkg
 
       
       
