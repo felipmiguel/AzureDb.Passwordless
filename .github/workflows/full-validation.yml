@@ -297,7 +297,14 @@ jobs:
       id: setup-postgresql-ef-db
       if: steps.build-postgresql-ef-test.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
-      run: dotnet ef database update --framework net8.0
+      env:
+        POSTGRESQL_FQDN: ${{ env.POSTGRESQL_FQDN }}
+        POSTGRESQL_DATABASE: ${{ env.POSTGRESQL_DATABASE }}
+        POSTGRESQL_SERVER_ADMIN: ${{ env.POSTGRESQL_SERVER_ADMIN }}
+      run: |
+        POSTGRESQL_CONNECTION_STRING="Server=$POSTGRESQL_FQDN;Port=5432;User ID=$POSTGRESQL_SERVER_ADMIN;Database=$POSTGRESQL_DATABASE;SSL Mode=Require;Trust Server Certificate=true"
+        echo "{\"ConnectionStrings\":{\"DefaultConnection\":\"${POSTGRESQL_CONNECTION_STRING}\"}}" >appsettings.json
+        dotnet ef database update --framework net8.0
       continue-on-error: true
         
     - name: Test Postgresql Entity Framework
