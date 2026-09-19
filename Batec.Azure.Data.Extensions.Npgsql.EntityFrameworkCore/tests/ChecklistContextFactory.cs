@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Sample.Repository;
+using System.IO;
 using System.Reflection;
 
 namespace Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests
@@ -14,7 +15,8 @@ namespace Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests
         public ChecklistContext CreateDbContext(string[] args)
         {
             ConfigurationBuilder configBuilder = new ConfigurationBuilder();
-            configBuilder.AddJsonFile("appsettings.json");
+            configBuilder.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
             IConfigurationRoot config = configBuilder.Build();
 
             ServiceCollection services = new ServiceCollection();
@@ -23,7 +25,7 @@ namespace Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests
                 options.UseNpgsql(GetConnectionString(config), optionsBuilder =>
                 optionsBuilder
                     .MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)
-                    .UseAzureADAuthentication(new DefaultAzureCredential()));
+                    .UseAzureADAuthentication(new AzureCliCredential()));
             });
 
             var serviceProvider = services.BuildServiceProvider();

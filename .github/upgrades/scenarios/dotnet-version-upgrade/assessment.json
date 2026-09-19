@@ -1,0 +1,1421 @@
+{
+  "settings": {
+    "components": {
+      "code": true,
+      "binaries": false
+    },
+    "targetId": "net10.0",
+    "targetDisplayName": ".NETCoreApp,Version=v10.0"
+  },
+  "analysisStartTime": "2026-09-03T22:00:14.1671748Z",
+  "analysisEndTime": "2026-09-03T22:00:21.2079951Z",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 13,
+      "issues": 5,
+      "incidents": 40,
+      "effort": 40
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 19,
+        "Optional": 1,
+        "Potential": 20,
+        "Information": 0
+      },
+      "category": {
+        "Project": 13,
+        "NuGet": 23,
+        "Api": 4
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "Batec.Azure.Data.Extensions.Common\\src\\Batec.Azure.Data.Extensions.Common.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.Common",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net462",
+          "netstandard2.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 1,
+        "numberOfCodeFiles": 1,
+        "linesTotal": 83,
+        "linesOfCode": 83,
+        "totalApiScanned": 58,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "769a5b3e-2bee-4741-aa87-9d42dcdac78e",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Common\\src\\Batec.Azure.Data.Extensions.Common.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+              "protected": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Common\\src\\Batec.Azure.Data.Extensions.Common.csproj",
+            "snippet": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+            "protectedSnippet": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net462;netstandard2.0",
+              "RecommendedTargetFramework": "net462;netstandard2.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.Common\\tests\\Batec.Azure.Data.Extensions.Common.Tests.csproj",
+      "startingProject": true,
+      "issues": 3,
+      "storyPoints": 3,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.Common.Tests",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net7.0",
+          "net6.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 2,
+        "numberOfCodeFiles": 2,
+        "linesTotal": 48,
+        "linesOfCode": 48,
+        "totalApiScanned": 13,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "f705dad4-82c7-431b-ac46-0a770c7ba7bf",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Common\\tests\\Batec.Azure.Data.Extensions.Common.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+              "protected": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Common\\tests\\Batec.Azure.Data.Extensions.Common.Tests.csproj",
+            "snippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "label": "Microsoft.Extensions.DependencyInjection 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyInjection",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "2351bbd4-a9a6-4350-b5ef-5d4a223d6fac",
+          "ruleId": "NuGet.0003",
+          "projectPath": "Batec.Azure.Data.Extensions.Common\\tests\\Batec.Azure.Data.Extensions.Common.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+              "protected": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Common\\tests\\Batec.Azure.Data.Extensions.Common.Tests.csproj",
+            "snippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "protectedSnippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "label": "System.ValueTuple 4.5.0",
+            "properties": {
+              "PackageId": "System.ValueTuple",
+              "PackageVersion": "4.5.0",
+              "PackageNewVersion": null,
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "e8c62ffc-d71a-4d52-a76c-6e8721fc808a",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Common\\tests\\Batec.Azure.Data.Extensions.Common.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+              "protected": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Common\\tests\\Batec.Azure.Data.Extensions.Common.Tests.csproj",
+            "snippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "protectedSnippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net7.0;net6.0",
+              "RecommendedTargetFramework": "net7.0;net6.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.MySqlConnector\\src\\Batec.Azure.Data.Extensions.MySqlConnector.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.MySqlConnector",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net462",
+          "netstandard2.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 2,
+        "numberOfCodeFiles": 2,
+        "linesTotal": 132,
+        "linesOfCode": 132,
+        "totalApiScanned": 70,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "7ba30764-80b9-4657-8cb2-9845d45eab63",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.MySqlConnector\\src\\Batec.Azure.Data.Extensions.MySqlConnector.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+              "protected": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.MySqlConnector\\src\\Batec.Azure.Data.Extensions.MySqlConnector.csproj",
+            "snippet": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+            "protectedSnippet": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net462;netstandard2.0",
+              "RecommendedTargetFramework": "net462;netstandard2.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.MySqlConnector\\tests\\Batec.Azure.Data.Extensions.MySqlConnector.Tests.csproj",
+      "startingProject": true,
+      "issues": 3,
+      "storyPoints": 3,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.MySqlConnector.Tests",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net7.0",
+          "net6.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 2,
+        "numberOfCodeFiles": 2,
+        "linesTotal": 64,
+        "linesOfCode": 64,
+        "totalApiScanned": 19,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "fdeacb9c-523f-45c8-ba6e-65211e8840fe",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.MySqlConnector\\tests\\Batec.Azure.Data.Extensions.MySqlConnector.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+              "protected": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.MySqlConnector\\tests\\Batec.Azure.Data.Extensions.MySqlConnector.Tests.csproj",
+            "snippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "label": "Microsoft.Extensions.DependencyInjection 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyInjection",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "16c1b797-5745-4205-ac7a-6538613193f9",
+          "ruleId": "NuGet.0003",
+          "projectPath": "Batec.Azure.Data.Extensions.MySqlConnector\\tests\\Batec.Azure.Data.Extensions.MySqlConnector.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+              "protected": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.MySqlConnector\\tests\\Batec.Azure.Data.Extensions.MySqlConnector.Tests.csproj",
+            "snippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "protectedSnippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "label": "System.ValueTuple 4.5.0",
+            "properties": {
+              "PackageId": "System.ValueTuple",
+              "PackageVersion": "4.5.0",
+              "PackageNewVersion": null,
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "718420fe-31ea-49f6-8e9c-704ad4638c66",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.MySqlConnector\\tests\\Batec.Azure.Data.Extensions.MySqlConnector.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+              "protected": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.MySqlConnector\\tests\\Batec.Azure.Data.Extensions.MySqlConnector.Tests.csproj",
+            "snippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "protectedSnippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net7.0;net6.0",
+              "RecommendedTargetFramework": "net7.0;net6.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.Npgsql\\src\\Batec.Azure.Data.Extensions.Npgsql.csproj",
+      "startingProject": true,
+      "issues": 3,
+      "storyPoints": 4,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.Npgsql",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net462",
+          "netstandard2.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 3,
+        "numberOfCodeFiles": 3,
+        "linesTotal": 173,
+        "linesOfCode": 173,
+        "totalApiScanned": 92,
+        "minLinesOfCodeToChange": 2,
+        "maxLinesOfCodeToChange": 2
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "efd87ac8-0278-44d1-9528-5bcbcddadca2",
+          "ruleId": "NuGet.0004",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\src\\Batec.Azure.Data.Extensions.Npgsql.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Npgsql, 7.0.4\n\nRecommendation:\n\nNpgsql, 10.0.3",
+              "protected": "Npgsql, 7.0.4\n\nRecommendation:\n\nNpgsql, 10.0.3"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\src\\Batec.Azure.Data.Extensions.Npgsql.csproj",
+            "snippet": "Npgsql, 7.0.4\n\nRecommendation:\n\nNpgsql, 10.0.3",
+            "protectedSnippet": "Npgsql, 7.0.4\n\nRecommendation:\n\nNpgsql, 10.0.3",
+            "label": "Npgsql 7.0.4",
+            "properties": {
+              "PackageId": "Npgsql",
+              "PackageVersion": "7.0.4",
+              "PackageNewVersion": "10.0.3",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "829d6331-d5c4-4897-91af-e8c492010ee4",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\src\\Batec.Azure.Data.Extensions.Npgsql.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+              "protected": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\src\\Batec.Azure.Data.Extensions.Npgsql.csproj",
+            "snippet": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+            "protectedSnippet": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net462;netstandard2.0",
+              "RecommendedTargetFramework": "net462;netstandard2.0;net10.0"
+            }
+          }
+        },
+        {
+          "incidentId": "5c0a7bee-f2c1-4be5-9aa6-7cdf2ed5250e",
+          "ruleId": "Api.0002",
+          "description": "Breaking change: New TimeSpan.From*() overloads that take integers ",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\src\\Batec.Azure.Data.Extensions.Npgsql.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "return builder.UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(29), TimeSpan.FromSeconds(5));",
+              "protected": "M:System.TimeSpan.FromSeconds(System.Double)"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\src\\NpgsqlDataSourceBuilderExtensions.cs",
+            "snippet": "return builder.UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(29), TimeSpan.FromSeconds(5));",
+            "protectedSnippet": "M:System.TimeSpan.FromSeconds(System.Double)",
+            "label": "M:System.TimeSpan.FromSeconds(System.Double)",
+            "properties": {
+              "CharCount": "1667"
+            },
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/core-libraries/9.0/timespan-from-overloads.md",
+                "isCustom": false
+              }
+            ],
+            "line": 27,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "468c5645-5a66-417e-a9a8-b2c640d0e76b",
+          "ruleId": "Api.0002",
+          "description": "Breaking change: New TimeSpan.From*() overloads that take integers ",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\src\\Batec.Azure.Data.Extensions.Npgsql.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "return builder.UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(29), TimeSpan.FromSeconds(5));",
+              "protected": "M:System.TimeSpan.FromMinutes(System.Double)"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\src\\NpgsqlDataSourceBuilderExtensions.cs",
+            "snippet": "return builder.UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(29), TimeSpan.FromSeconds(5));",
+            "protectedSnippet": "M:System.TimeSpan.FromMinutes(System.Double)",
+            "label": "M:System.TimeSpan.FromMinutes(System.Double)",
+            "properties": {
+              "CharCount": "1667"
+            },
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/core-libraries/9.0/timespan-from-overloads.md",
+                "isCustom": false
+              }
+            ],
+            "line": 27,
+            "column": 12
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\src\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net6.0",
+          "net7.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 1,
+        "numberOfCodeFiles": 1,
+        "linesTotal": 31,
+        "linesOfCode": 31,
+        "totalApiScanned": 11,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "7fa3c493-c04d-4c65-9f31-f1e7d1e9e999",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\src\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net6.0;net7.0\nRecommended target framework: net6.0;net7.0;net10.0",
+              "protected": "Current target framework: net6.0;net7.0\nRecommended target framework: net6.0;net7.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\src\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.csproj",
+            "snippet": "Current target framework: net6.0;net7.0\nRecommended target framework: net6.0;net7.0;net10.0",
+            "protectedSnippet": "Current target framework: net6.0;net7.0\nRecommended target framework: net6.0;net7.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net6.0;net7.0",
+              "RecommendedTargetFramework": "net6.0;net7.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+      "startingProject": true,
+      "issues": 3,
+      "storyPoints": 7,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net7.0",
+          "net6.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 7,
+        "numberOfCodeFiles": 6,
+        "linesTotal": 344,
+        "linesOfCode": 343,
+        "totalApiScanned": 335,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "eb4df7af-4ede-4f89-b7e0-5522d8d90b37",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+              "protected": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+            "label": "Microsoft.EntityFrameworkCore.Design 7.0.9",
+            "properties": {
+              "PackageId": "Microsoft.EntityFrameworkCore.Design",
+              "PackageVersion": "7.0.9",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "a5134974-bf03-48bd-badb-2490672ddea5",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Configuration, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration, and replace with new package Microsoft.Extensions.Configuration 10.0.11",
+              "protected": "Microsoft.Extensions.Configuration, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration, and replace with new package Microsoft.Extensions.Configuration 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.Extensions.Configuration, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration, and replace with new package Microsoft.Extensions.Configuration 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.Configuration, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration, and replace with new package Microsoft.Extensions.Configuration 10.0.11",
+            "label": "Microsoft.Extensions.Configuration 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Configuration",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "4cade0e8-acd6-4fe0-aa4d-08d14448be24",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Configuration.Abstractions, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Abstractions, and replace with new package Microsoft.Extensions.Configuration.Abstractions 10.0.11",
+              "protected": "Microsoft.Extensions.Configuration.Abstractions, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Abstractions, and replace with new package Microsoft.Extensions.Configuration.Abstractions 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.Extensions.Configuration.Abstractions, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Abstractions, and replace with new package Microsoft.Extensions.Configuration.Abstractions 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.Configuration.Abstractions, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Abstractions, and replace with new package Microsoft.Extensions.Configuration.Abstractions 10.0.11",
+            "label": "Microsoft.Extensions.Configuration.Abstractions 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Configuration.Abstractions",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "33b664fa-6c9c-4b5a-83ee-b60be99a54dd",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Configuration.Json, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Json, and replace with new package Microsoft.Extensions.Configuration.Json 10.0.11",
+              "protected": "Microsoft.Extensions.Configuration.Json, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Json, and replace with new package Microsoft.Extensions.Configuration.Json 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.Extensions.Configuration.Json, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Json, and replace with new package Microsoft.Extensions.Configuration.Json 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.Configuration.Json, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Json, and replace with new package Microsoft.Extensions.Configuration.Json 10.0.11",
+            "label": "Microsoft.Extensions.Configuration.Json 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Configuration.Json",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "f16e4137-4e5f-4c23-a946-3d91354d3ae7",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+              "protected": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "label": "Microsoft.Extensions.DependencyInjection 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyInjection",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "9f96ed7c-29a8-4704-bfab-d06d920d6e53",
+          "ruleId": "NuGet.0003",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+              "protected": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+            "snippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "protectedSnippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "label": "System.ValueTuple 4.5.0",
+            "properties": {
+              "PackageId": "System.ValueTuple",
+              "PackageVersion": "4.5.0",
+              "PackageNewVersion": null,
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "a48f2c82-ccde-480a-b94b-8fdab10e385a",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+              "protected": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "protectedSnippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net7.0;net6.0",
+              "RecommendedTargetFramework": "net7.0;net6.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+      "startingProject": true,
+      "issues": 4,
+      "storyPoints": 5,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.Npgsql.Tests",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net7.0",
+          "net6.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 3,
+        "numberOfCodeFiles": 3,
+        "linesTotal": 113,
+        "linesOfCode": 113,
+        "totalApiScanned": 81,
+        "minLinesOfCodeToChange": 2,
+        "maxLinesOfCodeToChange": 2
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "8ea5ef85-0a09-4137-8336-7c723a2ac3dc",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+              "protected": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+            "snippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "label": "Microsoft.Extensions.DependencyInjection 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyInjection",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "9279f323-248d-41f7-84ec-10696ddd4bf0",
+          "ruleId": "NuGet.0003",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+              "protected": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+            "snippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "protectedSnippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "label": "System.ValueTuple 4.5.0",
+            "properties": {
+              "PackageId": "System.ValueTuple",
+              "PackageVersion": "4.5.0",
+              "PackageNewVersion": null,
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "27ff0842-c65b-4ff7-bb93-07d3ea265207",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+              "protected": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+            "snippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "protectedSnippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net7.0;net6.0",
+              "RecommendedTargetFramework": "net7.0;net6.0;net10.0"
+            }
+          }
+        },
+        {
+          "incidentId": "aed70e4b-28a5-4cdd-9398-f4863b7d5c0a",
+          "ruleId": "Api.0002",
+          "description": "Breaking change: New TimeSpan.From*() overloads that take integers ",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "NpgsqlDataSource dataSource = dataSourceBuilder\r\n                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))\r\n                            .Build();",
+              "protected": "M:System.TimeSpan.FromMilliseconds(System.Double)"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\tests\\TokenCredentialNpgsqlPasswordProviderTests.cs",
+            "snippet": "NpgsqlDataSource dataSource = dataSourceBuilder\r\n                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))\r\n                            .Build();",
+            "protectedSnippet": "M:System.TimeSpan.FromMilliseconds(System.Double)",
+            "label": "M:System.TimeSpan.FromMilliseconds(System.Double)",
+            "properties": {
+              "CharCount": "1645"
+            },
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/core-libraries/9.0/timespan-from-overloads.md",
+                "isCustom": false
+              }
+            ],
+            "line": 32,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "703be609-a0fb-445d-8448-f97109b8bf5c",
+          "ruleId": "Api.0002",
+          "description": "Breaking change: New TimeSpan.From*() overloads that take integers ",
+          "projectPath": "Batec.Azure.Data.Extensions.Npgsql\\tests\\Batec.Azure.Data.Extensions.Npgsql.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "NpgsqlDataSource dataSource = dataSourceBuilder\r\n                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))\r\n                            .Build();",
+              "protected": "M:System.TimeSpan.FromMinutes(System.Double)"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Npgsql\\tests\\TokenCredentialNpgsqlPasswordProviderTests.cs",
+            "snippet": "NpgsqlDataSource dataSource = dataSourceBuilder\r\n                            .UsePeriodicPasswordProvider(passwordProvider.PasswordProvider, TimeSpan.FromMinutes(2), TimeSpan.FromMilliseconds(100))\r\n                            .Build();",
+            "protectedSnippet": "M:System.TimeSpan.FromMinutes(System.Double)",
+            "label": "M:System.TimeSpan.FromMinutes(System.Double)",
+            "properties": {
+              "CharCount": "1645"
+            },
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/core-libraries/9.0/timespan-from-overloads.md",
+                "isCustom": false
+              }
+            ],
+            "line": 32,
+            "column": 12
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\src\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net6.0",
+          "net7.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 2,
+        "numberOfCodeFiles": 2,
+        "linesTotal": 84,
+        "linesOfCode": 84,
+        "totalApiScanned": 9,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "55487294-c2a4-428a-8bc7-5832c7273b51",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\src\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net6.0;net7.0\nRecommended target framework: net6.0;net7.0;net10.0",
+              "protected": "Current target framework: net6.0;net7.0\nRecommended target framework: net6.0;net7.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\src\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.csproj",
+            "snippet": "Current target framework: net6.0;net7.0\nRecommended target framework: net6.0;net7.0;net10.0",
+            "protectedSnippet": "Current target framework: net6.0;net7.0\nRecommended target framework: net6.0;net7.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net6.0;net7.0",
+              "RecommendedTargetFramework": "net6.0;net7.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+      "startingProject": true,
+      "issues": 3,
+      "storyPoints": 7,
+      "properties": {
+        "appName": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net7.0",
+          "net6.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 7,
+        "numberOfCodeFiles": 6,
+        "linesTotal": 341,
+        "linesOfCode": 340,
+        "totalApiScanned": 279,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "c1548d2e-9da2-437d-8534-4070fcfb5d0d",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+              "protected": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+            "label": "Microsoft.EntityFrameworkCore.Design 7.0.9",
+            "properties": {
+              "PackageId": "Microsoft.EntityFrameworkCore.Design",
+              "PackageVersion": "7.0.9",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "b1758265-6e1e-45d2-b997-e30578c8e9ab",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Configuration, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration, and replace with new package Microsoft.Extensions.Configuration 10.0.11",
+              "protected": "Microsoft.Extensions.Configuration, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration, and replace with new package Microsoft.Extensions.Configuration 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.Extensions.Configuration, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration, and replace with new package Microsoft.Extensions.Configuration 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.Configuration, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration, and replace with new package Microsoft.Extensions.Configuration 10.0.11",
+            "label": "Microsoft.Extensions.Configuration 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Configuration",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "90145a34-0daf-4d2f-b25b-166b0064a069",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Configuration.Abstractions, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Abstractions, and replace with new package Microsoft.Extensions.Configuration.Abstractions 10.0.11",
+              "protected": "Microsoft.Extensions.Configuration.Abstractions, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Abstractions, and replace with new package Microsoft.Extensions.Configuration.Abstractions 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.Extensions.Configuration.Abstractions, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Abstractions, and replace with new package Microsoft.Extensions.Configuration.Abstractions 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.Configuration.Abstractions, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Abstractions, and replace with new package Microsoft.Extensions.Configuration.Abstractions 10.0.11",
+            "label": "Microsoft.Extensions.Configuration.Abstractions 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Configuration.Abstractions",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "f24521aa-00f0-44a1-bf4a-fdc57edbbbc7",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.Configuration.Json, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Json, and replace with new package Microsoft.Extensions.Configuration.Json 10.0.11",
+              "protected": "Microsoft.Extensions.Configuration.Json, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Json, and replace with new package Microsoft.Extensions.Configuration.Json 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.Extensions.Configuration.Json, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Json, and replace with new package Microsoft.Extensions.Configuration.Json 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.Configuration.Json, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.Configuration.Json, and replace with new package Microsoft.Extensions.Configuration.Json 10.0.11",
+            "label": "Microsoft.Extensions.Configuration.Json 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.Configuration.Json",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "31902bf0-1f87-48e6-a70b-e38100abb624",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+              "protected": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "protectedSnippet": "Microsoft.Extensions.DependencyInjection, 7.0.0\n\nRecommendation:\n\nRemove Microsoft.Extensions.DependencyInjection, and replace with new package Microsoft.Extensions.DependencyInjection 10.0.11",
+            "label": "Microsoft.Extensions.DependencyInjection 7.0.0",
+            "properties": {
+              "PackageId": "Microsoft.Extensions.DependencyInjection",
+              "PackageVersion": "7.0.0",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "35fe5a8d-3efa-4aba-b118-afd97b843240",
+          "ruleId": "NuGet.0003",
+          "projectPath": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+              "protected": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+            "snippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "protectedSnippet": "System.ValueTuple, 4.5.0\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "label": "System.ValueTuple 4.5.0",
+            "properties": {
+              "PackageId": "System.ValueTuple",
+              "PackageVersion": "4.5.0",
+              "PackageNewVersion": null,
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "9faf842b-5bfc-4248-bad4-1ab09082751a",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+              "protected": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore\\tests\\Batec.Azure.Data.Extensions.Pomelo.EntityFrameworkCore.Tests.csproj",
+            "snippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "protectedSnippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net7.0;net6.0",
+              "RecommendedTargetFramework": "net7.0;net6.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Batec.Core.TestFramework\\Batec.Core.TestFramework.csproj",
+      "startingProject": true,
+      "issues": 2,
+      "storyPoints": 2,
+      "properties": {
+        "appName": "Batec.Core.TestFramework",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net462",
+          "netstandard2.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 2,
+        "numberOfCodeFiles": 2,
+        "linesTotal": 82,
+        "linesOfCode": 82,
+        "totalApiScanned": 29,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "8fbd131c-6524-4998-a229-84d292ee208f",
+          "ruleId": "NuGet.0003",
+          "projectPath": "Batec.Core.TestFramework\\Batec.Core.TestFramework.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "System.Threading.Tasks.Extensions, 4.5.4\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+              "protected": "System.Threading.Tasks.Extensions, 4.5.4\n\nRecommendation:\n\nPackage functionality included with new framework reference"
+            },
+            "kind": "File",
+            "path": "Batec.Core.TestFramework\\Batec.Core.TestFramework.csproj",
+            "snippet": "System.Threading.Tasks.Extensions, 4.5.4\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "protectedSnippet": "System.Threading.Tasks.Extensions, 4.5.4\n\nRecommendation:\n\nPackage functionality included with new framework reference",
+            "label": "System.Threading.Tasks.Extensions 4.5.4",
+            "properties": {
+              "PackageId": "System.Threading.Tasks.Extensions",
+              "PackageVersion": "4.5.4",
+              "PackageNewVersion": null,
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "8b44490d-9840-452d-85a0-aaf3d01f2168",
+          "ruleId": "Project.0002",
+          "projectPath": "Batec.Core.TestFramework\\Batec.Core.TestFramework.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+              "protected": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Batec.Core.TestFramework\\Batec.Core.TestFramework.csproj",
+            "snippet": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+            "protectedSnippet": "Current target framework: net462;netstandard2.0\nRecommended target framework: net462;netstandard2.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net462;netstandard2.0",
+              "RecommendedTargetFramework": "net462;netstandard2.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Sample.Repository\\Sample.Repository.csproj",
+      "startingProject": true,
+      "issues": 2,
+      "storyPoints": 3,
+      "properties": {
+        "appName": "Sample.Repository",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net7.0",
+          "net6.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 4,
+        "numberOfCodeFiles": 4,
+        "linesTotal": 126,
+        "linesOfCode": 126,
+        "totalApiScanned": 139,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "544bd324-8027-4b02-a7bc-a61ac354343d",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Sample.Repository\\Sample.Repository.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.EntityFrameworkCore, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore, and replace with new package Microsoft.EntityFrameworkCore 10.0.11",
+              "protected": "Microsoft.EntityFrameworkCore, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore, and replace with new package Microsoft.EntityFrameworkCore 10.0.11"
+            },
+            "kind": "File",
+            "path": "Sample.Repository\\Sample.Repository.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore, and replace with new package Microsoft.EntityFrameworkCore 10.0.11",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore, and replace with new package Microsoft.EntityFrameworkCore 10.0.11",
+            "label": "Microsoft.EntityFrameworkCore 7.0.9",
+            "properties": {
+              "PackageId": "Microsoft.EntityFrameworkCore",
+              "PackageVersion": "7.0.9",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "cc72b14e-3a4f-42e9-a702-7e5540c096ad",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Sample.Repository\\Sample.Repository.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+              "protected": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11"
+            },
+            "kind": "File",
+            "path": "Sample.Repository\\Sample.Repository.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore.Design, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore.Design, and replace with new package Microsoft.EntityFrameworkCore.Design 10.0.11",
+            "label": "Microsoft.EntityFrameworkCore.Design 7.0.9",
+            "properties": {
+              "PackageId": "Microsoft.EntityFrameworkCore.Design",
+              "PackageVersion": "7.0.9",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "387dd25d-434b-4211-9f9f-8e2530ca232a",
+          "ruleId": "Project.0002",
+          "projectPath": "Sample.Repository\\Sample.Repository.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+              "protected": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Sample.Repository\\Sample.Repository.csproj",
+            "snippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "protectedSnippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net7.0;net6.0",
+              "RecommendedTargetFramework": "net7.0;net6.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "Sample.Repository.Tests\\Sample.Repository.Tests.csproj",
+      "startingProject": true,
+      "issues": 2,
+      "storyPoints": 2,
+      "properties": {
+        "appName": "Sample.Repository.Tests",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net7.0",
+          "net6.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 2,
+        "numberOfCodeFiles": 2,
+        "linesTotal": 34,
+        "linesOfCode": 34,
+        "totalApiScanned": 29,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "da4d31cf-b14c-489d-9b3d-983b3030256a",
+          "ruleId": "NuGet.0002",
+          "projectPath": "Sample.Repository.Tests\\Sample.Repository.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.EntityFrameworkCore, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore, and replace with new package Microsoft.EntityFrameworkCore 10.0.11",
+              "protected": "Microsoft.EntityFrameworkCore, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore, and replace with new package Microsoft.EntityFrameworkCore 10.0.11"
+            },
+            "kind": "File",
+            "path": "Sample.Repository.Tests\\Sample.Repository.Tests.csproj",
+            "snippet": "Microsoft.EntityFrameworkCore, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore, and replace with new package Microsoft.EntityFrameworkCore 10.0.11",
+            "protectedSnippet": "Microsoft.EntityFrameworkCore, 7.0.9\n\nRecommendation:\n\nRemove Microsoft.EntityFrameworkCore, and replace with new package Microsoft.EntityFrameworkCore 10.0.11",
+            "label": "Microsoft.EntityFrameworkCore 7.0.9",
+            "properties": {
+              "PackageId": "Microsoft.EntityFrameworkCore",
+              "PackageVersion": "7.0.9",
+              "PackageNewVersion": "10.0.11",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "5342e57b-e70b-4f34-b88e-ab83cc1d056f",
+          "ruleId": "Project.0002",
+          "projectPath": "Sample.Repository.Tests\\Sample.Repository.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+              "protected": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0"
+            },
+            "kind": "File",
+            "path": "Sample.Repository.Tests\\Sample.Repository.Tests.csproj",
+            "snippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "protectedSnippet": "Current target framework: net7.0;net6.0\nRecommended target framework: net7.0;net6.0;net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net7.0;net6.0",
+              "RecommendedTargetFramework": "net7.0;net6.0;net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    }
+  ],
+  "rules": {
+    "Project.0002": {
+      "id": "Project.0002",
+      "isFeature": false,
+      "description": "Project\u0027s target framework(s) needs to be changed to the new target framework that you selected for this upgrade.\n\nDuring upgrade target framework will be adjusted to corresponding platform when applicable. In some cases project would result in multiple target frameworks after the upgrade if it was using features that now have their own platforms in modern .NET frameworks (windows, iOS, Android etc).",
+      "label": "Project\u0027s target framework(s) needs to be changed",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Overview of porting from .NET Framework to .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265227",
+          "isCustom": false
+        },
+        {
+          "title": ".NET project SDKs",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265226",
+          "isCustom": false
+        }
+      ]
+    },
+    "NuGet.0003": {
+      "id": "NuGet.0003",
+      "isFeature": false,
+      "description": "NuGet package functionality is included with framework reference.\n\nPackage needs to be removed.",
+      "label": "NuGet package functionality is included with framework reference",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262609",
+          "isCustom": false
+        }
+      ]
+    },
+    "NuGet.0002": {
+      "id": "NuGet.0002",
+      "isFeature": false,
+      "description": "NuGet package upgrade is recommended for selected target framework.\n\nStandard .NET packages are recommended to have versions matching version of .NET that project targets.\n\nSome other packages also are known to work better for selected target frameworks.",
+      "label": "NuGet package upgrade is recommended",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262530",
+          "isCustom": false
+        }
+      ]
+    },
+    "NuGet.0004": {
+      "id": "NuGet.0004",
+      "isFeature": false,
+      "description": "NuGet package contains security vulnerabilities.\n\nPackage needs to be upgraded to a newer version that addresses known security vulnerabilities.",
+      "label": "NuGet package contains security vulnerability",
+      "severity": "Optional",
+      "effort": 1
+    },
+    "Api.0002": {
+      "id": "Api.0002",
+      "isFeature": false,
+      "description": "API is source incompatible for selected .NET version: requires code changes to compile successfully when targeting a new version, such as removing obsolete APIs or changing method signatures.",
+      "label": "Source incompatible for selected .NET version",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Breaking changes in .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262679",
+          "isCustom": false
+        }
+      ]
+    }
+  }
+}
