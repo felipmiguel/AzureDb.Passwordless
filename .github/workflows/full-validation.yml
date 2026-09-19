@@ -290,12 +290,14 @@ jobs:
       run: dotnet build --framework net8.0 --no-restore
       continue-on-error: true
 
-    - name: Refresh Azure CLI token
-      run: az account get-access-token > /dev/null
+    - name: Validate PostgreSQL Azure CLI token
+      id: validate-postgresql-token
+      run: az account get-access-token --resource-type oss-rdbms > /dev/null
+      continue-on-error: true
 
     - name: Setup PostgreSQL EF database
       id: setup-postgresql-ef-db
-      if: steps.build-postgresql-ef-test.outcome == 'success'
+      if: steps.build-postgresql-ef-test.outcome == 'success' && steps.validate-postgresql-token.outcome == 'success'
       working-directory: ./Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore/tests/
       env:
         POSTGRESQL_FQDN: ${{ env.POSTGRESQL_FQDN }}

@@ -25,7 +25,7 @@ namespace Batec.Azure.Data.Extensions.Npgsql.EntityFrameworkCore.Tests
                 options.UseNpgsql(GetConnectionString(config), optionsBuilder =>
                 optionsBuilder
                     .MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)
-                    .UseAzureADAuthentication(new DefaultAzureCredential()));
+                    .UseAzureADAuthentication(new AzureCliCredential()));
             });
 
             var serviceProvider = services.BuildServiceProvider();
